@@ -20,7 +20,7 @@ A React + Vite template powered by shadcn/ui.
 
 Make sure you have the following installed on your development machine:
 
-- Node.js (version 16 or above)
+- Node.js (version 18 or above)
 - pnpm (package manager)
 
 ## 🚀 Getting Started
@@ -30,7 +30,7 @@ Follow these steps to get started with the react-vite-ui template:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/dan5py/react-vite-ui.git
+   git clone https://github.com/RoOLeary/rvshad-ui
    ```
 
 2. Navigate to the project directory:
@@ -68,7 +68,7 @@ react-vite-ui/
   ├── public/            # Public assets
   ├── src/               # Application source code
   │   ├── components/    # React components
-  │   │   └── ui/        # shadc/ui components
+  │   │   └── ui/        # shadcn/ui components
   │   ├── styles/        # CSS stylesheets
   │   ├── lib/           # Utility functions
   │   ├── App.tsx        # Application entry point
