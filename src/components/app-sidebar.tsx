@@ -1,4 +1,4 @@
-import { Calendar, Inbox, Settings, UserRoundPen } from "lucide-react"
+import { Calendar, Inbox, Settings, ChevronUp, UserRoundPen } from "lucide-react"
 
 import {
   Sidebar,
@@ -9,8 +9,16 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarFooter,
 } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 // Menu items.
 const items = [
@@ -113,32 +121,44 @@ export function AppSidebar() {
         </SidebarGroup>
         </div>
       
-
-      <div className="justify-end">
-      <div className="group2 gap-10 p-4">
-
-        <SidebarGroup className="mt-2">
-          <SidebarGroupLabel>
-            
-          <h1 className="font-black text-md">Profile</h1>
-
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <a href={'#'}>
-                      <UserRoundPen />
-                      <span>Profile</span>
-                    </a>
+      <SidebarFooter className="p-6">
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <SidebarMenuButton>
+                    <UserRoundPen width={'16'} color={
+                      'white'
+                    }/>
+                    <h1 className="font-black text-md p-6">Profile</h1>
+                    <ChevronUp className="ml-auto" />
                   </SidebarMenuButton>
-                </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-          </SidebarGroup>
-        </div>
-      </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  side="top"
+                  className="w-[--radix-popper-anchor-width]"
+                >
+                   <DropdownMenuItem>
+                    <span><a href="https://docs.findest.com" target="_blank">Resources</a></span>
+                  </DropdownMenuItem>
+                  <Separator />
+                  <DropdownMenuItem>
+                    <span>Account</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <span>Billing</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarFooter>
+    
       </SidebarContent>
+      
     </Sidebar>
   )
 }
