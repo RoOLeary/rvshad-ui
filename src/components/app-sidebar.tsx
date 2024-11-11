@@ -16,7 +16,7 @@ import { Separator } from "./ui/separator"
 const items = [
   {
     title: "Inbox",
-    url: "#",
+    url: "/inbox",
     icon: Inbox,
     sublinks: [
       { title: "Sublink 1", url: "#" },

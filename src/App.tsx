@@ -18,11 +18,10 @@ function App() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarTrigger />
+      <SidebarTrigger className="absolute md:relative z-10 top-0"/>
       <div className="app-canvas w-full">
-      <DashboardHeader />
-      <main className="flex flex-col items-center justify-center w-full h-screen">
-        
+      <DashboardHeader /> 
+      <main className="flex flex-col items-center justify-center w-full h-screen p-6">      
         <div className="flex flex-col items-center gap-y-4  w-full h-screen">
           <div className="inline-flex items-center gap-x-4">
           <h3>Findest</h3>
