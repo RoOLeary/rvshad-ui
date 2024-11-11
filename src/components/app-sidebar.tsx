@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+import { Calendar, Inbox, Settings, UserRoundPen } from "lucide-react"
 
 import {
   Sidebar,
@@ -10,42 +10,71 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { Separator } from "./ui/separator"
 
 // Menu items.
 const items = [
   {
-    title: "Home",
-    url: "#",
-    icon: Home,
-  },
-  {
     title: "Inbox",
     url: "#",
     icon: Inbox,
+    sublinks: [
+      { title: "Sublink 1", url: "#" },
+      { title: "Sublink 2", url: "#" },
+      { title: "Sublink 3", url: "#" },
+    ],
   },
   {
-    title: "Entries",
+    title: "Universe",
     url: "#",
     icon: Calendar,
+    sublinks: [
+      { title: "Sublink A", url: "#" },
+      { title: "Sublink B", url: "#" },
+      { title: "Sublink C", url: "#" },
+    ],
   },
+];
+
+const advancedItems = [
   {
-    title: "Search",
+    title: "Advanced Search",
     url: "#",
-    icon: Search,
+    icon: Calendar,
+    sublinks: [
+      { title: "Sublink X", url: "#" },
+      { title: "Sublink Y", url: "#" },
+      { title: "Sublink Z", url: "#" },
+    ],
   },
   {
-    title: "Settings",
+    title: "Q&A",
     url: "#",
     icon: Settings,
+    sublinks: [
+      { title: "Sublink I", url: "#" },
+      { title: "Sublink II", url: "#" },
+      { title: "Sublink III", url: "#" },
+    ],
   },
-]
+];
+
+import logoUniverse from '../assets/universe_logo_white.png';
 
 export function AppSidebar() {
   return (
-    <Sidebar>
-      <SidebarContent>
+    <Sidebar className="bg-white">
+      <div className="flex mx-auto w-full p-6 items-center justify-center">
+        <img src={logoUniverse} className="max-w-[130px] items-center justify-center" />
+      </div>
+            
+      <SidebarContent className="justify-between">
+            
+        <div className="group1 gap-10 p-4">
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel>
+           
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
@@ -60,7 +89,55 @@ export function AppSidebar() {
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
+          <br />
+          <Separator />
+          <SidebarGroupLabel className="mt-2">
+            
+            <h1 className="font-black text-md">IGOR<sup>AI</sup>search</h1>
+
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {advancedItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <a href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
         </SidebarGroup>
+        </div>
+      
+
+      <div className="justify-end">
+      <div className="group2 gap-10 p-4">
+
+        <SidebarGroup className="mt-2">
+          <SidebarGroupLabel>
+            
+          <h1 className="font-black text-md">Profile</h1>
+
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <a href={'#'}>
+                      <UserRoundPen />
+                      <span>Profile</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+          </SidebarGroup>
+        </div>
+      </div>
       </SidebarContent>
     </Sidebar>
   )
