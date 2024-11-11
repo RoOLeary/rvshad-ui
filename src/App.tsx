@@ -15,7 +15,15 @@ interface RouteWrapperProps<T> {
 }
 
 
-// Define your route components
+// Define some route components
+const Base = () => (
+  <div className="flex flex-col items-center justify-center w-full h-screen">
+  <h2>Base Landing Page</h2>
+  {/* Add your About page content here */}
+  </div>
+);
+
+
 const Home = () => (
   <div className="flex flex-col items-center gap-y-4 w-full h-screen">
     <div className="inline-flex items-center gap-x-4">
@@ -45,6 +53,14 @@ const Queries = () => (
   <div className="flex flex-col items-center justify-center w-full h-screen">
     <h2>Queries Page</h2>
     {/* Add your About page content here */}
+  </div>
+);
+
+const NotFoundPage = () => (
+  <div className="flex flex-col items-center justify-center w-full h-screen">
+    <h2>404!!</h2>
+    {/* Add your About page content here */}
+    <p>Nothing found. Check your query and try again. </p>
   </div>
 );
 
@@ -106,6 +122,21 @@ function App() {
                 element={
                   <RouteWrapper>
                     <Home />
+                  </RouteWrapper>
+                }
+              />
+              <Route path="/"
+                element={
+                  <RouteWrapper>
+                    <Base />
+                  </RouteWrapper>
+                }
+              />
+              {/* Fallback route for 404 */}
+              <Route path="*"
+                element={
+                  <RouteWrapper>
+                    <NotFoundPage />
                   </RouteWrapper>
                 }
               />

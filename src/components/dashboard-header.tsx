@@ -8,13 +8,13 @@ interface DashboardHeader {
 export default function DashboardHeader() {
 
   return (
-    <header className="flex flex-col gap-6 md:flex-row items-center justify-between bg-gray-150 p-6 w-full bg-gray-300">
+    <header className="flex flex-col gap-6 md:flex-row items-center justify-between bg-gray-150 p-6 w-full bg-gray-300 sticky top-0">
         <div className="control-buttons">
             <ul className="flex gap-2">
-                <li><Button><Clock width={18} color="black" /></Button></li>
-                <li><Button><Pin width={18} color="black"/></Button></li>
-                <li><Button><ChartNetwork width={18} color="black"/></Button></li>
-                <li><Button><Search width={18} color="black"/></Button></li>
+                <li><Button text="Recent Activity" title="Recent Activity"><Clock width={18} color="black" /></Button></li>
+                <li><Button text="Pinned" title="Pinned"><Pin width={18} color="black"/></Button></li>
+                <li><Button text="Network Explorer" title="Network Explorer"><ChartNetwork width={18} color="black"/></Button></li>
+                <li><Button text="No active queries" title="No active queries"><Search width={18} color="black"/></Button></li>
             </ul>
         </div>
        

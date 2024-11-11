@@ -1,4 +1,4 @@
-import { Calendar, Inbox, Settings, ChevronUp, UserRoundPen } from "lucide-react"
+import { Calendar, Inbox, Settings, ChevronUp, UserRoundPen, Bot } from "lucide-react"
 
 import {
   Sidebar,
@@ -50,7 +50,7 @@ const advancedItems = [
     url: "/queries",
     icon: Calendar,
     sublinks: [
-      { title: "Sublink X", url: "#" },
+      { title: "Sublink X", url: "/general" },
       { title: "Sublink Y", url: "#" },
       { title: "Sublink Z", url: "#" },
     ],
@@ -73,7 +73,7 @@ export function AppSidebar() {
   return (
     <Sidebar className="bg-white">
       <div className="flex mx-auto w-full p-6 items-center justify-center">
-        <img src={logoUniverse} className="max-w-[130px] items-center justify-center" />
+        <a href="/"><img src={logoUniverse} className="max-w-[130px] items-center justify-center" /></a>
       </div>
             
       <SidebarContent className="justify-between">
@@ -99,9 +99,9 @@ export function AppSidebar() {
           </SidebarGroupContent>
           <br />
           <Separator />
-          <SidebarGroupLabel className="mt-2">
-            
-            <h1 className="font-black text-md">IGOR<sup>AI</sup>search</h1>
+          <SidebarGroupLabel className="my-4">
+            <Bot width={18} color={"white"} />
+            <h1 className="font-black text-md ml-2">IGOR<sup>AI</sup>search</h1>
 
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -138,15 +138,19 @@ export function AppSidebar() {
                   side="top"
                   className="w-[--radix-popper-anchor-width]"
                 >
-                   <DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <span><a href="#" target="_blank">Universes</a></span>
+                  </DropdownMenuItem>
+                  <Separator />
+                  <DropdownMenuItem>
                     <span><a href="https://docs.findest.com" target="_blank">Resources</a></span>
                   </DropdownMenuItem>
                   <Separator />
                   <DropdownMenuItem>
-                    <span>Account</span>
+                    <span>Admin</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <span>Billing</span>
+                    <span>Settings</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <span>Log out</span>
