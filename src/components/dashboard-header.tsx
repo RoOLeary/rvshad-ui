@@ -23,7 +23,7 @@ export default function DashboardHeader() {
             <form className="relative min-w-[420px]">
                 <input
                 type="text"
-                placeholder="search the universe"
+                placeholder="Search the Universe"
                 className="min-w-[420px] p-2 pl-10 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />

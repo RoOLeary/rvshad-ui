@@ -10,7 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { Separator } from "./ui/separator"
+import { Separator } from "@/components/ui/separator"
 
 // Menu items.
 const items = [
@@ -26,7 +26,7 @@ const items = [
   },
   {
     title: "Universe",
-    url: "#",
+    url: "/library/overview",
     icon: Calendar,
     sublinks: [
       { title: "Sublink A", url: "#" },
@@ -39,7 +39,7 @@ const items = [
 const advancedItems = [
   {
     title: "Advanced Search",
-    url: "#",
+    url: "/queries",
     icon: Calendar,
     sublinks: [
       { title: "Sublink X", url: "#" },
@@ -49,7 +49,7 @@ const advancedItems = [
   },
   {
     title: "Q&A",
-    url: "#",
+    url: "https://use-ui.findest.com/?email=ronan.oleary@findest.eu&tenant=Ro3Test",
     icon: Settings,
     sublinks: [
       { title: "Sublink I", url: "#" },
