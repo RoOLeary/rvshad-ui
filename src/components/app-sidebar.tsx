@@ -1,4 +1,4 @@
-import { Calendar, Inbox, Settings, ChevronUp, UserRoundPen, Bot } from "lucide-react"
+import { Calendar, Inbox, Settings, ChevronUp, UserRoundPen, Bot, FileText, BookOpenCheck, Fingerprint} from "lucide-react"
 
 import {
   Sidebar,
@@ -26,20 +26,15 @@ const items = [
     title: "Inbox",
     url: "/inbox",
     icon: Inbox,
-    sublinks: [
-      { title: "Sublink 1", url: "#" },
-      { title: "Sublink 2", url: "#" },
-      { title: "Sublink 3", url: "#" },
-    ],
-  },
+    },
   {
     title: "Universe",
     url: "/library/overview",
     icon: Calendar,
     sublinks: [
-      { title: "Sublink A", url: "#" },
-      { title: "Sublink B", url: "#" },
-      { title: "Sublink C", url: "#" },
+      { title: "Documents", url: "/library/documents", icon: FileText },
+      { title: "Entities", url: "/library/entities", icon: Fingerprint },
+      { title: "Studies", url: "/library/studies", icon: BookOpenCheck },
     ],
   },
 ];
@@ -49,21 +44,11 @@ const advancedItems = [
     title: "Advanced Search",
     url: "/queries",
     icon: Calendar,
-    sublinks: [
-      { title: "Sublink X", url: "/general" },
-      { title: "Sublink Y", url: "#" },
-      { title: "Sublink Z", url: "#" },
-    ],
   },
   {
     title: "Q&A",
     url: "https://use-ui.findest.com/?email=ronan.oleary@findest.eu&tenant=Ro3Test",
     icon: Settings,
-    sublinks: [
-      { title: "Sublink I", url: "#" },
-      { title: "Sublink II", url: "#" },
-      { title: "Sublink III", url: "#" },
-    ],
   },
 ];
 
@@ -86,14 +71,31 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                <div key={item.title}>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <a href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  {item.sublinks && (
+                    <ul className="ml-8 mt-1 space-y-1">
+                      {item.sublinks.map((sublink) => (
+                        <li key={sublink.title}>
+                          <a 
+                            href={sublink.url}
+                            className="text-sm text-gray-300 hover:text-gray-500 py-1 flex gap-2"
+                          >
+                            <sublink.icon width={12} />
+                            {sublink.title}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
@@ -102,12 +104,12 @@ export function AppSidebar() {
           <SidebarGroupLabel className="my-4">
             <Bot width={18} color={"white"} />
             <h1 className="font-black text-md ml-2">IGOR<sup>AI</sup>search</h1>
-
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {advancedItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
+            {advancedItems.map((item) => (
+              <div key={item.title}>
+                <SidebarMenuItem>
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
                       <item.icon />
@@ -115,21 +117,20 @@ export function AppSidebar() {
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-              ))}
+              </div>
+            ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
         </div>
       
-      <SidebarFooter className="p-6">
+        <SidebarFooter className="p-6">
           <SidebarMenu>
             <SidebarMenuItem>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <SidebarMenuButton>
-                    <UserRoundPen width={'16'} color={
-                      'white'
-                    }/>
+                    <UserRoundPen width={'16'} color={'white'}/>
                     <h1 className="font-black text-md p-6">Profile</h1>
                     <ChevronUp className="ml-auto" />
                   </SidebarMenuButton>

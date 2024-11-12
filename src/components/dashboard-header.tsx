@@ -1,6 +1,12 @@
 import { Clock, Pin, ChartNetwork, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+  } from "@/components/ui/tooltip"
+  
 interface DashboardHeader {
   className?: string;
 }
@@ -8,13 +14,58 @@ interface DashboardHeader {
 export default function DashboardHeader() {
 
   return (
-    <header className="flex flex-col gap-6 md:flex-row items-center justify-between bg-gray-150 p-6 w-full bg-gray-300 sticky top-0">
+    <header className="flex flex-col gap-6 md:flex-row items-center justify-between bg-gray-150 p-6 w-full bg-gray-300 sticky top-0 z-10">
         <div className="control-buttons">
             <ul className="flex gap-2">
-                <li><Button text="Recent Activity" title="Recent Activity"><Clock width={18} color="black" /></Button></li>
-                <li><Button text="Pinned" title="Pinned"><Pin width={18} color="black"/></Button></li>
-                <li><Button text="Network Explorer" title="Network Explorer"><ChartNetwork width={18} color="black"/></Button></li>
-                <li><Button text="No active queries" title="No active queries"><Search width={18} color="black"/></Button></li>
+                <li>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                            <Button title="Recent Activity"><Clock width={18} color="black" /></Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>Recent Activity</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </li> 
+                <li>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                            <Button title="Pinned"><Pin width={18} color="black"/></Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>Pinned</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </li> 
+                <li>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                            <Button title="Network Explorer"><ChartNetwork width={18} color="black"/></Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                            <p>Network Explorer</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </li> 
+                   
+                <li>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                            <Button title="No active queries"><Search width={18} color="black"/></Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                            <p>No active queries</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </li> 
             </ul>
         </div>
        
