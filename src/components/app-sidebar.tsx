@@ -1,5 +1,5 @@
 import { Calendar, Inbox, Settings, ChevronUp, UserRoundPen, Bot, FileText, BookOpenCheck, Fingerprint } from "lucide-react"
-
+import AdvancedSearchModal from "./advanced-search-modal";
 import {
   Sidebar,
   SidebarContent,
@@ -40,11 +40,6 @@ const items = [
 ];
 
 const advancedItems = [
-  {
-    title: "Advanced Search",
-    url: "/queries",
-    icon: Calendar,
-  },
   {
     title: "Q&A",
     url: "https://use-ui.findest.com/?email=ronan.oleary@findest.eu&tenant=Ro3Test",
@@ -106,7 +101,9 @@ export function AppSidebar() {
               <h1 className="font-black text-md ml-2">IGOR<sup>AI</sup>search</h1>
             </SidebarGroupLabel>
             <SidebarGroupContent>
-              <SidebarMenu>
+              
+              <SidebarMenu className="ml-8 mt-1 space-y-1">
+                <AdvancedSearchModal />
                 {advancedItems.map((item) => (
                   <div key={item.title}>
                     <SidebarMenuItem>
@@ -119,6 +116,7 @@ export function AppSidebar() {
                     </SidebarMenuItem>
                   </div>
                 ))}
+               
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

@@ -8,6 +8,7 @@ import { SortableTable } from '@/components/data-table/sortable-table';
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import DashboardHeader from "./components/dashboard-header";
+import DataChart from "./components/data-chart";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Document } from './views/Document';
 import { Documents } from './views/Documents';
@@ -37,7 +38,7 @@ const Home = () => (
     </a> */}
     {/* <CountBtn /> */}
     <SortableTable />
-    {/* <ContentCarousel /> */}
+    <DataChart />
     {/* <SearchProgress /> */}
   </div>
 );
