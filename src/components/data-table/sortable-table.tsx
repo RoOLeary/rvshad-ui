@@ -223,7 +223,7 @@ export const columns: ColumnDef<Payment>[] = [
   {
     id: "actions",
     enableHiding: false,
-    // header: () => <div className="text-right">Actions</div>,
+    header: () => <div className="text-left">Actions</div>,
     cell: ({ row }) => {
       const payment = row.original
 
