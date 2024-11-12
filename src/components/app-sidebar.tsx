@@ -42,7 +42,7 @@ const items = [
 const advancedItems = [
   {
     title: "Q&A",
-    url: "https://use-ui.findest.com/?email=ronan.oleary@findest.eu&tenant=Ro3Test",
+    url: "/library/queries",
     icon: Settings,
   },
 ];

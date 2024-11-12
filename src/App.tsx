@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-route
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 // import CountBtn from "@/components/count-btn";
 // import { Badge } from "@/components/ui/badge";
-// import SearchProgress from "@/components/search-progress";
+import SearchProgress from "@/components/search-progress";
 // import { ContentCarousel } from "@/components/content-carousel";
 import { SortableTable } from '@/components/data-table/sortable-table';
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
@@ -38,8 +38,14 @@ const Home = () => (
     </a> */}
     {/* <CountBtn /> */}
     <SortableTable />
-    <DataChart />
-    {/* <SearchProgress /> */}
+    <div className="w-full flex gap-10">
+      <div className="w-1/2">
+        <DataChart />
+      </div>
+      <div className="w-1/2">
+        <SearchProgress />
+      </div>
+    </div>
   </div>
 );
 
@@ -72,7 +78,7 @@ function App() {
           <TransitionGroup component={null}>
             <CSSTransition key={location.key} classNames="fade" timeout={1000} unmountOnExit>
               <Routes location={location}>
-                <Route path="/queries" element={<Queries />} />
+                <Route path="/library/queries" element={<Queries />} />
                 <Route path="/library/overview" element={<Documents />} />
                 <Route path="/library/documents" element={<Documents />} />
                 <Route path="/library/documents/:id" element={<Document />} />
@@ -80,7 +86,7 @@ function App() {
                 <Route path="/library/entities/:id" element={<Entity />} />
                 <Route path="/all-components" element={<Base />} />
                 <Route path="/inbox" element={<Home />} />
-                <Route path="/" element={<Documents />} />
+                <Route path="/" element={<Home />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </CSSTransition>

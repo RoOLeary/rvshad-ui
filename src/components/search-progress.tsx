@@ -20,11 +20,11 @@ const SearchProgress = () => {
   };
 
   return (
-    <Card className="w-full max-w-md">
+    <Card className="w-full max-w-full">
       <CardHeader>
-        <CardTitle>Progress Control Demo</CardTitle>
+        <CardTitle>Progress Control</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 h-full">
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
             <span>Progress: {progress}%</span>

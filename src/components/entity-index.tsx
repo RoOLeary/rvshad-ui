@@ -62,6 +62,7 @@ export const EntityIndex = () => {
                 id={`doc-${doc.id}`}
                 checked={selectedDocs.has(doc.id)}
                 onCheckedChange={(checked) => handleSelectDoc(doc.id, checked)}
+                className="secondary"
               />
             </div>
             <Card className="w-full bg-slate-100">
