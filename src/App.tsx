@@ -77,8 +77,9 @@ function App() {
                 <Route path="/library/documents/:id" element={<Document />} />
                 <Route path="/library/entities" element={<Entities />} />
                 <Route path="/library/entities/:id" element={<Entity />} />
+                <Route path="/all-components" element={<Base />} />
                 <Route path="/inbox" element={<Home />} />
-                <Route path="/" element={<Base />} />
+                <Route path="/" element={<Documents />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </CSSTransition>

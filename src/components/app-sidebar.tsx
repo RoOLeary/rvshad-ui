@@ -1,4 +1,4 @@
-import { Calendar, Inbox, Settings, ChevronUp, UserRoundPen, Bot, FileText, BookOpenCheck, Fingerprint} from "lucide-react"
+import { Calendar, Inbox, Settings, ChevronUp, UserRoundPen, Bot, FileText, BookOpenCheck, Fingerprint } from "lucide-react"
 
 import {
   Sidebar,
@@ -23,11 +23,6 @@ import {
 // Menu items.
 const items = [
   {
-    title: "Inbox",
-    url: "/inbox",
-    icon: Inbox,
-    },
-  {
     title: "Universe",
     url: "/library/overview",
     icon: Calendar,
@@ -36,6 +31,11 @@ const items = [
       { title: "Entities", url: "/library/entities", icon: Fingerprint },
       { title: "Studies", url: "/library/studies", icon: BookOpenCheck },
     ],
+  },
+  {
+    title: "Inbox",
+    url: "/inbox",
+    icon: Inbox,
   },
 ];
 
@@ -60,77 +60,77 @@ export function AppSidebar() {
       <div className="flex mx-auto w-full p-6 items-center justify-center">
         <a href="/"><img src={logoUniverse} className="max-w-[130px] items-center justify-center" /></a>
       </div>
-            
+
       <SidebarContent className="justify-between">
-            
+
         <div className="group1 gap-10 p-4">
-        <SidebarGroup>
-          <SidebarGroupLabel>
-           
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <div key={item.title}>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <a href={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  {item.sublinks && (
-                    <ul className="ml-8 mt-1 space-y-1">
-                      {item.sublinks.map((sublink) => (
-                        <li key={sublink.title}>
-                          <a 
-                            href={sublink.url}
-                            className="text-sm text-gray-300 hover:text-gray-500 py-1 flex gap-2"
-                          >
-                            <sublink.icon width={12} />
-                            {sublink.title}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-          <br />
-          <Separator />
-          <SidebarGroupLabel className="my-4">
-            <Bot width={18} color={"white"} />
-            <h1 className="font-black text-md ml-2">IGOR<sup>AI</sup>search</h1>
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-            {advancedItems.map((item) => (
-              <div key={item.title}>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              </div>
-            ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+          <SidebarGroup>
+            <SidebarGroupLabel>
+
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items.map((item) => (
+                  <div key={item.title}>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton asChild>
+                        <a href={item.url}>
+                          <item.icon />
+                          <span>{item.title}</span>
+                        </a>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                    {item.sublinks && (
+                      <ul className="ml-8 mt-1 space-y-1">
+                        {item.sublinks.map((sublink) => (
+                          <li key={sublink.title}>
+                            <a
+                              href={sublink.url}
+                              className="text-sm text-gray-300 hover:text-gray-500 py-1 flex gap-2"
+                            >
+                              <sublink.icon width={12} />
+                              {sublink.title}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+            <br />
+            <Separator />
+            <SidebarGroupLabel className="my-4">
+              <Bot width={18} color={"white"} />
+              <h1 className="font-black text-md ml-2">IGOR<sup>AI</sup>search</h1>
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {advancedItems.map((item) => (
+                  <div key={item.title}>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton asChild>
+                        <a href={item.url}>
+                          <item.icon />
+                          <span>{item.title}</span>
+                        </a>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  </div>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
         </div>
-      
+
         <SidebarFooter className="p-6">
           <SidebarMenu>
             <SidebarMenuItem>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <SidebarMenuButton>
-                    <UserRoundPen width={'16'} color={'white'}/>
+                    <UserRoundPen width={'16'} color={'white'} />
                     <h1 className="font-black text-md p-6">Profile</h1>
                     <ChevronUp className="ml-auto" />
                   </SidebarMenuButton>
@@ -140,7 +140,7 @@ export function AppSidebar() {
                   className="w-[--radix-popper-anchor-width]"
                 >
                   <DropdownMenuItem>
-                    <span><a href="#" target="_blank">Universes</a></span>
+                    <span><a href="/inbox">Inbox</a></span>
                   </DropdownMenuItem>
                   <Separator />
                   <DropdownMenuItem>
@@ -161,9 +161,9 @@ export function AppSidebar() {
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarFooter>
-    
+
       </SidebarContent>
-      
+
     </Sidebar>
   )
 }
