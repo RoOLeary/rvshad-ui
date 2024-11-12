@@ -22,12 +22,11 @@ export const Documents = () => (
             <DropdownMenu>
                 <DropdownMenuTrigger className="bg-gray p-4 rounded-md flex w-full"><Filter /> Add Filter</DropdownMenuTrigger>
                 <DropdownMenuContent>
-                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuLabel>Doc Type</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
-                    <DropdownMenuItem>Billing</DropdownMenuItem>
-                    <DropdownMenuItem>Team</DropdownMenuItem>
-                    <DropdownMenuItem>Subscription</DropdownMenuItem>
+                    <DropdownMenuItem>Science</DropdownMenuItem>
+                    <DropdownMenuItem>Patent</DropdownMenuItem>
+                    <DropdownMenuItem>Webpage</DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
             <ListPagination />   

@@ -20,13 +20,36 @@ export const Entities = () => (
         <DropdownMenu>
             <DropdownMenuTrigger className="bg-gray p-4 rounded-md flex w-full"><Filter /> Add Filter</DropdownMenuTrigger>
             <DropdownMenuContent>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Billing</DropdownMenuItem>
-                <DropdownMenuItem>Team</DropdownMenuItem>
-                <DropdownMenuItem>Subscription</DropdownMenuItem>
-            </DropdownMenuContent>
+                    <DropdownMenuLabel>Custom Entity Types</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel>Basic</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Technology</DropdownMenuItem>
+                    <DropdownMenuItem>Material</DropdownMenuItem>
+                    <DropdownMenuItem>Process</DropdownMenuItem>
+                    <DropdownMenuItem>Method</DropdownMenuItem>
+                    <DropdownMenuItem>Ingredient</DropdownMenuItem>
+                    <DropdownMenuItem>Chemical</DropdownMenuItem>
+                    <DropdownMenuItem>Product</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel>Organisation</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Partner</DropdownMenuItem>
+                    <DropdownMenuItem>Supplier</DropdownMenuItem>
+                    <DropdownMenuItem>Competitor</DropdownMenuItem>
+
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel>Other Entity Types</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Entity</DropdownMenuItem>
+
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel>Started By</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Ro</DropdownMenuItem>
+                    
+                   
+                </DropdownMenuContent>
         </DropdownMenu>
         <ListPagination />   
         </div>  
