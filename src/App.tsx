@@ -38,7 +38,7 @@ const Home = () => (
     </a> */}
     {/* <CountBtn /> */}
     <SortableTable />
-    <div className="w-full flex gap-10">
+    <div className="w-full flex gap-10 p-6">
       <div className="w-1/2">
         <DataChart />
       </div>
