@@ -1,5 +1,8 @@
+import { useState, useEffect } from 'react';
 import { useGetSavedDocumentsQuery } from '../services/documents/document';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { CardContent } from '@/components/ui/card';
+import { Checkbox } from "@/components/ui/checkbox";
+import { DocumentCard } from '@/components/document-card';
 import { ListPagination } from "@/components/list-pagination";
 import {
     DropdownMenu,
@@ -8,36 +11,75 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import { Loader, Filter } from 'lucide-react';
 
-export const Documents = () => {
-    const { data, isLoading, isError, error } = useGetSavedDocumentsQuery();
+export const Documents: React.FC = () => {
+    const { data, isLoading, isError, error } = useGetSavedDocumentsQuery(undefined, {
+        refetchOnMountOrArgChange: false, // Prevents automatic refetching
+    });
 
+    const [selectedDocs, setSelectedDocs] = useState<Set<string>>(new Set());
+    const [hasCachedData, setHasCachedData] = useState(false);
+
+    useEffect(() => {
+        // Set hasCachedData to true if data is initially fetched
+        if (data) {
+            setHasCachedData(true);
+        }
+    }, [data]);
+
+    // Handle select all documents
+    const handleSelectAll = (checked: boolean) => {
+        if (checked && data) {
+            setSelectedDocs(new Set(data.documents.map((doc) => doc.id)));
+        } else {
+            setSelectedDocs(new Set());
+        }
+    };
+
+    // Handle individual document selection
+    const handleSelectDoc = (id: string, checked: boolean) => {
+        const newSelected = new Set(selectedDocs);
+        if (checked) {
+            newSelected.add(id);
+        } else {
+            newSelected.delete(id);
+        }
+        setSelectedDocs(newSelected);
+    };
 
     return (
-        <div className="w-full mx-auto max-sm:px-4">
-            <h1 className="text-black font-black text-xl">Documents</h1>
-            <div className="flex">
-                
-                <DropdownMenu>
-                    <DropdownMenuTrigger className="bg-gray p-4 rounded-md flex w-full"><Filter /> Add Filter</DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuLabel>Doc Type</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>Science</DropdownMenuItem>
-                        <DropdownMenuItem>Patent</DropdownMenuItem>
-                        <DropdownMenuItem>Webpage</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-                <ListPagination />
+        <div className="flex flex-col w-full h-full max-sm:px-4">
+            <div className="flex w-full justify-between items-center">
+                <h1 className="text-black font-black text-xl">Documents</h1>
+                <div className="flex">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger className="bg-gray p-4 rounded-md flex w-full"><Filter /> Add Filter</DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuLabel>Study Type</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>Science</DropdownMenuItem>
+                            <DropdownMenuItem>Patent</DropdownMenuItem>
+                            <DropdownMenuItem>Webpage</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <ListPagination />   
+                </div>  
             </div>
-            <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                    Saved Documents
-                    {isLoading && <Loader className="animate-spin" />}
-                </CardTitle>
-            </CardHeader>
+            <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-lg mb-4">
+                <Checkbox
+                    id="select-all"
+                    checked={data ? selectedDocs.size === data.documents.length : false}
+                    onCheckedChange={(checked) => handleSelectAll(checked as boolean)}
+                />
+                <label 
+                    htmlFor="select-all"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                    Select All Documents ({selectedDocs.size} of {data?.documents?.length || 0} selected)
+                </label>
+            </div>
 
             <CardContent>
                 {isError && (
@@ -46,7 +88,7 @@ export const Documents = () => {
                     </div>
                 )}
 
-                {isLoading && (
+                {isLoading && !hasCachedData && ( // Show spinner only if loading and no cached data is available
                     <div className="text-center py-8">
                         <Loader className="animate-spin mx-auto mb-2" />
                         <p>Loading documents...</p>
@@ -55,59 +97,18 @@ export const Documents = () => {
 
                 {data && (
                     <div>
-                        <div className="mb-4">
-                            <p className="text-sm text-gray-600">
-                                Total Documents: {data?.documents?.length}
-                            </p>
-                        </div>
-
                         <div className="space-y-4">
-                            {data.documents?.map((doc) => (
-                                <Card key={doc.id} className="p-4">
-                                    <a href={`/library/documents/${doc.id}`}>
-                                    <div>
-                                        <h3 className="font-medium">{doc.title}</h3>
-                                        <div className="grid grid-cols-2 gap-2 mt-2 text-sm">
-                                            <div>
-                                                <span className="text-gray-600">Type: </span>
-                                                {doc.type}
-                                            </div>
-                                            <div>
-                                                <span className="text-gray-600">Added: </span>
-                                                {new Date(doc.dateAdded).toLocaleDateString()}
-                                            </div>
-                                            <div className="col-span-2">
-                                                <span className="text-gray-600">URL: </span>
-                                                <a href={doc.url} target="_blank" rel="noopener noreferrer"
-                                                    className="text-blue-600 hover:underline">
-                                                    {doc.url}
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </a>
-                                </Card>
+                            {data.documents.slice(0,9).map((doc) => (
+                                <DocumentCard
+                                    key={doc.id}
+                                    {...doc}
+                                    isSelected={selectedDocs.has(doc.id)}
+                                    onSelect={handleSelectDoc}                                />
                             ))}
                         </div>
+                        <ListPagination />
                     </div>
                 )}
-
-                {/* State Demonstration */}
-                <Card className="mt-6 bg-gray-50">
-                    <CardHeader>
-                        <CardTitle className="text-sm text-black">API State</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <pre className="text-xs text-slate-500">
-                            {JSON.stringify({
-                                isLoading,
-                                isError,
-                                documentCount: data?.documents?.length || 0,
-                                totalDocuments: data?.total || 0
-                            }, null, 2)}
-                        </pre>
-                    </CardContent>
-                </Card>
             </CardContent>
         </div>
     );

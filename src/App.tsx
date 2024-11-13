@@ -58,9 +58,8 @@ const Queries = () => (
 // Main App component with route transitions applied to the entire route structure
 function App() {
   const location = useLocation();
-  const queryVar = useGetProfileQuery();
+  // const queryVar = useGetProfileQuery();
 
-  console.log('i should explode', queryVar);
   return (
     <SidebarProvider>
       <AppSidebar />

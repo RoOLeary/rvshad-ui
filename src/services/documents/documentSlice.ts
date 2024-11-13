@@ -3,8 +3,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // Define interfaces for the document state
 interface Document {
     id: string;
-    name: string;
+    url: string;
     title: string;
+    type: string; 
+    abstract: string;
     // Add other document properties as needed
 }
 

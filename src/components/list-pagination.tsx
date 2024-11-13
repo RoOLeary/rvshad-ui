@@ -1,3 +1,6 @@
+// import { useSelector } from 'react-redux';
+// import { currentUser } from '../services/auth/authSlice';
+
 import {
     Pagination,
     PaginationContent,
@@ -10,9 +13,13 @@ import {
 
 
   export const ListPagination = () => {
+    // const user = useSelector(currentUser);
     
     return(
         <Pagination>
+            {/* {user ? <div className="flex items-center gap-2">
+                        <h3>Hello {user}</h3>
+                </div> : <p>Nada</p>}   */}
         <PaginationContent>
             <PaginationItem>
             <PaginationPrevious href="#" />

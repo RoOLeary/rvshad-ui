@@ -15,6 +15,7 @@ export interface AuthState {
 }
 
 export interface User {
+    user: string;
     id: string;
     email: string;
     name: string;
@@ -25,10 +26,13 @@ export interface LoginRequest {
     password: string;
 }
 
-export interface Document {
+export interface DocumentData {
+    abstract: string;
     id: string;
     title: string;
     name: string;
+    type: string;
+    dateAdded: string;
 }
 
 export interface DocumentListResponse {
@@ -44,7 +48,10 @@ export interface DocumentListResponse {
   export interface DocumentListResponseListQueryParams {
     id?: number;
     title?: string;
-    name?: string;
+    url?: string;
+    type?: string; 
+    dateAdded?: string;
+    abstract?:string;
   }
 
 // Define interfaces for the API response

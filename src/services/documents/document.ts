@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import type { SavedDocumentResponse } from '@/types/types';
 
+
 export const documentApi = createApi({
   reducerPath: 'documentApi',
   baseQuery: fetchBaseQuery({ 

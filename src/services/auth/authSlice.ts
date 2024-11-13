@@ -11,14 +11,14 @@ interface AuthResponse {
 }
 
 interface AuthState {
-    user: AuthResponse['user'] | string;
+    user: AuthResponse['user'];
     token: string | null;
     isLoading: boolean;
     error: string | null;
 }
 
 const initialState: AuthState = {
-    user: null,
+    user: 'ronan',
     token: null,
     isLoading: false,
     error: null,

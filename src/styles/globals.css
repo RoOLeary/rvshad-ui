@@ -156,21 +156,19 @@
 
 .fade-enter {
   opacity: 0;
-  transform: scale(0.95);
+
 }
 .fade-enter-active {
   opacity: 1;
-  transform: scale(1);
-  transition: opacity 1000ms, transform 1000ms;
+  transition: all 250ms ease-in-out;
 }
 .fade-exit {
   opacity: 1;
-  transform: scale(1);
+  transition: all 250ms ease-in-out;
 }
 .fade-exit-active {
   opacity: 0;
-  transform: scale(0.95);
-  transition: opacity 1000ms, transform 1000ms;
+  transition: all 250ms ease-in-out;
 }
 
 @layer base {
