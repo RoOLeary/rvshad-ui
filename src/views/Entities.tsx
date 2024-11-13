@@ -72,7 +72,7 @@ export const Entities = () => {
                     ))}
                 </div>
             )}
-
+            <EntityIndex />
             <div className="py-4 w-full">
                 <ListPagination />
             </div>
