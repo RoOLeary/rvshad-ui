@@ -24,7 +24,7 @@ export const entityApi = createApi({
             url: 'entity',
             params: {
               orderBy: 2,
-              createdByMe:true
+              createdByMe:false
             }
         })
     }),

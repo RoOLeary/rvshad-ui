@@ -105,7 +105,8 @@ export const Documents: React.FC = () => {
                                     key={doc.id}
                                     {...doc}
                                     isSelected={selectedDocs.has(doc.id)}
-                                    onSelect={handleSelectDoc}                                />
+                                    onSelect={handleSelectDoc}
+                                />
                             ))}
                         </div>
                         <ListPagination />

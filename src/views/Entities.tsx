@@ -1,5 +1,6 @@
+import { useEffect, useState } from 'react';
 import { useGetEntitiesQuery } from '../services/entities/entity';
-import { Filter } from "lucide-react";
+import { Filter, Loader } from "lucide-react";
 import { EntityIndex } from "@/components/entity-index";
 import { ListPagination } from "@/components/list-pagination";
 import {
@@ -10,10 +11,49 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { EntityCard } from '@/components/entity-card';
+import { Checkbox } from "@/components/ui/checkbox";
 
-export const Entities = () => {
+ 
+
+export const Entities: React.FC = () => {
+    const [selectedEntities, setSelectedEntities] = useState<Set<string>>(new Set());
+    const [hasCachedData, setHasCachedData] = useState(false);
+
     // Use RTK Query hook to fetch entities from API
-    const { data: entityData, isLoading, isError, error } = useGetEntitiesQuery();
+    const { data: entityData, isLoading, isError, error } = useGetEntitiesQuery(
+        undefined, {
+            refetchOnMountOrArgChange: false, // Prevents automatic refetching
+    });
+    
+    useEffect(() => {
+        // Set hasCachedData to true if data is initially fetched
+        if (entityData) {
+            setHasCachedData(true);
+        }
+    }, [entityData]);
+
+    // Handle select all documents
+    const handleSelectAll = (checked: boolean) => {
+        if (checked && entityData) {
+            setSelectedEntities(new Set(entityData.entities.map((entity) => entity.id)));
+        } else {
+            setSelectedEntities(new Set());
+        }
+    };
+
+    // Handle individual document selection
+    const handleSelectEntity = (id: string, checked: boolean) => {
+        const newSelected = new Set(selectedEntities);
+        if (checked) {
+            newSelected.add(id);
+        } else {
+            newSelected.delete(id);
+        }
+        setSelectedEntities(newSelected);
+    };
+
+
 
     console.log('entities', entityData); // Logs the full entity data structure
 
@@ -58,21 +98,45 @@ export const Entities = () => {
                     <ListPagination />
                 </div>
             </div>
+            <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-lg mb-4">
+                <Checkbox
+                    id="select-all"
+                    checked={entityData ? selectedEntities.size === entityData?.entities?.length : false}
+                    onCheckedChange={(checked) => handleSelectAll(checked as boolean)}
+                />
+                <label 
+                    htmlFor="select-all"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                    Select All Documents ({selectedEntities.size} of {entityData?.entities?.length || 0} selected)
+                </label>
+            </div>
+                {/* Render loading, error, or data states */}
+                {isError && (
+                    <div className="p-4 bg-red-50 text-red-700 rounded-md">
+                        Error loading entities: {JSON.stringify(error)}
+                    </div>
+                )}
 
-            {/* Render loading, error, or data states */}
-            {isLoading && <p>Loading entities...</p>}
-            {isError && <p>Error loading entities: {error?.message}</p>}
-            {entityData?.entities && entityData.entities.length > 0 && (
-                <div>
-                    {entityData.entities.map((entity) => (
-                        <div key={entity.id} className="entity-item">
-                            <h3>{entity.title}</h3>
-                            {/* <p>{entity.abstract}</p> */}
-                        </div>
-                    ))}
-                </div>
-            )}
-            <EntityIndex />
+                {isLoading && !hasCachedData && ( // Show spinner only if loading and no cached data is available
+                    <div className="text-center py-8">
+                        <Loader className="animate-spin mx-auto mb-2" />
+                        <p>Loading entities...</p>
+                    </div>
+                )}
+
+                {entityData?.entities && entityData.entities.length > 0 && (
+                    <div className="p-4">
+                        {entityData.entities.map((entity) => (
+                            <EntityCard
+                                key={entity.id}
+                                {...entity}
+                                isSelected={selectedEntities.has(entity.id)}
+                                onSelect={handleSelectEntity} />
+                        ))}
+                    </div>
+                )}
+            
             <div className="py-4 w-full">
                 <ListPagination />
             </div>
