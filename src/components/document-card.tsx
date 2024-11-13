@@ -8,7 +8,7 @@ interface DocumentCardProps {
     url: string;
     title: string;
     type: string;
-    abstract: string;
+    abstract?: string;
     dateAdded?: string;
     isSelected: boolean;
     onSelect: (id: string, checked: boolean) => void;

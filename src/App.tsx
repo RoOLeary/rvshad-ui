@@ -16,7 +16,7 @@ import { Entities } from './views/Entities';
 import { Entity } from './views/Entity';
 import { NotFoundPage } from './views/NotFound';
 import { store } from "./store";
-import { useGetProfileQuery } from "./services/auth/auth"
+// import { useGetProfileQuery } from "./services/auth/auth";
 
 // Define route components
 const Base = () => (
@@ -58,8 +58,7 @@ const Queries = () => (
 // Main App component with route transitions applied to the entire route structure
 function App() {
   const location = useLocation();
-  // const queryVar = useGetProfileQuery();
-
+  
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -100,7 +99,9 @@ function App() {
 function AppWrapper() {
   return (
     <ReduxStoreProvider store={store}>
-      <Router>
+      <Router future={{
+          v7_startTransition: true,
+        }}>
         <App />
       </Router>
     </ReduxStoreProvider>

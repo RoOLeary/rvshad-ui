@@ -55,16 +55,18 @@ export const Documents: React.FC = () => {
                 <h1 className="text-black font-black text-xl">Documents</h1>
                 <div className="flex">
                     <DropdownMenu>
-                        <DropdownMenuTrigger className="bg-gray p-4 rounded-md flex w-full"><Filter /> Add Filter</DropdownMenuTrigger>
+                        <DropdownMenuTrigger className="bg-slate-50 mb-2 p-4 rounded-md flex w-full"><Filter /> Add Filter</DropdownMenuTrigger>
                         <DropdownMenuContent>
-                            <DropdownMenuLabel>Study Type</DropdownMenuLabel>
+                            <DropdownMenuLabel>Doc Type</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem>Science</DropdownMenuItem>
                             <DropdownMenuItem>Patent</DropdownMenuItem>
                             <DropdownMenuItem>Webpage</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <ListPagination />   
+                    <div className="hidden md:flex mb-2">
+                        <ListPagination />   
+                    </div>
                 </div>  
             </div>
             <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-lg mb-4">

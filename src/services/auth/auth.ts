@@ -1,10 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../../store'; // Adjust this import path as needed
 import type { User, LoginRequest, AuthResponse } from "../../types/types";
-// Define interfaces for the API
 
-
-// Create the API slice using RTK Query
 export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({ 
