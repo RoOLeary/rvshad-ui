@@ -78,6 +78,14 @@ export interface Entity {
     // Add other entity properties as needed
 }
 
+export interface EntityData {
+    id: string;
+    title: string;
+    type: string;
+    description: string;
+    // Add other entity properties as needed
+}
+
 export 
 interface EntityState {
     entities: Entity[];

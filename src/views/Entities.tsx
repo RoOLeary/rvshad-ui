@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useGetEntitiesQuery } from '../services/entities/entity';
 import { Filter, Loader } from "lucide-react";
-import { EntityIndex } from "@/components/entity-index";
 import { ListPagination } from "@/components/list-pagination";
 import {
     DropdownMenu,

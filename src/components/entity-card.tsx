@@ -7,13 +7,13 @@ interface EntityCardProps {
     id: string;
     title: string;
     type: string;
-    abstract?: string;
+    description?: string;
     dateAdded?: string;
     isSelected: boolean;
     onSelect: (id: string, checked: boolean) => void;
 }
 
-export const EntityCard: React.FC<EntityCardProps> = ({ id, title, type, abstract, dateAdded, isSelected, onSelect }) => {
+export const EntityCard: React.FC<EntityCardProps> = ({ id, title, type, description, dateAdded, isSelected, onSelect }) => {
     const navigate = useNavigate();
 
     const handleCheckboxChange = (checked: boolean) => {
@@ -22,7 +22,7 @@ export const EntityCard: React.FC<EntityCardProps> = ({ id, title, type, abstrac
 
     const handleCardClick = () => {
         // Navigate to the document view and pass the document data
-        navigate(`/library/entities/${id}`, { state: { id, title, type, abstract, dateAdded } });
+        navigate(`/library/entities/${id}`, { state: { id, title, type, description, dateAdded } });
     };
 
     return (

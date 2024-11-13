@@ -27,9 +27,9 @@ const items = [
     url: "/library/overview",
     icon: Calendar,
     sublinks: [
-      { title: "Documents", url: "/library/documents", icon: FileText },
-      { title: "Entities", url: "/library/entities", icon: Fingerprint },
-      { title: "Studies", url: "/library/studies", icon: BookOpenCheck },
+      { title: "Documents", url: "/documents", icon: FileText },
+      { title: "Entities", url: "/entities", icon: Fingerprint },
+      { title: "Studies", url: "/studies", icon: BookOpenCheck },
     ],
   },
   {
@@ -80,7 +80,7 @@ export function AppSidebar() {
                         {item.sublinks.map((sublink) => (
                           <li key={sublink.title}>
                             <a
-                              href={sublink.url}
+                              href={`/library${sublink.url}`}
                               className="text-sm text-gray-300 hover:text-gray-500 py-1 flex gap-2"
                             >
                               <sublink.icon width={12} />
