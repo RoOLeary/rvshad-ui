@@ -11,14 +11,14 @@ interface AuthResponse {
 }
 
 interface AuthState {
-    user: AuthResponse['user'] | AuthResponse['ronan'];
+    user: AuthResponse['user'] | string;
     token: string | null;
     isLoading: boolean;
     error: string | null;
 }
 
 const initialState: AuthState = {
-    user: 'ronan',
+    user: null,
     token: null,
     isLoading: false,
     error: null,
@@ -40,4 +40,7 @@ const authSlice = createSlice({
 });
 
 export const { setCredentials, logout } = authSlice.actions;
+export const currentUser = (state: {
+    auth: unknown; user: unknown; 
+}) => state?.auth?.user; 
 export default authSlice.reducer;

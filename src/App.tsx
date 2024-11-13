@@ -16,7 +16,7 @@ import { Entities } from './views/Entities';
 import { Entity } from './views/Entity';
 import { NotFoundPage } from './views/NotFound';
 import { store } from "./store";
-import { useGetProfileQuery } from "./services/auth"
+import { useGetProfileQuery } from "./services/auth/auth"
 
 // Define route components
 const Base = () => (

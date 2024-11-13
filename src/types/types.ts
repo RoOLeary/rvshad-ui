@@ -25,9 +25,39 @@ export interface LoginRequest {
     password: string;
 }
 
-// export const initialState: AuthState = {
-//     user: null,
-//     token: null,
-//     isLoading: false,
-//     error: null,
-// };
+export interface Document {
+    id: string;
+    title: string;
+    name: string;
+}
+
+export interface DocumentListResponse {
+    info: {
+      count?: number;
+      pages?: number;
+      next?: string | null;
+      prev?: string | null;
+    };
+    results: Document[];
+  }
+  
+  export interface DocumentListResponseListQueryParams {
+    id?: number;
+    title?: string;
+    name?: string;
+  }
+
+// Define interfaces for the API response
+export interface SavedDocument {
+    id: string;
+    title: string;
+    url: string;
+    type: string;
+    dateAdded: string;
+    // Add other fields as needed
+}
+
+export interface SavedDocumentResponse {
+    documents: SavedDocument[];
+    total: number;
+}

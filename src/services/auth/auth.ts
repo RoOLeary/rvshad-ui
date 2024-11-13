@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { RootState } from '../store'; // Adjust this import path as needed
-import type { User, LoginRequest, AuthResponse } from "../types/types";
+import { RootState } from '../../store'; // Adjust this import path as needed
+import type { User, LoginRequest, AuthResponse } from "../../types/types";
 // Define interfaces for the API
 
 
@@ -8,7 +8,7 @@ import type { User, LoginRequest, AuthResponse } from "../types/types";
 export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({ 
-        baseUrl: 'https://api.findest.com/',
+        baseUrl: 'https://api.findest.com/api/v2/',
         prepareHeaders: (headers, { getState }) => {
             // Get token from state and add to headers if it exists
             const state = getState() as RootState;
@@ -25,7 +25,7 @@ export const authApi = createApi({
         // Login mutation
         login: builder.mutation<AuthResponse, LoginRequest>({
             query: (credentials) => ({
-                url: '/auth/login',
+                url: 'authentication/verify',
                 method: 'POST',
                 body: credentials,
             }),
