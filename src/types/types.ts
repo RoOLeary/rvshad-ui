@@ -27,7 +27,7 @@ export interface LoginRequest {
 }
 
 export interface DocumentData {
-    abstract: string;
+    abstract?: string;
     id: string;
     title: string;
     name: string;
