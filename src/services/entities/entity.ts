@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Entity } from './types'; // Adjust the import path as needed
+import { Entity } from '../../types/types'; // Adjust the import path as needed
 
 export const entityApi = createApi({
   reducerPath: 'entityApi',
@@ -39,12 +39,12 @@ export const entityApi = createApi({
         body: { title },
       }),
     }),
-    deleteEntity: builder.mutation<{ success: boolean }, number>({
+    deleteEntity: builder.mutation<{ success: boolean; id: string }, number>({
       query: (id) => ({
-        url: `/${id}`,
-        method: 'DELETE',
+          url: `/${id}`,
+          method: 'DELETE',
       }),
-    }),
+  }),
   }),
 });
 

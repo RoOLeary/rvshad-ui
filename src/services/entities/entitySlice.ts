@@ -1,26 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { entityApi } from './entity'; // Assuming you have your API slice in a separate file
-
-// Define interfaces for the entity state
-interface Entity {
-    id: string;
-    title: string;
-    type: string;
-    description: string;
-    // Add other entity properties as needed
-}
-
-interface EntityState {
-    entities: Entity[];
-    selectedEntity: Entity | null;
-    isLoading: boolean;
-    error: string | null;
-    filters: {
-        id?: string;
-        title?: string;
-        type?: string;
-    };
-}
+import { Entity, EntityState } from '../../types/types'; 
 
 const initialState: EntityState = {
     entities: [],
@@ -194,7 +174,7 @@ const entitySlice = createSlice({
                 entityApi.endpoints.deleteEntity.matchFulfilled,
                 (state, action) => {
                     state.isLoading = false;
-                    state.entities = state.entities.filter((entity) => entity.id !== action.payload);
+                    state.entities = state.entities.filter((entity) => entity.id !== action.payload.id);
                     state.error = null;
                 }
             )

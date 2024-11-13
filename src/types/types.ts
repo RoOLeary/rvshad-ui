@@ -68,3 +68,37 @@ export interface SavedDocumentResponse {
     documents: SavedDocument[];
     total: number;
 }
+
+// Define interfaces for the entity state
+export interface Entity {
+    id: string;
+    title: string;
+    type: string;
+    description: string;
+    // Add other entity properties as needed
+}
+
+export 
+interface EntityState {
+    entities: Entity[];
+    selectedEntity: Entity | null;
+    isLoading: boolean;
+    error: string | null;
+    filters: {
+        id?: string;
+        title?: string;
+        type?: string;
+    };
+}
+
+export const initialState: EntityState = {
+    entities: [],
+    selectedEntity: null,
+    isLoading: false,
+    error: null,
+    filters: {
+        id: '',
+        title: '',
+        type: '',
+    },
+};
