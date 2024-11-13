@@ -1,9 +1,8 @@
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { Provider as ReduxStoreProvider } from "react-redux";
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-// import CountBtn from "@/components/count-btn";
-// import { Badge } from "@/components/ui/badge";
+// import { HistoryRouter as Router } from 'redux-first-history/rr6';
 import SearchProgress from "@/components/search-progress";
-// import { ContentCarousel } from "@/components/content-carousel";
 import { SortableTable } from '@/components/data-table/sortable-table';
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
@@ -12,8 +11,12 @@ import DataChart from "./components/data-chart";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Document } from './views/Document';
 import { Documents } from './views/Documents';
+import { Studies } from './views/Studies';
 import { Entities } from './views/Entities';
 import { Entity } from './views/Entity';
+import { NotFoundPage } from './views/NotFound';
+import { store } from "./store";
+import { useGetProfileQuery } from "./services/auth"
 
 // Define route components
 const Base = () => (
@@ -30,12 +33,7 @@ const Base = () => (
 
 const Home = () => (
   <div className="flex flex-col gap-y-4 w-full h-screen">
-    {/* <div className="inline-flex items-center gap-x-4">
-      <h3>Findest</h3>
-    </div>
-    <a href="https://docs.findest.com" rel="noopener noreferrer nofollow" target="_blank">
-      <Badge variant="default">Findest Design System/ui</Badge>
-    </a> */}
+ 
     {/* <CountBtn /> */}
     <SortableTable />
     <div className="w-full flex gap-10 p-6">
@@ -55,31 +53,33 @@ const Queries = () => (
   </div>
 );
 
-const NotFoundPage = () => (
-  <div className="flex flex-col items-center justify-center w-full h-screen">
-    <h2>404!!</h2>
-    <p>Nothing found. Check your query and try again.</p>
-  </div>
-);
+
 
 // Main App component with route transitions applied to the entire route structure
 function App() {
   const location = useLocation();
+  const queryVar = useGetProfileQuery();
 
+  console.log('i should explode', queryVar);
   return (
     <SidebarProvider>
       <AppSidebar />
-
       <div className="app-canvas w-full">
         <DashboardHeader />
         <main className="flex flex-col items-center justify-start w-full h-full p-6">
           <SidebarTrigger className="absolute z-10 top-0 left-0" />
-
           <TransitionGroup component={null}>
-            <CSSTransition key={location.key} classNames="fade" timeout={1000} unmountOnExit>
+            <CSSTransition 
+              key={location.key} 
+              classNames="fade" 
+              timeout={1000} 
+              unmountOnExit
+            >
               <Routes location={location}>
                 <Route path="/library/queries" element={<Queries />} />
                 <Route path="/library/overview" element={<Documents />} />
+                <Route path="/library/studies" element={<Studies />} />
+                <Route path="/library/studies/:id" element={<Document />} />
                 <Route path="/library/documents" element={<Documents />} />
                 <Route path="/library/documents/:id" element={<Document />} />
                 <Route path="/library/entities" element={<Entities />} />
@@ -97,12 +97,14 @@ function App() {
   );
 }
 
-// Top-level wrapper to provide Router context
+// Top-level wrapper
 function AppWrapper() {
   return (
-    <Router>
-      <App />
-    </Router>
+    <ReduxStoreProvider store={store}>
+      <Router>
+        <App />
+      </Router>
+    </ReduxStoreProvider>
   );
 }
 
