@@ -8,6 +8,8 @@ import authSlice from "./services/auth/authSlice";
 import { documentApi } from "./services/documents/document";
 import documentSlice from "./services/documents/documentSlice";
 
+import { entityApi } from './services/entities/entity';  // Import the API slice
+
 // Create the history context
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
   history: createBrowserHistory(),
@@ -18,8 +20,10 @@ export const rootReducer = combineReducers({
   router: routerReducer,
   auth: authSlice,
   documents: documentSlice,
+  entities: documentSlice,
   [authApi.reducerPath]: authApi.reducer,
   [documentApi.reducerPath]: documentApi.reducer,
+  [entityApi.reducerPath]: entityApi.reducer
 });
 
 // Define RootState type directly from rootReducer
@@ -34,7 +38,7 @@ export const store = configureStore({
         ignoredActions: ["persist/PERSIST"],
         ignoredPaths: ["router.location.key"],
       },
-    }).concat(authApi.middleware, documentApi.middleware, routerMiddleware),
+    }).concat(authApi.middleware, documentApi.middleware, entityApi.middleware, routerMiddleware),
 });
 
 // Define AppDispatch directly from store
