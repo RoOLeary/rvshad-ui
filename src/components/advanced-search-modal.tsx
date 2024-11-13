@@ -5,7 +5,7 @@ import {
 } from "@/components/ui/dialog";
 import { Calendar } from "lucide-react";
 
-const AdvancedSearchModal = () => {
+const AdvancedSearchModal: React.FC = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -17,14 +17,13 @@ const AdvancedSearchModal = () => {
         </div>
       </DialogTrigger>
       <DialogContent className="max-w-6xl h-[80vh] bg-slate-100">
-        
-          <div className="w-full h-full flex items-start">
-            <iframe 
-              src="https://use-ui.findest.com/?email=ronan.oleary@findest.eu&tenant=Ro3Test"
-              className="w-full h-full border-none "
-              title="Advanced Search"
-            />
-          </div>
+        <div className="w-full h-full flex items-start">
+          <iframe
+            src="https://use-ui.findest.com/?email=ronan.oleary@findest.eu&tenant=Ro3Test"
+            className="w-full h-full border-none"
+            title="Advanced Search"
+          />
+        </div>
       </DialogContent>
     </Dialog>
   );

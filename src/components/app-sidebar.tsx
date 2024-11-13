@@ -101,7 +101,7 @@ export function AppSidebar() {
               <h1 className="font-black text-md ml-2">IGOR<sup>AI</sup>search</h1>
             </SidebarGroupLabel>
             <SidebarGroupContent>
-              
+
               <SidebarMenu className="ml-8 mt-1 space-y-1">
                 <AdvancedSearchModal />
                 {advancedItems.map((item) => (
@@ -116,7 +116,7 @@ export function AppSidebar() {
                     </SidebarMenuItem>
                   </div>
                 ))}
-               
+
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

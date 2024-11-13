@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { createBrowserHistory } from "history";
@@ -14,8 +13,8 @@ const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHisto
   history: createBrowserHistory(),
 });
 
-// Define root reducer type
-const rootReducer = combineReducers({
+// Define and export root reducer explicitly for typing
+export const rootReducer = combineReducers({
   router: routerReducer,
   auth: authSlice,
   documents: documentSlice,
@@ -23,25 +22,22 @@ const rootReducer = combineReducers({
   [documentApi.reducerPath]: documentApi.reducer,
 });
 
+// Define RootState type directly from rootReducer
+export type RootState = ReturnType<typeof rootReducer>;
+
 // Create the store with proper TypeScript types
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        // Ignore these paths in the state
-        ignoredActions: ['persist/PERSIST'],
-        ignoredPaths: ['router.location.key'],
+        ignoredActions: ["persist/PERSIST"],
+        ignoredPaths: ["router.location.key"],
       },
-    }).concat([
-      authApi.middleware,
-      documentApi.middleware,
-      routerMiddleware,
-    ]),
+    }).concat(authApi.middleware, documentApi.middleware, routerMiddleware),
 });
 
-// Infer types from the store
-export type RootState = ReturnType<typeof rootReducer>;
+// Define AppDispatch directly from store
 export type AppDispatch = typeof store.dispatch;
 
 // Setup RTK Query listeners
@@ -51,6 +47,6 @@ setupListeners(store.dispatch);
 export const history = createReduxHistory(store);
 
 // Export type-safe hooks
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

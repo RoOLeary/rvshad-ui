@@ -20,7 +20,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-    user: 'ronan',
+    user: 'Ro',
     token: null,
     isLoading: false,
     error: null,
