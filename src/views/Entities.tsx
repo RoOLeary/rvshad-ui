@@ -54,7 +54,7 @@ export const Entities: React.FC = () => {
 
 
 
-    console.log('entities', entityData); // Logs the full entity data structure
+    // console.log('entities', entityData); 
 
     // Render loading, error, or data states
     return (

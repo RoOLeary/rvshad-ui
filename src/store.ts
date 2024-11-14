@@ -3,12 +3,13 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { createBrowserHistory } from "history";
 import { combineReducers } from "redux";
 import { createReduxHistoryContext } from "redux-first-history";
-import { authApi } from "./services/auth/auth";
+import { authApi } from "../src/services/auth";
 import authSlice from "./services/auth/authSlice";
 import { documentApi } from "./services/documents/document";
 import documentSlice from "./services/documents/documentSlice";
 
 import { entityApi } from './services/entities/entity';  // Import the API slice
+import entitySlice from './services/entities/entitySlice';
 
 // Create the history context
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
@@ -20,7 +21,7 @@ export const rootReducer = combineReducers({
   router: routerReducer,
   auth: authSlice,
   documents: documentSlice,
-  entities: documentSlice,
+  entities: entitySlice,
   [authApi.reducerPath]: authApi.reducer,
   [documentApi.reducerPath]: documentApi.reducer,
   [entityApi.reducerPath]: entityApi.reducer

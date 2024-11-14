@@ -1,3 +1,4 @@
+// import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { currentUser } from '../services/auth/authSlice';
 
@@ -10,20 +11,31 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-import { usePermissionsChecker } from '../hooks/use-permissions-tracker';
+import { useWebSocket } from '../hooks/use-web-socket';
+// import { Permission, usePermissionsChecker } from '../hooks/use-permissions-checker';
 
 interface DashboardHeader {
     className?: string;
 }
 
 export default function DashboardHeader() {
-    const perms = usePermissionsChecker();
+    
     const user = useSelector(currentUser);
 
-    console.log('perms', perms);
-   
+
+    const { isConnected, sendMessage, lastMessage } = useWebSocket('ws://localhost:4000/chat', {
+        reconnect: true,
+        reconnectInterval: 3000,
+        onOpen: () => console.log('Connected to WebSocket'),
+        onMessage: (event) => console.log('New message received:', event.data),
+        onClose: () => console.log('Disconnected from WebSocket'),
+      });
+
+    console.log('from websocket hook', isConnected)
+
     return (
         <header className="flex flex-col gap-6 md:flex-row items-center justify-between bg-gray-150 p-6 w-full bg-gray-300 sticky top-0 z-10">
+            {/* <input type="text" value={name} onChange={(e) => setName(e.target.value)}/> */}
             <div className="control-buttons">
                 <ul className="flex gap-2">
                     <li>

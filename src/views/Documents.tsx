@@ -100,7 +100,7 @@ export const Documents: React.FC = () => {
                 {data && (
                     <div>
                         <div className="space-y-4">
-                            {data.documents.slice(0,9).map((doc) => (
+                            {data.documents.map((doc) => (
                                 <DocumentCard
                                     key={doc.id}
                                     {...doc}

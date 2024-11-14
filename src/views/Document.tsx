@@ -6,8 +6,6 @@ export const Document: React.FC = () => {
     const location = useLocation();
     const document = location.state as DocumentData;
 
-    console.log('document', document);
-
     // Render the full document data if available
     return (
         <div className="flex flex-col w-full h-full max-sm:px-4">
