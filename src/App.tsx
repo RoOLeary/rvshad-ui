@@ -1,14 +1,12 @@
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { Provider as ReduxStoreProvider } from "react-redux";
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-// import { HistoryRouter as Router } from 'redux-first-history/rr6';
 import SearchProgress from "@/components/search-progress";
 import { SortableTable } from '@/components/data-table/sortable-table';
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import DashboardHeader from "./components/dashboard-header";
 import DataChart from "./components/data-chart";
-// import { Skeleton } from "@/components/ui/skeleton";
 import { Base } from './views/Base';
 import { Document } from './views/Document';
 import { Documents } from './views/Documents';
@@ -18,8 +16,6 @@ import { Entities } from './views/Entities';
 import { Entity } from './views/Entity';
 import { NotFoundPage } from './views/NotFound';
 import { store } from "./store";
-// import { useGetProfileQuery } from "./services/auth/auth";
-// import CountBtn from '@/components/count-btn';
 
 const Home = () => (
   <div className="flex flex-col gap-y-4 w-full h-screen">
@@ -41,9 +37,6 @@ const Home = () => (
 function App() {
   const location = useLocation();
 
-
-  console.log(location); 
-  
   return (
     <SidebarProvider>
       <AppSidebar />

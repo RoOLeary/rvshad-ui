@@ -70,13 +70,13 @@ export const Base = () => {
             </div>
     
             <div  className="flex flex-col space-y-3 w-full max-sm:px-4">
-                <h2 className='font-black text-lg items-start'>What's happening at Findest</h2>
+                <h2 className='font-black text-lg items-start'>What's happening at Findest?</h2>
                 <div className="flex flex-col items-start justify-start h-[350px] w-full rounded-xl gap-2">
                 
-                    {[...Array(4)].map((_, index) => (
+                    {[...Array(5)].map((_, index) => (
                         <div key={index} className="flex flex-row items-start w-full max-sm:px-4 bg-green-200 rounded-md p-4">
                             <Link />
-                            <p>An item of text and content</p>
+                            <p className="pl-4">{Math.random().toString(36).substring(2, 33)}</p>
                         </div>
                     ))}
                     </div>
