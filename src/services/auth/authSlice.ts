@@ -1,23 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck abcdefh
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-
-interface AuthResponse {
-    user: {
-        id: string;
-        email: string;
-        name: string;
-    };
-    token: string;
-}
-
-interface AuthState {
-    user: AuthResponse['user'];
-    token: string | null;
-    isLoading: boolean;
-    error: string | null;
-}
+import { AuthResponse, AuthState } from '../types/types';
 
 const initialState: AuthState = {
     user: 'Ro',

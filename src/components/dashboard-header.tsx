@@ -10,15 +10,18 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+import { usePermissionsChecker } from '../hooks/use-permissions-tracker';
+
 interface DashboardHeader {
     className?: string;
 }
 
 export default function DashboardHeader() {
-
+    const perms = usePermissionsChecker();
     const user = useSelector(currentUser);
 
-    console.log('current user:', user);
+    console.log('perms', perms);
+   
     return (
         <header className="flex flex-col gap-6 md:flex-row items-center justify-between bg-gray-150 p-6 w-full bg-gray-300 sticky top-0 z-10">
             <div className="control-buttons">
