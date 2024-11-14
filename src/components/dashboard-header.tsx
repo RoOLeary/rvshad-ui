@@ -2,7 +2,7 @@
 import { useSelector } from 'react-redux';
 import { currentUser } from '../services/auth/authSlice';
 
-import { Clock, Pin, ChartNetwork, Search } from "lucide-react";
+import { Clock, Pin, ChartNetwork, Search, SmilePlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
     Tooltip,
@@ -32,6 +32,7 @@ export default function DashboardHeader() {
       });
 
     console.log('from websocket hook', isConnected)
+    console.log('sendMessage websocket hook', sendMessage)
 
     return (
         <header className="flex flex-col gap-6 md:flex-row items-center justify-between bg-gray-150 p-6 w-full bg-gray-300 sticky top-0 z-10">
@@ -42,7 +43,7 @@ export default function DashboardHeader() {
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <Button title="Recent Activity"><Clock width={18} color="black" /></Button>
+                                    <Button><Clock width={18} color="black" /></Button>
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p>Recent Activity</p>
@@ -54,7 +55,7 @@ export default function DashboardHeader() {
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <Button title="Pinned"><Pin width={18} color="black" /></Button>
+                                    <Button><Pin width={18} color="black" /></Button>
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p>Pinned</p>
@@ -66,7 +67,7 @@ export default function DashboardHeader() {
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <Button title="Network Explorer"><ChartNetwork width={18} color="black" /></Button>
+                                    <Button><ChartNetwork width={18} color="black" /></Button>
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p>Network Explorer</p>
@@ -79,7 +80,7 @@ export default function DashboardHeader() {
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <Button title="No active queries"><Search width={18} color="black" /></Button>
+                                    <Button><Search width={18} color="black" /></Button>
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p>No active queries</p>
@@ -102,15 +103,15 @@ export default function DashboardHeader() {
                 </form>
 
 
-
             </div>
             <div className="flex items-center gap-2">
                 {user ? <div className="flex items-center gap-2">
                         <h3>Welcome {user}</h3>
                         <Button variant="outline" className="text-white">Log Out</Button>
                 </div> : <Button variant="outline" className="text-white">Log In</Button>}  
-                <div className="create-action">
+                <div className="create-action flex items-center gap-2">
                     <Button variant="secondary">Create New</Button>
+                    <Button className="hover:bg-slate-300 text-white"><SmilePlus width={18} color="black" /></Button>
                 </div>
             </div>
         </header>
