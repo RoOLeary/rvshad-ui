@@ -13,19 +13,13 @@ export const activityApi = createApi({
   }),
   tagTypes: ['SavedDocument'],
   endpoints: (builder) => ({
-    getSavedDocuments: builder.query<SavedDocumentResponse, void>({
+    getMyRecentActivity: builder.query<SavedDocumentResponse, void>({
       query: () => ({
-        url: 'mysimplerecent',
-        params: {
-          orderBy: 2,
-          doIncludePatents: true,
-          doIncludeScienceArticles: true,
-          doIncludeWeblinks: true
-        }
+        url: 'mysimplerecent'
       }),
       providesTags: ['SavedDocument'],
     }),
   }),
 });
 
-export const { useGetSavedDocumentsQuery } = activityApi;
+export const { useGetMyRecentActivityQuery } = activityApi;

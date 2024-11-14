@@ -1,44 +1,46 @@
-import { useGetEntitiesQuery } from '../services/entities/entity';
-import { Link, MoreHorizontal } from 'lucide-react';
+import { useGetMyRecentActivityQuery } from '../services/activity/activity';
+import { Link, MoreHorizontal, SquareArrowOutUpRight, ScanEye, Network, List } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
+import { redirect, useNavigate } from 'react-router-dom';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
 
 export const Base = () => {
 
-    const { data: entityData } = useGetEntitiesQuery();
+    const { data: activityData } = useGetMyRecentActivityQuery();
     const navigate = useNavigate();
 
-    const handleNavigateToEntities = (id) => {
-        // Navigate to the document view and pass the document data
-        console.log('nav clicked');
-        navigate(`/library/entities/${id}`, { state: { id } });
+    const handleNavigateToEntities = (type:string, id:string) => {
+        let redirRoute; 
+        if(type == 'Entity'){
+            redirRoute = 'entities'; 
+        } else {
+            redirRoute = 'studies'; 
+        }; 
+        navigate(`/library/${redirRoute}/${id}`, { state: { id } });
     };
 
 
 
-    console.log('data', entityData);
+    console.log('data', activityData);
     return(
         <div className="flex flex-col w-full h-screen max-sm:px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {/* TODO: add dynamic units later */}
     
             <div  className="flex flex-col space-y-3 w-full max-sm:px-4 overflow-y-scroll">
-                <h2 className='font-black text-lg items-start'>Pick up where you left off</h2>
+                <h2 className='font-black text-lg items-start'>Pick up where you left off...</h2>
                 <div className="flex flex-col items-start justify-start h-[350px] w-full rounded-xl gap-2">
-                
-                    {entityData?.entities && entityData?.entities.map((entity, id) => (
-                        <div key={entity.id} className="flex flex-col items-start w-full max-sm:px-4 bg-green-50 rounded-md p-2 cursor-pointer" onClick={() => handleNavigateToEntities(entity.id)}>
-                            <p className="flex gap-2"><Link /> Entity</p>
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                    {activityData && activityData.map((activity:any, idx:string) => (
+                        <div key={idx} className="flex flex-col items-start w-full max-sm:px-4 bg-green-50 rounded-md p-4 cursor-pointer shadow-md" onClick={() => handleNavigateToEntities(activity.type, activity.id)}>
+                            <p className="flex gap-2 text-sm items-center"><Link size={'12px'} /> {activity.type}</p>
                             <div className='flex justify-between w-full items-center'>
-                            <h3 className="font-black">{entity.title}</h3>
+                            <h3 className="font-black">{activity.name}</h3>
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                     <Button variant="rotated" className="h-8 w-8 p-0">
@@ -47,10 +49,10 @@ export const Base = () => {
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                    <DropdownMenuItem>Open Page</DropdownMenuItem>
-                                    <DropdownMenuItem>Open Preview</DropdownMenuItem>
-                                    <DropdownMenuItem>Open in Tree View</DropdownMenuItem>
-                                    <DropdownMenuItem>Open in List View</DropdownMenuItem>
+                                    <DropdownMenuItem><SquareArrowOutUpRight /> Open Page</DropdownMenuItem>
+                                    <DropdownMenuItem><ScanEye /> Open Preview</DropdownMenuItem>
+                                    <DropdownMenuItem><Network /> Open in Tree View</DropdownMenuItem>
+                                    <DropdownMenuItem><List /> Open in List View</DropdownMenuItem>
                                 </DropdownMenuContent>
                                 </DropdownMenu>
                             </div>
