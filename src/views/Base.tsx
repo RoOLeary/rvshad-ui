@@ -1,7 +1,7 @@
 import { useGetMyRecentActivityQuery } from '../services/activity/activity';
 import { Link, MoreHorizontal, SquareArrowOutUpRight, ScanEye, Network, List } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
     DropdownMenu,
     DropdownMenuContent,
