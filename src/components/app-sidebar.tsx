@@ -53,7 +53,7 @@ export function AppSidebar() {
   return (
     <Sidebar className="bg-white">
       <div className="flex mx-auto w-full p-6 items-center justify-center">
-        <a href="/" rel="preload" as="image"><img src={logoUniverse} className="max-w-[130px] items-center justify-center" /></a>
+        <a href="/" rel="preload" as="image"><img src={logoUniverse} alt="Findest logo" className="max-w-[130px] items-center justify-center" /></a>
       </div>
 
       <SidebarContent className="justify-between">
