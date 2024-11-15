@@ -10,7 +10,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-
+import SearchBar from './searchbar';
 // import { useWebSocket } from '../hooks/use-web-socket';
 // import { Permission, usePermissionsChecker } from '../hooks/use-permissions-checker';
 
@@ -91,19 +91,8 @@ export default function DashboardHeader() {
                 </ul>
             </div>
 
-
-            <div className="header-searchform">
-                <form className="relative min-w-[420px]">
-                    <input
-                        type="text"
-                        placeholder="Search the Universe"
-                        className="min-w-[420px] p-2 pl-10 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    />
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                </form>
-
-
-            </div>
+            <SearchBar />
+            
             <div className="flex items-center gap-2">
                 {user ? <div className="flex items-center gap-2">
                         {/* <h3>Welcome {user}</h3> */}

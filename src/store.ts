@@ -12,7 +12,11 @@ import { entityApi } from './services/entities/entity';  // Import the API slice
 import entitySlice from './services/entities/entitySlice';
 
 import { activityApi } from './services/activity/activity';
-import activitySlice from './services/activity/activitySlice'
+import activitySlice from './services/activity/activitySlice';
+
+
+import { searchApi } from './services/search/search';
+import searchSlice from './services/search/searchSlice';
 
 // Create the history context
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
@@ -26,10 +30,12 @@ export const rootReducer = combineReducers({
   documents: documentSlice,
   entities: entitySlice,
   activities: activitySlice,
+  search: searchSlice,
   [authApi.reducerPath]: authApi.reducer,
   [documentApi.reducerPath]: documentApi.reducer,
   [entityApi.reducerPath]: entityApi.reducer,
-  [activityApi.reducerPath]: activityApi.reducer
+  [activityApi.reducerPath]: activityApi.reducer,
+  [searchApi.reducerPath]: searchApi.reducer
 });
 
 // Define RootState type directly from rootReducer
@@ -44,7 +50,7 @@ export const store = configureStore({
         ignoredActions: ["persist/PERSIST"],
         ignoredPaths: ["router.location.key"],
       },
-    }).concat(authApi.middleware, documentApi.middleware, entityApi.middleware, activityApi.middleware, routerMiddleware),
+    }).concat(authApi.middleware, documentApi.middleware, entityApi.middleware, activityApi.middleware, searchApi.middleware, routerMiddleware),
 });
 
 // Define AppDispatch directly from store

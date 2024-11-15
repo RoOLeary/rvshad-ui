@@ -61,10 +61,12 @@ export interface SavedDocument {
     url: string;
     type: string;
     dateAdded: string;
+    entities?: [];
     // Add other fields as needed
 }
 
 export interface SavedDocumentResponse {
+    [x: string]: any;
     documents: SavedDocument[];
     total: number;
 }
