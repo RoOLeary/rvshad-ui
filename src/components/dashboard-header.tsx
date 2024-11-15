@@ -43,7 +43,7 @@ export default function DashboardHeader() {
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <Button name="Recent"><Clock width={18} color="black" /></Button>
+                                    <Button aria-label="Recent"><Clock width={18} color="black" /></Button>
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p>Recent Activity</p>
@@ -55,7 +55,7 @@ export default function DashboardHeader() {
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <Button name="Pinned"><Pin width={18} color="black" /></Button>
+                                    <Button aria-label="Pinned"><Pin width={18} color="black" /></Button>
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p>Pinned</p>
@@ -67,7 +67,7 @@ export default function DashboardHeader() {
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <Button name="Network Explorer"><ChartNetwork width={18} color="black" /></Button>
+                                    <Button aria-label="Network Explorer"><ChartNetwork width={18} color="black" /></Button>
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p>Network Explorer</p>
@@ -80,7 +80,7 @@ export default function DashboardHeader() {
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <Button name="Active queries"><Search width={18} color="black" /></Button>
+                                    <Button aria-label="Active queries"><Search width={18} color="black" /></Button>
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p>No active queries</p>
