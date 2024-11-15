@@ -106,7 +106,7 @@ export default function DashboardHeader() {
             </div>
             <div className="flex items-center gap-2">
                 {user ? <div className="flex items-center gap-2">
-                        <h3>Welcome {user}</h3>
+                        {/* <h3>Welcome {user}</h3> */}
                         <Button variant="outline" className="text-white">Log Out</Button>
                 </div> : <Button variant="outline" className="text-white">Log In</Button>}  
                 <div className="create-action flex items-center gap-2">
