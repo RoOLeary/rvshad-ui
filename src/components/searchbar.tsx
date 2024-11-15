@@ -10,16 +10,18 @@ export const SearchBar = () => {
   // Debounced search function
   const debouncedTriggerSearch = useDebounce((query: string) => {
     if (query.trim()) {
-      searchItems(query); // Trigger the API call
+      const formattedValue = query.replace(/\s+/g, '+'); // Replace spaces with '+'
+      searchItems(formattedValue); // Trigger the API call
     }
   }, 500); // 500ms debounce delay
 
   // Handle input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setSearchQuery(value); // Update the input value
+    setSearchQuery(value); // Update the input value with formatted value
     debouncedTriggerSearch(value); // Trigger the debounced API call
   };
+  
 
   return (
     <div className="header-searchform relative">
