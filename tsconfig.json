@@ -7,7 +7,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": false,
+    "strict": true,
     "useUnknownInCatchVariables": false,
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
@@ -15,8 +15,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "noImplicitAny": false,
     "jsx": "react-jsx",
-    "types": ["node", "jest"],  // Include Jest types here
     "baseUrl": "./src",
     "paths": {
       "@/*": ["*"]

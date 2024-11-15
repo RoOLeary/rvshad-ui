@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useGetEntitiesQuery } from '../services/entities/entity';
 import { Filter, Loader } from "lucide-react";
 import { ListPagination } from "@/components/list-pagination";
+import { Entity } from '../types/types'; // Create a type for document data if needed for TypeScript
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -33,7 +34,8 @@ export const Entities: React.FC = () => {
     // Handle select all documents
     const handleSelectAll = (checked: boolean) => {
         if (checked && entityData) {
-            setSelectedEntities(new Set(entityData.entities.map((entity) => entity.id)));
+          
+            setSelectedEntities(new Set(entityData?.entries?.map((entity:Entity) => entity.id)));
         } else {
             setSelectedEntities(new Set());
         }
@@ -98,14 +100,14 @@ export const Entities: React.FC = () => {
             <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-lg mb-4">
                 <Checkbox
                     id="select-all"
-                    checked={entityData ? selectedEntities.size === entityData?.entities?.length : false}
+                    checked={entityData ? selectedEntities.size === entityData?.entries?.length : false}
                     onCheckedChange={(checked) => handleSelectAll(checked as boolean)}
                 />
                 <label 
                     htmlFor="select-all"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
-                    Select All Documents ({selectedEntities.size} of {entityData?.entities?.length || 0} selected)
+                    Select All Documents ({selectedEntities.size} of {entityData?.entries?.length || 0} selected)
                 </label>
             </div>
                 {/* Render loading, error, or data states */}
@@ -122,9 +124,9 @@ export const Entities: React.FC = () => {
                     </div>
                 )}
 
-                {entityData?.entities && entityData.entities.length > 0 && (
+                {entityData?.entries && entityData.entries.length > 0 && (
                     <div className="p-4">
-                        {entityData.entities.map((entity) => (
+                        {entityData.entries.map((entity:Entity) => (
                             <EntityCard
                                 key={entity.id}
                                 {...entity}

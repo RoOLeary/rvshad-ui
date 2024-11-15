@@ -67,6 +67,7 @@ export interface SavedDocument {
 export interface SavedDocumentResponse {
     documents: SavedDocument[];
     total: number;
+    map?: unknown;
 }
 
 // Define interfaces for the entity state
@@ -75,7 +76,8 @@ export interface Entity {
     title: string;
     type: string;
     description: string;
-    // Add other entity properties as needed
+    entities: Entity[];
+    entries?: unknown
 }
 
 export interface EntityData {
@@ -83,7 +85,7 @@ export interface EntityData {
     title: string;
     type: string;
     description: string;
-    // Add other entity properties as needed
+    entities: Entity[];
 }
 
 export 
