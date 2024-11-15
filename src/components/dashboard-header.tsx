@@ -11,7 +11,7 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-import { useWebSocket } from '../hooks/use-web-socket';
+// import { useWebSocket } from '../hooks/use-web-socket';
 // import { Permission, usePermissionsChecker } from '../hooks/use-permissions-checker';
 
 interface DashboardHeader {
