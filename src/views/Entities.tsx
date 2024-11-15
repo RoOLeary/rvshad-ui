@@ -13,8 +13,6 @@ import {
 import { EntityCard } from '@/components/entity-card';
 import { Checkbox } from "@/components/ui/checkbox";
 
- 
-
 export const Entities: React.FC = () => {
     const [selectedEntities, setSelectedEntities] = useState<Set<string>>(new Set());
     const [hasCachedData, setHasCachedData] = useState(false);

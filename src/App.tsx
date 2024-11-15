@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { Provider as ReduxStoreProvider } from "react-redux";
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import SearchProgress from "@/components/search-progress";
+// import SearchProgress from '@/components/search-progress';
 import { SortableTable } from '@/components/data-table/sortable-table';
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
@@ -26,9 +26,9 @@ const Home = () => (
       <div className="w-1/2">
         <DataChart />
       </div>
-      <div className="w-1/2">
+      {/* <div className="w-1/2">
         <SearchProgress />
-      </div>
+      </div> */}
     </div>
   </div>
 );

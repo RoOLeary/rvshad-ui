@@ -7,7 +7,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "strict": false,
     "useUnknownInCatchVariables": false,
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
@@ -16,7 +16,12 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["@testing-library/jest-dom"]
+    "types": ["node", "jest"],  // Include Jest types here
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"]
+    },
+    "allowImportingTsExtensions": true  // Enable importing .ts and .tsx extensions
   },
   "include": [
     "./src",

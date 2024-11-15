@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Minus, Plus, RotateCcw } from "lucide-react";
 
-const SearchProgress = () => {
+export default function SearchProgress() {
   const [progress, setProgress] = useState(0);
   
   const increment = () => {
@@ -63,5 +63,3 @@ const SearchProgress = () => {
     </Card>
   );
 };
-
-export default SearchProgress;
