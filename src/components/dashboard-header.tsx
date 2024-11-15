@@ -43,7 +43,7 @@ export default function DashboardHeader() {
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <Button><Clock width={18} color="black" /></Button>
+                                    <Button name="Recent"><Clock width={18} color="black" /></Button>
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p>Recent Activity</p>
@@ -55,7 +55,7 @@ export default function DashboardHeader() {
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <Button><Pin width={18} color="black" /></Button>
+                                    <Button name="Pinned"><Pin width={18} color="black" /></Button>
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p>Pinned</p>
@@ -67,7 +67,7 @@ export default function DashboardHeader() {
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <Button><ChartNetwork width={18} color="black" /></Button>
+                                    <Button name="Network Explorer"><ChartNetwork width={18} color="black" /></Button>
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p>Network Explorer</p>
@@ -80,7 +80,7 @@ export default function DashboardHeader() {
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <Button><Search width={18} color="black" /></Button>
+                                    <Button name="Active queries"><Search width={18} color="black" /></Button>
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p>No active queries</p>
@@ -111,7 +111,7 @@ export default function DashboardHeader() {
                 </div> : <Button variant="outline" className="text-white">Log In</Button>}  
                 <div className="create-action flex items-center gap-2">
                     <Button variant="secondary">Create New</Button>
-                    <Button className="hover:bg-slate-300 text-white"><SmilePlus width={18} color="black" /></Button>
+                    <Button name="Happiness" className="hover:bg-slate-300 text-white"><SmilePlus width={18} color="black" /></Button>
                 </div>
             </div>
         </header>
