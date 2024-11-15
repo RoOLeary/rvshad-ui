@@ -52,7 +52,7 @@ export const Base = () => {
                 <h2 className='font-black text-lg items-start'>Pick up where you left off...</h2>
                 <div className="flex flex-col items-start justify-start h-[350px] w-full rounded-xl gap-2 overflow-y-scroll">
                     {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                    {activityData && activityData.map((activity:any, idx:string) => (
+                    {activityData && activityData?.map((activity:any, idx:string) => (
                         <div key={idx} className="flex flex-col items-start w-full max-sm:px-4 bg-green-50 rounded-md p-4 cursor-pointer shadow-md" onClick={() => handleNavigateToEntities(activity.type, activity.id)}>
                             <p className="flex gap-2 text-sm items-center"><Link size={'12px'} /> {activity.type}</p>
                             <div className='flex justify-between w-full items-center'>

@@ -74,7 +74,7 @@ function App() {
 }
 
 // Top-level wrapper
-function AppWrapper() {
+export function AppWrapper() {
   return (
     <ReduxStoreProvider store={store}>
       <BrowserRouter future={{

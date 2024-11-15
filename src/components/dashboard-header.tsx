@@ -11,7 +11,7 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-import { useWebSocket } from '../hooks/use-web-socket';
+// import { useWebSocket } from '../hooks/use-web-socket';
 // import { Permission, usePermissionsChecker } from '../hooks/use-permissions-checker';
 
 interface DashboardHeader {
@@ -106,8 +106,7 @@ export default function DashboardHeader() {
             </div>
             <div className="flex items-center gap-2">
                 {user ? <div className="flex items-center gap-2">
-                        {/* <h3>Welcome {user}</h3> */}
-                        <Button variant="outline" className="text-white">Log Out</Button>
+                  <Button variant="outline" className="text-white">Log Out</Button>
                 </div> : <Button variant="outline" className="text-white">Log In</Button>}  
                 <div className="create-action flex items-center gap-2">
                     <Button variant="secondary">Create New</Button>
