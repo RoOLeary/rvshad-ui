@@ -12,7 +12,7 @@ export enum Permission {
 
 export function usePermissionsChecker(user: User | null, requiredPermissions: Permission[]) {
 
-    console.log('user in hook for perms', user)
+    // console.log('user in hook for perms', user)
 
      const hasPermissions = useMemo(() => { 
         if (!user) return false; 

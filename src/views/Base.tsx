@@ -42,7 +42,7 @@ export const Base = () => {
         return `${hours}:${minutes}`;
     };
 
-    console.log('data', activityData);
+    // console.log('data', activityData);
     return(
         <div className="flex flex-col w-full h-screen max-sm:px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

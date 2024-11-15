@@ -31,8 +31,8 @@ export default function DashboardHeader() {
         onClose: () => console.log('Disconnected from WebSocket'),
       });
 
-    console.log('from websocket hook', isConnected)
-    console.log('sendMessage websocket hook', sendMessage)
+    // console.log('from websocket hook', isConnected)
+    // console.log('sendMessage websocket hook', sendMessage)
 
     return (
         <header className="flex flex-col gap-6 md:flex-row items-center justify-between bg-gray-150 p-6 w-full bg-gray-300 sticky top-0 z-10">
