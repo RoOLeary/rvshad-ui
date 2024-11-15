@@ -86,8 +86,7 @@ export interface EntityData {
     // Add other entity properties as needed
 }
 
-export 
-interface EntityState {
+export interface EntityState {
     entities: Entity[];
     selectedEntity: Entity | null;
     isLoading: boolean;
