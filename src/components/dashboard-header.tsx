@@ -23,13 +23,13 @@ export default function DashboardHeader() {
     const user = useSelector(currentUser);
 
 
-    const { isConnected, sendMessage, lastMessage } = useWebSocket('ws://localhost:4000/chat', {
-        reconnect: true,
-        reconnectInterval: 3000,
-        onOpen: () => console.log('Connected to WebSocket'),
-        onMessage: (event) => console.log('New message received:', event.data),
-        onClose: () => console.log('Disconnected from WebSocket'),
-      });
+    // const { isConnected, sendMessage, lastMessage } = useWebSocket('ws://localhost:4000/chat', {
+    //     reconnect: true,
+    //     reconnectInterval: 3000,
+    //     onOpen: () => console.log('Connected to WebSocket'),
+    //     onMessage: (event) => console.log('New message received:', event.data),
+    //     onClose: () => console.log('Disconnected from WebSocket'),
+    //   });
 
     // console.log('from websocket hook', isConnected)
     // console.log('sendMessage websocket hook', sendMessage)
