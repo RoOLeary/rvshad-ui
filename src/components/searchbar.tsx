@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useCallback } from 'react';
-import { CSSTransition } from 'react-transition-group';
 import { List, MoreHorizontal, Network, ScanEye, Search, SquareArrowOutUpRight, X, Loader } from 'lucide-react';
 import { useSearchItemsMutation } from '../services/search/search';
 import { useDebounce } from '../hooks/use-debounce';
@@ -165,20 +164,18 @@ export const SearchBar = () => {
       {(filteredResults.length > 0 || hasSearched) && (
         <div className="absolute top-full left-0 w-full bg-white shadow-lg z-20 mt-2 border border-gray-300 rounded-md py-4 px-2">
           {/* Filter Tabs */}
-          <div className="flex justify-evenly pb-4 bg-white border-b border-gray-300 gap-2">
+          <div className="flex max-sm:flex-col max-sm:w-full flex-wrap justify-center gap-4 pb-4 bg-white border-b border-gray-300">
             {TABS.map((tab) => (
-              <div key={tab} className="flex flex-col items-center">
-                <button
-                  onClick={() => handleTabChange(tab)}
-                  className={`flex-grow text-center px-4 py-2 rounded-lg ${
-                    selectedTab === tab ? 'bg-black text-white' : 'bg-gray-200'
-                  }`}
-                  style={{ minWidth: '120px' }}
-                  aria-pressed={selectedTab === tab}
-                >
-                  {tab}
-                </button>
-              </div>
+              <button
+                key={tab}
+                onClick={() => handleTabChange(tab)}
+                className={`flex-1 max-w-full px-4 py-2 rounded-lg text-center ${
+                  selectedTab === tab ? 'bg-black text-white' : 'bg-gray-200'
+                } hover:bg-gray-400 hover:text-gray-50 duration-200`}
+                aria-pressed={selectedTab === tab}
+              >
+                {tab}
+              </button>
             ))}
           </div>
 
