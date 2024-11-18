@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useCallback } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { List, MoreHorizontal, Network, ScanEye, Search, SquareArrowOutUpRight, X } from 'lucide-react';
+import { List, MoreHorizontal, Network, ScanEye, Search, SquareArrowOutUpRight, X, Loader } from 'lucide-react';
 import { useSearchItemsMutation } from '../services/search/search';
 import { useDebounce } from '../hooks/use-debounce';
 import {
@@ -9,7 +9,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import { Button } from './ui/button';
 
 const TABS = ['All', 'Entity', 'Document', 'Query', 'Study'];
@@ -165,77 +165,80 @@ export const SearchBar = () => {
       {(filteredResults.length > 0 || hasSearched) && (
         <div className="absolute top-full left-0 w-full bg-white shadow-lg z-20 mt-2 border border-gray-300 rounded-md py-4 px-2">
           {/* Filter Tabs */}
-          <div className="flex space-x-2 justify-center pb-2 bg-white border-b border-gray-300">
+          <div className="flex justify-evenly pb-2 bg-white border-b border-gray-300 gap-2">
             {TABS.map((tab) => (
-              <button
-                key={tab}
-                onClick={() => handleTabChange(tab)}
-                className={`flex-grow text-center px-4 py-2 rounded-lg ${
-                  selectedTab === tab ? 'bg-blue-500 text-white' : 'bg-gray-200'
-                }`}
-                style={{ minWidth: '100px' }}
-                aria-pressed={selectedTab === tab}
-              >
-                {tab}
-              </button>
+              <div key={tab} className="flex flex-col items-center">
+                <button
+                  onClick={() => handleTabChange(tab)}
+                  className={`flex-grow text-center px-4 py-2 rounded-lg ${
+                    selectedTab === tab ? 'bg-blue-500 text-white' : 'bg-gray-200'
+                  }`}
+                  style={{ minWidth: '120px' }}
+                  aria-pressed={selectedTab === tab}
+                >
+                  {tab}
+                </button>
+              </div>
             ))}
           </div>
 
-          {/* Results */}
-          <CSSTransition
-            in={filteredResults.length > 0}
-            timeout={300}
-            classNames="fade"
-            unmountOnExit
-          >
-            <ul
-              className="overflow-y-scroll"
-              style={{ maxHeight: '300px' }}
-              aria-live="polite"
-              aria-busy={isLoading}
-            >
-              {filteredResults.map((entity) => (
-                <li
-                  key={entity.id}
-                  className="p-2 border-b last:border-b-0 hover:bg-gray-100 flex items-center gap-2 justify-between"
-                >
-                  <div>
-                    <span className="block text-sm text-gray-600 font-bold">{entity.type}</span>
-                    <a
-                      href={entity.url}
-                      target={entity.url.startsWith('http') ? '_blank' : '_self'}
-                      rel={entity.url.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="text-blue-500 hover:underline"
-                    >
-                      {entity.name}
-                    </a>
-                  </div>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="rotated" className="h-10 w-10 p-0">
-                        <span className="sr-only">Open menu</span>
-                        <MoreHorizontal />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem><SquareArrowOutUpRight /> Open Page</DropdownMenuItem>
-                        <DropdownMenuItem><ScanEye /> Open Preview</DropdownMenuItem>
-                        <DropdownMenuItem><Network /> Open in Tree View</DropdownMenuItem>
-                        <DropdownMenuItem><List /> Open in List View</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </li>
-              ))}
-            </ul>
-          </CSSTransition>
-        </div>
-      )}
+          {/* Loading Spinner */}
+          {isLoading && (
+            <div className="flex justify-center items-center py-4">
+              <Loader className="animate-spin text-blue-500" size={32} />
+            </div>
+          )}
 
-      {/* No Results Found */}
-      {hasSearched && !isLoading && filteredResults.length === 0 && (
-        <p className="absolute top-full left-0 w-full border border-gray-300 rounded-md bg-white mt-2 shadow-lg z-10 p-4 text-sm text-gray-500">
-          No items found.
-        </p>
+          {/* Results or No Results */}
+          <div className="overflow-y-scroll" style={{ maxHeight: '350px' }}>
+            {filteredResults.length > 0 ? (
+              <ul aria-live="polite" aria-busy={isLoading}>
+                {filteredResults.map((entity) => (
+                  <li
+                    key={entity.id}
+                    className="p-2 border-b last:border-b-0 hover:bg-gray-100 flex items-center gap-2 justify-between"
+                  >
+                    <div>
+                      <span className="block text-sm text-gray-600 font-bold">{entity.type}</span>
+                      <a
+                        href={entity.url}
+                        target={entity.url.startsWith('http') ? '_blank' : '_self'}
+                        rel={entity.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        className="text-blue-500 hover:underline"
+                      >
+                        {entity.name}
+                      </a>
+                    </div>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="rotated" className="h-10 w-10 p-0">
+                          <span className="sr-only">Open menu</span>
+                          <MoreHorizontal />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem>
+                          <SquareArrowOutUpRight /> Open Page
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <ScanEye /> Open Preview
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <Network /> Open in Tree View
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <List /> Open in List View
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="p-4 text-sm text-gray-500">No items found.</p>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );
