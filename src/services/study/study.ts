@@ -19,14 +19,25 @@ export const studyApi = createApi({
         body: study,
       }),
     }),
-    getStudies: builder.query<Study[], void>({
-        query: () => ({
-            url: 'study',
-            params: {
-              orderBy: 2,
-              createdByMe:false
-            }
-        })
+    // getStudies: builder.query<Study[], void>({
+    //     query: () => ({
+    //         url: 'study',
+    //         params: {
+    //           orderBy: 2,
+    //           createdByMe:false
+    //         }
+    //     })
+    // }),
+    getStudies: builder.query<{ studies: Study[]; totalItems: number; totalPages: number; page: number }, { page?: number; limit?: number }>({
+      query: ({ page = 1, limit = 10 }) => ({
+        url: 'study',
+        params: {
+          orderBy: 2,
+          createdByMe: false,
+          page,
+          limit,
+        },
+      }),
     }),
     getStudyById: builder.query<Study, number>({
       query: (id) => `/${id}`,
