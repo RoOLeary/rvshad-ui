@@ -16,6 +16,7 @@ import { Entities } from './views/Entities';
 import { Entity } from './views/Entity';
 import { NotFoundPage } from './views/NotFound';
 import { store } from "./store";
+import { Study } from './views/Study';
 
 const Home = () => (
   <div className="flex flex-col gap-y-4 w-full h-screen">
@@ -55,7 +56,7 @@ function App() {
                 <Route path="/library/queries" element={<Queries />} />
                 <Route path="/library/overview" element={<Documents />} />
                 <Route path="/library/studies" element={<Studies />} />
-                <Route path="/library/studies/:id" element={<Document />} />
+                <Route path="/library/studies/:id" element={<Study />} />
                 <Route path="/library/documents" element={<Documents />} />
                 <Route path="/library/documents/:id" element={<Document />} />
                 <Route path="/library/entities" element={<Entities />} />
