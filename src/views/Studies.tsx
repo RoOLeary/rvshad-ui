@@ -56,7 +56,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { EntityCard } from '@/components/entity-card';
+import { StudyCard } from '@/components/study-card';
 import { Checkbox } from "@/components/ui/checkbox";
 
  
@@ -175,7 +175,7 @@ export const Studies: React.FC = () => {
                 {studyData?.studies && studyData.studies.length > 0 && (
                     <div className="p-4">
                         {studyData.studies.map((study) => (
-                            <EntityCard
+                            <StudyCard
                                 key={study.id}
                                 {...study}
                                 isSelected={selectedStudies.has(study.id)}

@@ -20,7 +20,8 @@ export const documentApi = createApi({
           orderBy: 2,
           doIncludePatents: true,
           doIncludeScienceArticles: true,
-          doIncludeWeblinks: true
+          doIncludeWeblinks: true,
+          createdByMe:false
         }
       }),
       providesTags: ['SavedDocument'],
