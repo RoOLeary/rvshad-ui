@@ -105,7 +105,7 @@ export const SearchBar = () => {
         data[key].map((item: any) => ({
           id: item?.id,
           name: item?.name || 'Unnamed',
-          type: ['ScienceArticle', 'Weblink', 'Technology'].includes(item?.type)
+          type: ['ScienceArticle', 'Weblink', 'Technology', 'Technology Scouting'].includes(item?.type)
             ? 'Document'
             : item?.type || 'Unknown',
           url: item?.url || `/library/${key}/${item?.id}`,
@@ -154,64 +154,65 @@ export const SearchBar = () => {
         </div>
       </form>
 
-      {/* Filter Tabs */}
-      {filteredResults.length > 0 || hasSearched ? (
-        <div className="mt-4 flex space-x-2 justify-center">
-          {TABS.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => handleTabChange(tab)}
-              className={`flex-grow text-center px-4 py-2 rounded-lg ${
-                selectedTab === tab ? 'bg-blue-500 text-white' : 'bg-gray-200'
-              }`}
-              style={{ minWidth: '100px' }}
-              aria-pressed={selectedTab === tab}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-      ) : null}
-
-      {/* Results */}
-      {isError ? (
-        <p className="mt-2 text-sm text-red-500">Failed to fetch results. Please try again.</p>
-      ) : (
-        <CSSTransition
-          in={filteredResults.length > 0}
-          timeout={300}
-          classNames="fade"
-          unmountOnExit
-        >
-          <ul
-            className="absolute top-full left-0 w-full border border-gray-300 rounded-md bg-white mt-2 shadow-lg z-10 overflow-y-scroll"
-            style={{ maxHeight: '300px' }}
-            aria-live="polite"
-            aria-busy={isLoading}
-          >
-            {filteredResults.map((entity) => (
-              <li
-                key={entity.id}
-                className="p-2 border-b last:border-b-0 hover:bg-gray-100"
+      {/* Filter Tabs and Results as Absolute */}
+      {(filteredResults.length > 0 || hasSearched) && (
+        <div className="absolute top-full left-0 w-full bg-white shadow-lg z-20 mt-2 border border-gray-300 rounded-md py-4 px-2">
+          {/* Filter Tabs */}
+          <div className="flex space-x-2 justify-center pb-2 bg-white border-b border-gray-300">
+            {TABS.map((tab) => (
+              <button
+                key={tab}
+                onClick={() => handleTabChange(tab)}
+                className={`flex-grow text-center px-4 py-2 rounded-lg ${
+                  selectedTab === tab ? 'bg-blue-500 text-white' : 'bg-gray-200'
+                }`}
+                style={{ minWidth: '100px' }}
+                aria-pressed={selectedTab === tab}
               >
-                <span className="block text-sm text-gray-600">{entity.type}</span>
-                <a
-                  href={entity.url}
-                  target={entity.url.startsWith('http') ? '_blank' : '_self'}
-                  rel={entity.url.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="text-blue-500 hover:underline"
-                >
-                  {entity.name}
-                </a>
-              </li>
+                {tab}
+              </button>
             ))}
-          </ul>
-        </CSSTransition>
+          </div>
+
+          {/* Results */}
+          <CSSTransition
+            in={filteredResults.length > 0}
+            timeout={300}
+            classNames="fade"
+            unmountOnExit
+          >
+            <ul
+              className="overflow-y-scroll"
+              style={{ maxHeight: '300px' }}
+              aria-live="polite"
+              aria-busy={isLoading}
+            >
+              {filteredResults.map((entity) => (
+                <li
+                  key={entity.id}
+                  className="p-2 border-b last:border-b-0 hover:bg-gray-100"
+                >
+                  <span className="block text-sm text-gray-600 font-bold">{entity.type}</span>
+                  <a
+                    href={entity.url}
+                    target={entity.url.startsWith('http') ? '_blank' : '_self'}
+                    rel={entity.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    className="text-blue-500 hover:underline"
+                  >
+                    {entity.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </CSSTransition>
+        </div>
       )}
 
       {/* No Results Found */}
       {hasSearched && !isLoading && filteredResults.length === 0 && (
-        <p className="mt-2 text-sm text-gray-500 bg-white p-4 rounded-md">No items found.</p>
+        <p className="absolute top-full left-0 w-full border border-gray-300 rounded-md bg-white mt-2 shadow-lg z-10 p-4 text-sm text-gray-500">
+          No items found.
+        </p>
       )}
     </div>
   );
