@@ -27,7 +27,7 @@ export const SearchBar = () => {
   const [selectedTab, setSelectedTab] = useState(TABS[0]); // Default to "All"
   const [hasSearched, setHasSearched] = useState(false);
 
-  const [searchItems, { data, isLoading, isError }] = useSearchItemsMutation();
+  const [searchItems, { data, isLoading }] = useSearchItemsMutation();
 
   const debouncedTriggerSearch = useDebounce(() => {
     if (filters.keyword.trim()) {
@@ -128,7 +128,7 @@ export const SearchBar = () => {
   const filteredResults = filterResults(data);
 
   return (
-    <div className="relative w-1/2 mx-auto">
+    <div className="relative max-sm:w-full w-1/2 mx-auto">
       {/* Search Input */}
       <form className="space-y-4">
         <div>
@@ -141,7 +141,7 @@ export const SearchBar = () => {
               onPaste={handleInputPaste}
               onBlur={handleInputBlur}
               className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Search by keyword"
+              placeholder="Search the Universe"
               aria-label="Search input"
             />
             <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
@@ -165,13 +165,13 @@ export const SearchBar = () => {
       {(filteredResults.length > 0 || hasSearched) && (
         <div className="absolute top-full left-0 w-full bg-white shadow-lg z-20 mt-2 border border-gray-300 rounded-md py-4 px-2">
           {/* Filter Tabs */}
-          <div className="flex justify-evenly pb-2 bg-white border-b border-gray-300 gap-2">
+          <div className="flex justify-evenly pb-4 bg-white border-b border-gray-300 gap-2">
             {TABS.map((tab) => (
               <div key={tab} className="flex flex-col items-center">
                 <button
                   onClick={() => handleTabChange(tab)}
                   className={`flex-grow text-center px-4 py-2 rounded-lg ${
-                    selectedTab === tab ? 'bg-blue-500 text-white' : 'bg-gray-200'
+                    selectedTab === tab ? 'bg-black text-white' : 'bg-gray-200'
                   }`}
                   style={{ minWidth: '120px' }}
                   aria-pressed={selectedTab === tab}
