@@ -112,7 +112,7 @@ export const SearchBar = () => {
         data[key].map((item: any) => ({
           id: item?.id,
           name: item?.name || 'Unnamed',
-          type: ['ScienceArticle', 'Weblink', 'Technology', 'Technology Scouting'].includes(item?.type)
+          type: ['ScienceArticle', 'Weblink', 'Technology', 'Technology Scouting', 'UsPatent'].includes(item?.type)
             ? 'Document'
             : item?.type || 'Unknown',
           url: item?.url || `/library/${key}/${item?.id}`,
