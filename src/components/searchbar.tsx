@@ -1,8 +1,11 @@
-import { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState, useCallback } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { Search, X } from 'lucide-react';
 import { useSearchItemsMutation } from '../services/search/search';
 import { useDebounce } from '../hooks/use-debounce';
+
+const TABS = ['All', 'Entity', 'Document', 'Query', 'Study'];
 
 export const SearchBar = () => {
   const [filters, setFilters] = useState({
@@ -14,24 +17,21 @@ export const SearchBar = () => {
     sources: '',
   });
 
-  const [selectedTab, setSelectedTab] = useState('All'); // Default tab is 'all'
-  const [hasSearched, setHasSearched] = useState(false); // Track if a search was performed
+  const [selectedTab, setSelectedTab] = useState(TABS[0]); // Default to "All"
+  const [hasSearched, setHasSearched] = useState(false);
 
-  const [searchItems, { data, isLoading }] = useSearchItemsMutation();
+  const [searchItems, { data, isLoading, isError }] = useSearchItemsMutation();
 
   const debouncedTriggerSearch = useDebounce(() => {
     if (filters.keyword.trim()) {
       const queryParams = new URLSearchParams();
 
-      if (filters.keyword) queryParams.append('query', filters.keyword);
-      if (filters.type) queryParams.append('type', filters.type);
-      if (filters.category) queryParams.append('category', filters.category);
-      if (filters.tags) queryParams.append('tags', filters.tags);
-      if (filters.authors) queryParams.append('authors', filters.authors);
-      if (filters.sources) queryParams.append('sources', filters.sources);
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value.trim()) queryParams.append(key, value);
+      });
 
       const queryString = queryParams.toString();
-      console.log(`Formatted query string: ${queryString}`);
+      console.log('Triggering search with query:', queryString);
 
       searchItems(queryString)
         .unwrap()
@@ -42,44 +42,41 @@ export const SearchBar = () => {
           console.error('Error fetching search results:', error);
         });
 
-      setHasSearched(true); // Set search flag
+      setHasSearched(true);
     }
   }, 500);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFilters((prev) => {
-      const updatedFilters = { ...prev, [name]: value };
-      console.log(`Filter updated: ${name} = ${value}`);
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const { name, value } = e.target;
+      setFilters((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
       debouncedTriggerSearch();
-      return updatedFilters;
-    });
-  };
+    },
+    [debouncedTriggerSearch]
+  );
 
-  const handleInputPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
-    const pastedText = e.clipboardData.getData('text');
-    setFilters((prev) => {
-      const updatedFilters = { ...prev, keyword: pastedText };
-      console.log(`Pasted text: ${pastedText}`);
+  const handleInputPaste = useCallback(
+    (e: React.ClipboardEvent<HTMLInputElement>) => {
+      const pastedText = e.clipboardData.getData('text');
+      setFilters((prev) => ({
+        ...prev,
+        keyword: pastedText,
+      }));
       debouncedTriggerSearch();
-      return updatedFilters;
-    });
-  };
+    },
+    [debouncedTriggerSearch]
+  );
 
   const handleInputBlur = () => {
     if (!filters.keyword.trim()) {
-      console.log('Resetting search due to empty keyword');
-      setFilters((prev) => ({
-        ...prev,
-        keyword: '',
-      }));
-      searchItems(''); // Reset the search
-      setHasSearched(false); // Reset search flag
+      handleReset();
     }
   };
 
   const handleReset = () => {
-    console.log('Resetting all filters');
     setFilters({
       keyword: '',
       type: '',
@@ -88,8 +85,9 @@ export const SearchBar = () => {
       authors: '',
       sources: '',
     });
-    searchItems(''); // Reset the search
-    setHasSearched(false); // Reset search flag
+    setSelectedTab('All');
+    searchItems('');
+    setHasSearched(false);
   };
 
   const handleTabChange = (tab: string) => {
@@ -98,42 +96,33 @@ export const SearchBar = () => {
 
   const filterResults = (data: any) => {
     if (!data) return [];
+
     console.log('Raw API Response:', data);
-  
+
     const allResults = Object.keys(data)
-      .filter((key) => Array.isArray(data[key]) && data[key].length > 0) // Only non-empty arrays
+      .filter((key) => Array.isArray(data[key]) && data[key].length > 0)
       .flatMap((key) =>
         data[key].map((item: any) => ({
           id: item?.id,
           name: item?.name || 'Unnamed',
-          type: item?.type || 'Unknown',
+          type: ['ScienceArticle', 'Weblink', 'Technology'].includes(item?.type)
+            ? 'Document'
+            : item?.type || 'Unknown',
           url: item?.url || `/library/${key}/${item?.id}`,
         }))
       )
-      .filter((item) => item.id && item.name); // Ensure valid items
-  
-    // Map 'ScienceArticle', 'Weblink', and 'Technology' to 'Document'
-    const resultsWithAdjustedTypes = allResults.map((item) => {
-      if (['ScienceArticle', 'Weblink', 'Technology'].includes(item.type)) {
-        return { ...item, type: 'Document' };
-      }
-      return item;
-    });
-  
-    // Filter results based on the selected tab
-    if (selectedTab === 'All') {
-      return resultsWithAdjustedTypes;
-    }
-  
-    return resultsWithAdjustedTypes.filter((item) => item.type === selectedTab);
+      .filter((item) => item.id && item.name);
+
+    return selectedTab === 'All'
+      ? allResults
+      : allResults.filter((item) => item.type === selectedTab);
   };
-  
-  
 
   const filteredResults = filterResults(data);
 
   return (
     <div className="relative w-1/2 mx-auto">
+      {/* Search Input */}
       <form className="space-y-4">
         <div>
           <div className="relative">
@@ -142,10 +131,11 @@ export const SearchBar = () => {
               name="keyword"
               value={filters.keyword}
               onChange={handleInputChange}
-              onPaste={handleInputPaste} // Handle pasted text
+              onPaste={handleInputPaste}
               onBlur={handleInputBlur}
               className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Search by keyword"
+              aria-label="Search input"
             />
             <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
               <Search size={20} />
@@ -155,6 +145,7 @@ export const SearchBar = () => {
                 type="button"
                 onClick={handleReset}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 focus:outline-none"
+                aria-label="Clear search"
               >
                 <X size={20} />
               </button>
@@ -163,68 +154,65 @@ export const SearchBar = () => {
         </div>
       </form>
 
-      {/* Tabs with Animation */}
-      <CSSTransition
-        in={filteredResults.length > 0 || hasSearched}
-        timeout={300}
-        classNames="fade"
-        unmountOnExit
-      >
-       <div className="mt-4 flex space-x-2 justify-center fade-enter-done">
-          {['All', 'Entity', 'Document', 'Query', 'Study', 'Inbox'].map((tab) => (
+      {/* Filter Tabs */}
+      {filteredResults.length > 0 || hasSearched ? (
+        <div className="mt-4 flex space-x-2 justify-center">
+          {TABS.map((tab) => (
             <button
               key={tab}
               onClick={() => handleTabChange(tab)}
-              className={`flex-grow text-center px-4 py-2 rounded-lg ${selectedTab === tab ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-              style={{ minWidth: '100px' }} // Ensures consistent button width
+              className={`flex-grow text-center px-4 py-2 rounded-lg ${
+                selectedTab === tab ? 'bg-blue-500 text-white' : 'bg-gray-200'
+              }`}
+              style={{ minWidth: '100px' }}
+              aria-pressed={selectedTab === tab}
             >
               {tab}
             </button>
           ))}
         </div>
-      </CSSTransition>
+      ) : null}
 
-      {/* Results with Absolute Positioning */}
-      <CSSTransition
-        in={filteredResults.length > 0}
-        timeout={300}
-        classNames="fade"
-        unmountOnExit
-      >
-        <ul
-          className="absolute top-full left-0 w-full border border-gray-300 rounded-md bg-white mt-2 shadow-lg z-10 overflow-y-scroll"
-          style={{ maxHeight: '300px' }} // Adjust height as needed
+      {/* Results */}
+      {isError ? (
+        <p className="mt-2 text-sm text-red-500">Failed to fetch results. Please try again.</p>
+      ) : (
+        <CSSTransition
+          in={filteredResults.length > 0}
+          timeout={300}
+          classNames="fade"
+          unmountOnExit
         >
-          {filteredResults.map((entity) => (
-            <li
-              key={entity.id}
-              className="p-2 border-b last:border-b-0 hover:bg-gray-100"
-            >
-              <span className="block text-sm text-gray-600">{entity.type}</span>
-              <a
-                href={entity.url}
-                target={entity.url.startsWith('http') ? '_blank' : '_self'} // Open external links in a new tab
-                rel={entity.url.startsWith('http') ? 'noopener noreferrer' : undefined} // Add security attributes for external links
-                className="text-blue-500 hover:underline"
+          <ul
+            className="absolute top-full left-0 w-full border border-gray-300 rounded-md bg-white mt-2 shadow-lg z-10 overflow-y-scroll"
+            style={{ maxHeight: '300px' }}
+            aria-live="polite"
+            aria-busy={isLoading}
+          >
+            {filteredResults.map((entity) => (
+              <li
+                key={entity.id}
+                className="p-2 border-b last:border-b-0 hover:bg-gray-100"
               >
-                {entity.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </CSSTransition>
+                <span className="block text-sm text-gray-600">{entity.type}</span>
+                <a
+                  href={entity.url}
+                  target={entity.url.startsWith('http') ? '_blank' : '_self'}
+                  rel={entity.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  className="text-blue-500 hover:underline"
+                >
+                  {entity.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </CSSTransition>
+      )}
 
-
-
-      {/* No items found */}
-      <CSSTransition
-        in={hasSearched && !isLoading && filteredResults.length === 0}
-        timeout={250}
-        classNames="fade"
-        unmountOnExit
-      >
-        <p className="absolute top-full left-0 w-full border border-gray-300 rounded-md bg-white mt-2 shadow-lg z-10 fade-enter-done p-4">No items found.</p>
-      </CSSTransition>
+      {/* No Results Found */}
+      {hasSearched && !isLoading && filteredResults.length === 0 && (
+        <p className="mt-2 text-sm text-gray-500 bg-white p-4 rounded-md">No items found.</p>
+      )}
     </div>
   );
 };
