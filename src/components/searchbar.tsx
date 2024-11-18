@@ -235,7 +235,9 @@ export const SearchBar = () => {
                 ))}
               </ul>
             ) : (
-              <p className="p-4 text-sm text-gray-500">No items found.</p>
+              filteredResults.length === 0 && hasSearched && !isLoading && (
+                <p className="p-4 text-sm text-gray-500">No items found.</p>
+              )
             )}
           </div>
         </div>
