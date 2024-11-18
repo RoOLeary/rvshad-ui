@@ -1,9 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useCallback } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { Search, X } from 'lucide-react';
+import { List, MoreHorizontal, Network, ScanEye, Search, SquareArrowOutUpRight, X } from 'lucide-react';
 import { useSearchItemsMutation } from '../services/search/search';
 import { useDebounce } from '../hooks/use-debounce';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Button } from './ui/button';
 
 const TABS = ['All', 'Entity', 'Document', 'Query', 'Study'];
 
@@ -190,17 +197,33 @@ export const SearchBar = () => {
               {filteredResults.map((entity) => (
                 <li
                   key={entity.id}
-                  className="p-2 border-b last:border-b-0 hover:bg-gray-100"
+                  className="p-2 border-b last:border-b-0 hover:bg-gray-100 flex items-center gap-2 justify-between"
                 >
-                  <span className="block text-sm text-gray-600 font-bold">{entity.type}</span>
-                  <a
-                    href={entity.url}
-                    target={entity.url.startsWith('http') ? '_blank' : '_self'}
-                    rel={entity.url.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="text-blue-500 hover:underline"
-                  >
-                    {entity.name}
-                  </a>
+                  <div>
+                    <span className="block text-sm text-gray-600 font-bold">{entity.type}</span>
+                    <a
+                      href={entity.url}
+                      target={entity.url.startsWith('http') ? '_blank' : '_self'}
+                      rel={entity.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className="text-blue-500 hover:underline"
+                    >
+                      {entity.name}
+                    </a>
+                  </div>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="rotated" className="h-10 w-10 p-0">
+                        <span className="sr-only">Open menu</span>
+                        <MoreHorizontal />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuItem><SquareArrowOutUpRight /> Open Page</DropdownMenuItem>
+                        <DropdownMenuItem><ScanEye /> Open Preview</DropdownMenuItem>
+                        <DropdownMenuItem><Network /> Open in Tree View</DropdownMenuItem>
+                        <DropdownMenuItem><List /> Open in List View</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </li>
               ))}
             </ul>
