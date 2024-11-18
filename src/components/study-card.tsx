@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -25,6 +25,12 @@ export const StudyCard: React.FC<StudyCardProps> = ({ id, title, type, descripti
         navigate(`/library/studies/${id}`, { state: { id, title, type, description, dateAdded } });
     };
 
+    useEffect(() => {
+      console.log('study card', type)
+    },[])
+
+
+
     return (
       <div className="space-y-4 pb-4">
         <div className="flex items-start space-x-4">
@@ -40,7 +46,7 @@ export const StudyCard: React.FC<StudyCardProps> = ({ id, title, type, descripti
                     <div className="flex flex-col mt-2 text-sm">
                         <div>
                             <span className="font-black text-black">Type: </span>
-                            {type || "Webpage"}
+                            Study
                         </div>
                         <div>
                             <span className="font-black text-black">Added: </span>

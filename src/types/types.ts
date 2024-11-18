@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface AuthResponse {
     user: {
         id: string;
@@ -116,6 +117,7 @@ export const initialState: EntityState = {
 
 
 export interface Study {
+  id: string, 
   type: string,
   customTypeName?: string,
   conclusion: string,
