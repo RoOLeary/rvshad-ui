@@ -218,7 +218,10 @@ export const SearchBar = () => {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem>
-                          <SquareArrowOutUpRight /> Open Page
+                          <SquareArrowOutUpRight /><a href={entity.url}
+                        target={entity.url.startsWith('http') ? '_blank' : '_self'}
+                        rel={entity.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        className="text-blue-500 hover:underline"> Open Page</a>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                           <ScanEye /> Open Preview

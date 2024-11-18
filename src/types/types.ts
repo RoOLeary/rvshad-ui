@@ -111,3 +111,31 @@ export const initialState: EntityState = {
         type: '',
     },
 };
+
+
+
+
+export interface Study {
+  type: string,
+  customTypeName?: string,
+  conclusion: string,
+  status: string,
+  studies: [],
+  entities?: [],
+  dateAdded: Date,
+  images: [],
+  highlights: [],
+  linkedCounts: string
+}
+
+export interface StudyState {
+  studies: Study[];
+  selectedStudy: Study | null;
+  isLoading: boolean;
+  error: string | null;
+  filters: {
+      id?: string;
+      title?: string;
+      type?: string;
+  };
+}
