@@ -1,3 +1,6 @@
+import { useSelector } from 'react-redux';
+import { currentUser } from '@/services/auth/authSlice';
+
 import {
   Dialog,
   DialogContent,
@@ -6,6 +9,9 @@ import {
 import { Calendar } from "lucide-react";
 
 const AdvancedSearchModal: React.FC = () => {
+
+  const user = useSelector(currentUser); 
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -18,6 +24,7 @@ const AdvancedSearchModal: React.FC = () => {
       </DialogTrigger>
       <DialogContent className="max-w-6xl h-[80vh] bg-slate-100">
         <div className="w-full h-full flex items-start">
+          {user ? user : null}
           <iframe
             src="https://use-ui.findest.com/?email=ronan.oleary@findest.eu&tenant=Ro3Test"
             className="w-full h-full border-none"
