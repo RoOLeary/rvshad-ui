@@ -14,7 +14,7 @@ export const Document: React.FC = () => {
 
     console.log('fetched', fetchedDocument?.connectedObjects);
 
-    // console.log(typeof(fetchedDocument?.connectedObjects));
+    // it's because this isn't linked with useNavigate
 
     const renderConnectedObjects = fetchedDocument && Object.entries(fetchedDocument?.connectedObjects).map((o, i) => {
       return <div key={i}><a href={o[1].url}>{o[1]?.name}</a></div>;
