@@ -15,32 +15,47 @@ export const authApi = createApi({
     endpoints: (builder) => ({
         // Login mutation
         login: builder.mutation<AuthResponse, LoginRequest>({
-            query: () => ({
-                url: 'authentication/verify',
-                method: 'GET',
-            })
-        }),
-
-        // Get current user profile
-        getProfile: builder.query<User, void>({
-            query: () => 'authentication/profile',
-            providesTags: ['Auth'],
-        }),
-
-        // Logout mutation
-        logout: builder.mutation<void, void>({
-            query: () => ({
-                url: 'authentication/logout',
-                method: 'GET',
-            }),
-            invalidatesTags: ['Auth'],
-        }),
+          query: (body) => ({
+              url: 'authentication/verify',
+              method: 'POST',
+              body,
+          }),
+          invalidatesTags: ['Auth'],
+      }),
+      getProfile: builder.query<User, void>({
+          query: () => 'authentication/profile',
+          providesTags: ['Auth'],
+      }),
+      logout: builder.mutation<void, void>({
+          query: () => ({
+              url: 'authentication/logout',
+              method: 'GET',
+          }),
+          invalidatesTags: ['Auth'],
+      }),
+      checkIsObjectSharedToUser: builder.query<void, { email: string; objectId: string }>({
+          query: ({ email, objectId }) => ({
+              url: `object/shared/${objectId}`,
+              method: 'POST',
+              body: { email },
+          }),
+      }),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      verifyAuth: builder.mutation<AuthResponse, { sharedToSettings:any }>({
+          query: (body) => ({
+              url: 'authentication/verify',
+              method: 'POST',
+              body,
+          }),
+      }),
     }),
 });
 
 // Export the hooks for all API queries and mutations
 export const {
-    useLoginMutation,
-    useGetProfileQuery,
-    useLogoutMutation,
+  useLoginMutation,
+  useGetProfileQuery,
+  useLogoutMutation,
+  useCheckIsObjectSharedToUserQuery,
+  useVerifyAuthMutation,
 } = authApi;
