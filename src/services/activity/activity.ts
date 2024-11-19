@@ -24,9 +24,7 @@ export const activityApi = createApi({
       }),
       providesTags: ['SavedDocument'],
     }),
-  }),
-
-  
+  }),  
 });
 
 export const { useGetMyRecentActivityQuery } = activityApi;
