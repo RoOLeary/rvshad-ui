@@ -39,6 +39,7 @@ export const entityApi = createApi({
         body: { title },
       }),
     }),
+    
     deleteEntity: builder.mutation<{ success: boolean; id: string }, number>({
       query: (id) => ({
           url: `/${id}`,

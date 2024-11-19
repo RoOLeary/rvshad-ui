@@ -3,21 +3,17 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { createBrowserHistory } from "history";
 import { combineReducers } from "redux";
 import { createReduxHistoryContext } from "redux-first-history";
+// Reducers
 import { authApi } from "../src/services/auth";
 import authSlice from "./services/auth/authSlice";
 import { documentApi } from "./services/documents/document";
 import documentSlice from "./services/documents/documentSlice";
-
 import { entityApi } from './services/entities/entity';  // Import the API slice
 import entitySlice from './services/entities/entitySlice';
-
 import { studyApi } from './services/study/study';
 import studySlice from './services/study/studySlice';
-
 import { activityApi } from './services/activity/activity';
 import activitySlice from './services/activity/activitySlice';
-
-
 import { searchApi } from './services/search/search';
 import searchSlice from './services/search/searchSlice';
 
@@ -55,7 +51,15 @@ export const store = configureStore({
         ignoredActions: ["persist/PERSIST"],
         ignoredPaths: ["router.location.key"],
       },
-    }).concat(authApi.middleware, documentApi.middleware, entityApi.middleware, activityApi.middleware, searchApi.middleware, studyApi.middleware, routerMiddleware),
+    }).concat(
+      authApi.middleware, 
+      documentApi.middleware, 
+      entityApi.middleware, 
+      activityApi.middleware, 
+      searchApi.middleware, 
+      studyApi.middleware, 
+      routerMiddleware
+    ),
 });
 
 // Define AppDispatch directly from store
