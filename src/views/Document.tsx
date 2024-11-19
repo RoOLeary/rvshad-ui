@@ -1,6 +1,8 @@
 import { useParams, useLocation } from 'react-router';
 import { DocumentData } from '../types/types'; // Create a type for document data if needed for TypeScript
 
+
+
 export const Document: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const location = useLocation();

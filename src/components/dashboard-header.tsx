@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
+import { useFeature } from 'use-feature';
 import { useDispatch } from 'react-redux'
-import { Clock, Pin, ChartNetwork, Search, SmilePlus } from "lucide-react";
+import { Clock, Pin, ChartNetwork, Search, SmilePlus, List } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
     Tooltip,
@@ -7,10 +9,19 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import SearchBar from './searchbar';
 import { setCredentials } from '@/services/auth';
 import { currentUser, logout } from '@/services/auth/authSlice';
 import { useSelector } from 'react-redux';
+import { useGetMyRecentActivityQuery } from '@/services/activity/activity';
+
+
 // import { useWebSocket } from '../hooks/use-web-socket';
 // import { Permission, usePermissionsChecker } from '../hooks/use-permissions-checker';
 
@@ -21,7 +32,9 @@ interface DashboardHeader {
 export default function DashboardHeader() {
     const dispatch = useDispatch()
     const user = useSelector(currentUser);
+    const { data: activityData } = useGetMyRecentActivityQuery();
     
+    const powerUserFlag = useFeature('power user only', true);
     // const [user, setUser] = useState('Ro');
     // const { isConnected, sendMessage, lastMessage } = useWebSocket('ws://localhost:4000/chat', {
     //     reconnect: true,
@@ -48,10 +61,18 @@ export default function DashboardHeader() {
       dispatch(logout())
     }
 
+    useEffect(() => {
+      if(user === 'Ro'){
+        console.log('feature flag', powerUserFlag);
+      } else {
+        console.log('Nothing to see here');
+      }
+    },[user])
 
     return (
         <header className="flex flex-col gap-6 md:flex-row items-center justify-between bg-gray-150 p-6 w-full bg-gray-300 sticky top-0 z-10">
             {/* <input type="text" value={name} onChange={(e) => setName(e.target.value)}/> */}
+            
             <div className="control-buttons">
                 <ul className="flex gap-2">
                     <li>
@@ -62,7 +83,21 @@ export default function DashboardHeader() {
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p>Recent Activity</p>
+                                    <DropdownMenu>
+                                      <DropdownMenuTrigger asChild>
+                                          <Button variant="rotated" className="h-8 w-8 p-0 hidden">
+                                          <span className="sr-only">Open menu</span>
+                                        </Button>
+                                      </DropdownMenuTrigger>
+                                      <DropdownMenuContent align="end">
+                                        {activityData && activityData.map((activity:any, idx:string) => (
+                                            <DropdownMenuItem key={idx}>{activity.name}</DropdownMenuItem>
+                                          ))}
+                                          <DropdownMenuItem><List /> Open in List View</DropdownMenuItem>
+                                      </DropdownMenuContent>
+                                  </DropdownMenu>
                                 </TooltipContent>
+                                
                             </Tooltip>
                         </TooltipProvider>
                     </li>

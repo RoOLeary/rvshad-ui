@@ -72,10 +72,10 @@ export const Base = () => {
                                     <DropdownMenuItem><Network /> Open in Tree View</DropdownMenuItem>
                                     <DropdownMenuItem><List /> Open in List View</DropdownMenuItem>
                                 </DropdownMenuContent>
-                                </DropdownMenu>
+                              </DropdownMenu>
                             </div>
                         </div>
-                    ))}
+                      ))}
                     </div>
             
             </div>

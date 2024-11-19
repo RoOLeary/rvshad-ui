@@ -16,6 +16,7 @@ export default ({ mode }) => {
     },
     define: {
       'process.env': env, // Inject environment variables
+      global: {},
     },
   });
 };

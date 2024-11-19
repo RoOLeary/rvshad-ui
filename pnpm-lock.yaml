@@ -110,6 +110,9 @@ importers:
       ts-enum-util:
         specifier: ^4.1.0
         version: 4.1.0
+      use-feature:
+        specifier: ^2.0.0
+        version: 2.0.0(react@18.3.1)
     devDependencies:
       '@eslint/js':
         specifier: ^9.14.0
@@ -2164,6 +2167,12 @@ packages:
       '@types/react':
         optional: true
 
+  use-feature@2.0.0:
+    resolution: {integrity: sha512-tioSVZL6KOwmvJ6cGYSUIrEYIS3TJPFn49ud2TB795f3AZbqdsLMh9UOjffZfZ2NnXbnVYiYHKnyt9kSVIpnjw==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      react: '>=16.0.0'
+
   use-sidecar@1.1.2:
     resolution: {integrity: sha512-epTbsLuzZ7lPClpz2TyryBfztm7m+28DlEv2ZCQ3MDr5ssiwyOwGH/e5F9CkfWjJ1t4clvI58yF822/GUkjjhw==}
     engines: {node: '>=10'}
@@ -4159,6 +4168,10 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       '@types/react': 18.3.12
+
+  use-feature@2.0.0(react@18.3.1):
+    dependencies:
+      react: 18.3.1
 
   use-sidecar@1.1.2(@types/react@18.3.12)(react@18.3.1):
     dependencies:
