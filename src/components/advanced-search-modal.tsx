@@ -24,7 +24,7 @@ const AdvancedSearchModal: React.FC = () => {
       </DialogTrigger>
       <DialogContent className="max-w-6xl h-[80vh] bg-slate-100">
         <div className="w-full h-full flex items-start">
-          {user ? user : null}
+          {user ? `${user} - state in modal` : null}
           <iframe
             src="https://use-ui.findest.com/?email=ronan.oleary@findest.eu&tenant=Ro3Test"
             className="w-full h-full border-none"

@@ -37,7 +37,7 @@ export const SearchBar = () => {
       });
 
       const queryString = queryParams.toString();
-      console.log('Triggering search with query:', queryString);
+      // console.log('Triggering search with query:', queryString);
 
       searchItems(queryString)
         .unwrap()
@@ -103,7 +103,7 @@ export const SearchBar = () => {
   const filterResults = (data: any) => {
     if (!data) return [];
 
-    console.log('Raw API Response:', data);
+    // console.log('Raw API Response:', data);
 
     const allResults = Object.keys(data)
       .filter((key) => Array.isArray(data[key]) && data[key].length > 0)

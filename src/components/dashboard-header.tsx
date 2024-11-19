@@ -8,7 +8,7 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 import SearchBar from './searchbar';
-import { setCredentials, useLoginMutation } from '@/services/auth';
+import { setCredentials } from '@/services/auth';
 import { currentUser, logout } from '@/services/auth/authSlice';
 import { useSelector } from 'react-redux';
 // import { useWebSocket } from '../hooks/use-web-socket';
@@ -21,13 +21,7 @@ interface DashboardHeader {
 export default function DashboardHeader() {
     const dispatch = useDispatch()
     const user = useSelector(currentUser);
-    const [login, {data}] = useLoginMutation();
     
-    console.log('mutation data', data);
-    console.log('mutation connected', login);
-    console.log('mutation logut', logout);
-   
-    console.log('userData', user);
     // const [user, setUser] = useState('Ro');
     // const { isConnected, sendMessage, lastMessage } = useWebSocket('ws://localhost:4000/chat', {
     //     reconnect: true,

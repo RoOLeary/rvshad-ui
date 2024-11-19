@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
-import { currentUser } from '../services/auth/authSlice';
+import { currentUser, setCredentials, logout } from '../services/auth/authSlice';
+import { useDispatch } from 'react-redux'
 import { Calendar, Inbox, Settings, ChevronUp, UserRoundPen, Bot, FileText, BookOpenCheck, Fingerprint } from "lucide-react"
 import AdvancedSearchModal from "./advanced-search-modal";
 import {
@@ -52,9 +53,16 @@ const advancedItems = [
 import logoUniverse from '../assets/universe_logo_white.png';
 
 export function AppSidebar() {
-
+  const dispatch = useDispatch(); 
   const user = useSelector(currentUser); 
+   
+  const handleLogin = () => {
+    dispatch(setCredentials("ronan.oleary@findest.eu"))
+  }
 
+  const handleLogout = () => {
+    dispatch(logout()); 
+  }
 
   return (
     <Sidebar className="bg-white">
@@ -158,7 +166,9 @@ export function AppSidebar() {
                     <span>Settings</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <span>Log out</span>
+                    {user ? <span><a href="#" onClick={handleLogout}>Log out</a></span> : 
+                    <span><a href="#" onClick={handleLogin}>Log In</a></span>
+                    }
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
