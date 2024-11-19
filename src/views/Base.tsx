@@ -13,6 +13,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
+import DataChart from "@/components/data-chart";
 import { useSelector } from 'react-redux';
 import { currentUser } from '@/services/auth';
 export const Base = () => {
@@ -82,7 +83,7 @@ export const Base = () => {
             <div  className="flex flex-col space-y-3 w-full max-sm:px-4">
                 <h2 className='font-black text-lg items-start'>Relations Graph</h2>
                 <div className="flex items-center justify-center  animate-pulse bg-muted h-[350px] w-full rounded-xl">
-                <h3 className="text-white">Panel</h3> 
+                  <DataChart />
                 </div>
             </div>
     
