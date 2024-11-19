@@ -26,7 +26,16 @@ export const documentApi = createApi({
       }),
       providesTags: ['SavedDocument'],
     }),
+
+    getDocumentById: builder.query<SavedDocumentResponse, void>({
+      query: (id) => ({
+        url: `saveddocument/${id}`,
+      }),
+    }),
   }),
 });
 
-export const { useGetSavedDocumentsQuery } = documentApi;
+export const { 
+  useGetSavedDocumentsQuery, 
+  useGetDocumentByIdQuery
+} = documentApi;

@@ -64,8 +64,10 @@ export default function DashboardHeader() {
     useEffect(() => {
       if(user === 'Ro'){
         console.log('feature flag', powerUserFlag);
+      } else if(user === 'Roel'){
+        console.log('feature flag but only for Roel', powerUserFlag);
       } else {
-        console.log('Nothing to see here');
+        console.log('nothing to see here');
       }
     },[user])
 

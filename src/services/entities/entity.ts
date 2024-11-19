@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Entity } from '../../types/types'; // Adjust the import path as needed
+import { Entity, SavedDocumentResponse } from '../../types/types'; // Adjust the import path as needed
 
 export const entityApi = createApi({
   reducerPath: 'entityApi',
@@ -28,8 +28,11 @@ export const entityApi = createApi({
             }
         })
     }),
-    getEntityById: builder.query<Entity, number>({
-      query: (id) => `/${id}`,
+
+    getEntityById: builder.query<SavedDocumentResponse, void>({
+      query: (id) => ({
+        url: `entity/${id}`,
+      }),
     }),
 
     updateEntityTitle: builder.mutation<Entity, { id: number; title: string }>({

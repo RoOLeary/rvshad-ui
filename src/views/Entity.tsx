@@ -5,7 +5,7 @@ import { useParams, useLocation } from 'react-router';
 import { renderProseMirrorContent } from "@/lib/renderProseMirror";
 import { useSelector } from 'react-redux';
 import { currentUser } from '@/services/auth';
-
+import { useGetEntityByIdQuery } from '@/services/entities/entity';
 
 export const Entity: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -15,14 +15,22 @@ export const Entity: React.FC = () => {
     console.log('Entity user:', user);
 
     let parsedDescription: any = null;
-    if (entity?.abstract) {
+    if (entity?.description) {
       try {
-        parsedDescription = JSON.parse(entity.abstract);
+        parsedDescription = JSON.parse(entity.description);
         console.log("Parsed description:", parsedDescription);
       } catch (error) {
         console.error("Failed to parse description:", error);
       }
     }
+
+
+    const { data: fetchedEntity } = useGetEntityByIdQuery(id, {
+      refetchOnMountOrArgChange: false, // Prevents automatic refetching
+    });
+
+
+    console.log('fetched entity', fetchedEntity);
 
     return (
         <div className="flex flex-col w-full h-full max-sm:px-4">
