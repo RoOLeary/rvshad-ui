@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { Provider as ReduxStoreProvider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import SearchProgress from "@/components/search-progress";
 import { SortableTable } from '@/components/data-table/sortable-table';
@@ -15,7 +16,7 @@ import { Studies } from './views/Studies';
 import { Entities } from './views/Entities';
 import { Entity } from './views/Entity';
 import { NotFoundPage } from './views/NotFound';
-import { store } from "./store";
+import { store, persistor } from "./store";
 import { Study } from './views/Study';
 
 const Home = () => (
@@ -78,11 +79,13 @@ function App() {
 function AppWrapper() {
   return (
     <ReduxStoreProvider store={store}>
-      <BrowserRouter future={{
-          v7_startTransition: true,
-        }}>
-        <App />
-      </BrowserRouter>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter future={{
+            v7_startTransition: true,
+          }}>
+          <App />
+        </BrowserRouter>
+      </PersistGate>
     </ReduxStoreProvider>
   );
 }

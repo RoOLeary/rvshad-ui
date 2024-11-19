@@ -14,11 +14,14 @@ import {
 import { StudyCard } from '@/components/study-card';
 import { Checkbox } from "@/components/ui/checkbox";
 
+import { useSelector } from 'react-redux';
+import { currentUser } from '@/services/auth';
+
 export const Studies: React.FC = () => {
     const [selectedStudies, setSelectedStudies] = useState<Set<string>>(new Set());
     const [page, setPage] = useState(1);
     const limit = 10; // Number of studies per page
-  
+    const user = useSelector(currentUser);
     // Use RTK Query hook to fetch entities from API
     const { data: studyData, isLoading, isError, error } = useGetStudiesQuery(
       { page, limit },
@@ -65,7 +68,7 @@ export const Studies: React.FC = () => {
     return (
       <div className="flex flex-col w-full h-full max-sm:px-4">
         <div className="flex w-full justify-between items-center">
-          <h1 className="text-black font-black text-xl">Studies</h1>
+          <h1 className="text-black font-black text-xl">Studies {user ? `- ${user}` : null }</h1>
           <div className="flex">
             <DropdownMenu>
               <DropdownMenuTrigger className="bg-gray p-4 rounded-md flex w-full">

@@ -1,3 +1,5 @@
+import { useSelector } from 'react-redux';
+import { currentUser } from '../services/auth/authSlice';
 import { Calendar, Inbox, Settings, ChevronUp, UserRoundPen, Bot, FileText, BookOpenCheck, Fingerprint } from "lucide-react"
 import AdvancedSearchModal from "./advanced-search-modal";
 import {
@@ -50,6 +52,10 @@ const advancedItems = [
 import logoUniverse from '../assets/universe_logo_white.png';
 
 export function AppSidebar() {
+
+  const user = useSelector(currentUser); 
+
+
   return (
     <Sidebar className="bg-white">
       <div className="flex mx-auto w-full p-6 items-center justify-center">
@@ -138,7 +144,7 @@ export function AppSidebar() {
                   className="w-[--radix-popper-anchor-width]"
                 >
                   <DropdownMenuItem>
-                    <span><a href="/inbox">Inbox</a></span>
+                    <span><a href="/inbox">{user ? `${user}'s` : ''} Inbox</a></span>
                   </DropdownMenuItem>
                   <Separator />
                   <DropdownMenuItem>

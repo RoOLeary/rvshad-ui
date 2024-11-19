@@ -41,6 +41,7 @@
     "recharts": "^2.13.3",
     "redux": "^5.0.1",
     "redux-first-history": "^5.2.0",
+    "redux-persist": "^6.0.0",
     "tailwindcss-animate": "^1.0.7",
     "ts-enum-util": "^4.1.0"
   },

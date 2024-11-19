@@ -1,4 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { createBrowserHistory } from "history";
 import { combineReducers } from "redux";
@@ -22,6 +25,12 @@ const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHisto
   history: createBrowserHistory(),
 });
 
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ['auth']
+};
+
 // Define and export root reducer explicitly for typing
 export const rootReducer = combineReducers({
   router: routerReducer,
@@ -39,12 +48,13 @@ export const rootReducer = combineReducers({
   [studyApi.reducerPath]: studyApi.reducer,
 });
 
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 // Define RootState type directly from rootReducer
 export type RootState = ReturnType<typeof rootReducer>;
 
 // Create the store with proper TypeScript types
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
@@ -68,8 +78,10 @@ export type AppDispatch = typeof store.dispatch;
 // Setup RTK Query listeners
 setupListeners(store.dispatch);
 
+export const persistor = persistStore(store)
 // Create and export history
-export const history = createReduxHistory(store);
+export const history = createReduxHistory(persistor);
+
 
 // Export type-safe hooks
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";

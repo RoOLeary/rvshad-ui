@@ -1,7 +1,4 @@
-// import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { currentUser } from '../services/auth/authSlice';
-
+import { useDispatch } from 'react-redux'
 import { Clock, Pin, ChartNetwork, Search, SmilePlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +8,9 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 import SearchBar from './searchbar';
+import { setCredentials, useLoginMutation } from '@/services/auth';
+import { currentUser, logout } from '@/services/auth/authSlice';
+import { useSelector } from 'react-redux';
 // import { useWebSocket } from '../hooks/use-web-socket';
 // import { Permission, usePermissionsChecker } from '../hooks/use-permissions-checker';
 
@@ -19,10 +19,16 @@ interface DashboardHeader {
 }
 
 export default function DashboardHeader() {
-    
+    const dispatch = useDispatch()
     const user = useSelector(currentUser);
-
-
+    const [login, {data}] = useLoginMutation();
+    
+    console.log('mutation data', data);
+    console.log('mutation connected', login);
+    console.log('mutation logut', logout);
+   
+    console.log('userData', user);
+    // const [user, setUser] = useState('Ro');
     // const { isConnected, sendMessage, lastMessage } = useWebSocket('ws://localhost:4000/chat', {
     //     reconnect: true,
     //     reconnectInterval: 3000,
@@ -33,6 +39,21 @@ export default function DashboardHeader() {
 
     // console.log('from websocket hook', isConnected)
     // console.log('sendMessage websocket hook', sendMessage)
+
+    const handleLogIn = () => {
+      console.log('handle login');
+      const usr = {
+        email: 'ronan.oleary@findest.eu',
+        password: 'p4ssw0rd',
+      }
+      dispatch(setCredentials(usr.email))
+    }
+
+    const handleLogOut = () => {
+      console.log(`log out ${user}`);
+      dispatch(logout())
+    }
+
 
     return (
         <header className="flex flex-col gap-6 md:flex-row items-center justify-between bg-gray-150 p-6 w-full bg-gray-300 sticky top-0 z-10">
@@ -94,10 +115,11 @@ export default function DashboardHeader() {
             <SearchBar />
             
             <div className="flex items-center gap-2">
+              
                 {user ? <div className="flex items-center gap-2">
-                        {/* <h3>Welcome {user}</h3> */}
-                        <Button variant="outline" className="text-white">Log Out</Button>
-                </div> : <Button variant="outline" className="text-white">Log In</Button>}  
+                        <h3>Welcome {user}</h3>
+                        <Button variant="outline" className="text-white" onClick={handleLogOut}>Log Out</Button>
+                </div> : <Button variant="outline" className="text-white" onClick={handleLogIn}>Log In</Button>}  
                 <div className="create-action flex items-center gap-2">
                     <Button variant="secondary">Create New</Button>
                     <Button name="Happiness" className="hover:bg-slate-300 text-white"><SmilePlus width={18} color="black" /></Button>

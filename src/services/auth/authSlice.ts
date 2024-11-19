@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthResponse, AuthState } from '../types/types';
 
 const initialState: AuthState = {
-    user: 'Ro',
+    user: null,
     token: null,
     isLoading: false,
     error: null,
@@ -15,7 +15,7 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         setCredentials: (state, action: PayloadAction<AuthResponse>) => {
-            state.user = action.payload.user;
+            state.user = 'Ro';
             state.token = action.payload.token;
         },
         logout: (state) => {
@@ -26,7 +26,8 @@ const authSlice = createSlice({
 });
 
 export const { setCredentials, logout } = authSlice.actions;
-export const currentUser = (state: {
-    auth: string; user: string | null; 
-}) => state?.auth?.user; 
+export const currentUser = (state: RootState) => state.auth.user
+// export const currentUser = (state: {
+//     auth: string; user: string | null; 
+// }) => state?.auth?.user; 
 export default authSlice.reducer;

@@ -13,12 +13,13 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
-
+import { useSelector } from 'react-redux';
+import { currentUser } from '@/services/auth';
 export const Base = () => {
 
     const { data: activityData } = useGetMyRecentActivityQuery();
     const navigate = useNavigate();
-
+    const user = useSelector(currentUser);
     const handleNavigateToEntities = (type:string, id:string) => {
         let redirRoute; 
         if(type == 'Entity'){
@@ -49,7 +50,7 @@ export const Base = () => {
             {/* TODO: add dynamic units later */}
     
             <div  className="flex flex-col space-y-3 w-full max-sm:px-4 overflow-hidden">
-                <h2 className='font-black text-lg items-start'>Pick up where you left off...</h2>
+                <h2 className='font-black text-lg items-start'>{user} Pick up where you left off...</h2>
                 <div className="flex flex-col items-start justify-start h-[350px] w-full rounded-xl gap-2 overflow-y-scroll">
                     {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                     {activityData && activityData.map((activity:any, idx:string) => (
