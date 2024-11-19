@@ -21,6 +21,7 @@ export const Base = () => {
     const { data: activityData } = useGetMyRecentActivityQuery();
     const navigate = useNavigate();
     const user = useSelector(currentUser);
+
     const handleNavigateToEntities = (type:string, id:string) => {
         let redirRoute; 
         if(type == 'Entity'){

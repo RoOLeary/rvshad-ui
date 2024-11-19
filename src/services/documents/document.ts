@@ -21,7 +21,7 @@ export const documentApi = createApi({
           doIncludePatents: true,
           doIncludeScienceArticles: true,
           doIncludeWeblinks: true,
-          createdByMe:false
+          createdByMe:true
         }
       }),
       providesTags: ['SavedDocument'],

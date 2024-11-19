@@ -15,11 +15,18 @@ export const activityApi = createApi({
   endpoints: (builder) => ({
     getMyRecentActivity: builder.query<SavedDocumentResponse, void>({
       query: () => ({
-        url: 'mysimplerecent'
+        url: 'mysimplerecent',
+        // url: 'my/',
+        params: {
+          orderBy: 2,
+          createdByMe:true
+        }
       }),
       providesTags: ['SavedDocument'],
     }),
   }),
+
+  
 });
 
 export const { useGetMyRecentActivityQuery } = activityApi;

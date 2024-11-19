@@ -16,9 +16,9 @@ export const Document: React.FC = () => {
 
     // console.log(typeof(fetchedDocument?.connectedObjects));
 
-    // const renderConnectedObjects = fetchedDocument && Object.entries(fetchedDocument?.connectedObjects).map((o, i) => {
-    //   return <div>Connected Objects: {o[0].name}</div>
-    // }) 
+    const renderConnectedObjects = fetchedDocument && Object.entries(fetchedDocument?.connectedObjects).map((o, i) => {
+      return <div key={i}>Connected Object: {o[1]?.name}</div>;
+    });
 
     // Render the full document data if available
     return (
@@ -32,8 +32,11 @@ export const Document: React.FC = () => {
                 <br />
                 <h4 className='font-black'>Connected Objects:</h4>
                 
-                <p><a href={fetchedDocument?.connectedObjects[0].url}>{fetchedDocument?.connectedObjects[0].name}</a></p>
-    
+                <p>
+                  <a href={fetchedDocument?.connectedObjects[0].url}>{fetchedDocument?.connectedObjects[0].name}</a>
+                </p>
+
+                {renderConnectedObjects}
             </div>
         </div>
     );
