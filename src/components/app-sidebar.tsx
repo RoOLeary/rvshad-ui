@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { currentUser, setCredentials, logout } from '../services/auth/authSlice';
+import { currentUser, setCredentials, useLogoutMutation, clearAuth } from '@/services/auth/authApi';
 import { useDispatch } from 'react-redux'
 import { Calendar, Inbox, Settings, ChevronUp, UserRoundPen, Bot, FileText, BookOpenCheck, Fingerprint } from "lucide-react"
 import AdvancedSearchModal from "./advanced-search-modal";
@@ -55,14 +55,26 @@ import logoUniverse from '../assets/universe_logo_white.png';
 export function AppSidebar() {
   const dispatch = useDispatch(); 
   const user = useSelector(currentUser); 
+  const [logout] = useLogoutMutation(); 
    
   const handleLogin = () => {
-    dispatch(setCredentials("ronan.oleary@findest.eu"))
+    console.log('handle login');
+    const usr = {
+      email: 'ronan.oleary@findest.eu',
+      password: 'p4ssw0rd',
+    }
+    dispatch(setCredentials(usr))
   }
 
-  const handleLogout = () => {
-    dispatch(logout()); 
-  }
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap(); // Call the logout mutation and handle the promise
+      dispatch(clearAuth()); // Clear the auth state
+      console.log("Logged out successfully");
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
 
   return (
     <Sidebar className="bg-white">

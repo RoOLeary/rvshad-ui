@@ -8,12 +8,20 @@ export interface AuthResponse {
     token: string;
 }
 
+export interface User {
+    id: string;
+    name: string;
+    email: string;
+    // Add other user properties as needed
+  }
+
 export interface AuthState {
-    user: AuthResponse['user'] | null;
+    user: User | null; // `user` should match this structure
     token: string | null;
     isLoading: boolean;
     error: string | null;
 }
+  
 
 export interface User {
     user: string;

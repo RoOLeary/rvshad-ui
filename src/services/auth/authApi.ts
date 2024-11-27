@@ -70,7 +70,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action: PayloadAction<AuthResponse>) => {
-      state.user = action.payload.user;
+      state.user = action.payload.user; // Ensure `user` matches the `User` type
       state.token = action.payload.token;
     },
     clearAuth: (state) => {
@@ -85,6 +85,7 @@ export const { setCredentials, clearAuth } = authSlice.actions;
 
 // Selector to get the current user from the state
 export const currentUser = (state: { auth: AuthState }) => state.auth.user;
+
 
 // Combine the reducers for store configuration
 export const authReducer = {

@@ -101,7 +101,6 @@ export const Documents: React.FC = () => {
                     <div>
                         <div className="space-y-4">
                             {data.documents.map((doc) => {
-                              console.log(doc);
                               return(
                               <DocumentCard
                                     key={doc.id}

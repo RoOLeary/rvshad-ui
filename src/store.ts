@@ -7,8 +7,7 @@ import { createBrowserHistory } from "history";
 import { combineReducers } from "redux";
 import { createReduxHistoryContext } from "redux-first-history";
 // Reducers
-import { authApi } from "../src/services/auth";
-import authSlice from "./services/auth/authSlice";
+import { authApi, authReducer } from "./services/auth/authApi";
 import { documentApi } from "./services/documents/documentApi";
 import { entityApi } from './services/entities/entity';  // Import the API slice
 import entitySlice from './services/entities/entitySlice';
@@ -33,7 +32,7 @@ const persistConfig = {
 // Define and export root reducer explicitly for typing
 export const rootReducer = combineReducers({
   router: routerReducer,
-  auth: authSlice,
+  auth: authReducer.slice,
   entities: entitySlice,
   activities: activitySlice,
   search: searchSlice,
