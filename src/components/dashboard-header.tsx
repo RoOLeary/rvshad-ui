@@ -50,7 +50,7 @@ export default function DashboardHeader() {
     const handleLogIn = () => {
       console.log('handle login');
       const usr = {
-        email: 'ronan.oleary@findest.eu',
+        email: 'generic@email.com',
         password: 'p4ssw0rd',
       }
       dispatch(setCredentials(usr.email))
