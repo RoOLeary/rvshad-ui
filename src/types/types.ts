@@ -72,6 +72,12 @@ export interface SavedDocumentResponse {
     total: number;
 }
 
+export interface ConnectedObject {
+    connectedObject: [],
+    onRemoveConnectionClickAsync: (connectedObjectToRemove: any) => Promise<void>
+}
+
+
 // Define interfaces for the entity state
 export interface Entity {
     id: string;

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { SavedDocumentResponse } from '@/types/types';
+import type { SavedDocumentResponse, ConnectedObject } from '@/types/types';
 
 export const documentApi = createApi({
   reducerPath: 'documentApi',
@@ -32,10 +32,16 @@ export const documentApi = createApi({
         url: `saveddocument/${id}`,
       }),
     }),
+
+    getConnectedObjects: builder.query<ConnectedObject[], { id: string; type: string }>({
+      query: ({ id, type }) => `linking/${id}?objectType[]=${type}`,
+    }),
   }),
 });
 
 export const { 
   useGetSavedDocumentsQuery, 
-  useGetDocumentByIdQuery
+  useGetDocumentByIdQuery,
+  useLazyGetConnectedObjectsQuery,
+  usePrefetch
 } = documentApi;
