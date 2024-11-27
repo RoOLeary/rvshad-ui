@@ -1,6 +1,7 @@
-import { useSelector } from 'react-redux';
-import { currentUser, setCredentials, useLogoutMutation, clearAuth } from '@/services/auth/authApi';
-import { useDispatch } from 'react-redux'
+import { useState } from 'react';
+// import { useSelector } from 'react-redux';
+// import { currentUser, setCredentials, useLogoutMutation, clearAuth } from '@/services/auth/authApi';
+// import { useDispatch } from 'react-redux'
 import { Calendar, Inbox, Settings, ChevronUp, UserRoundPen, Bot, FileText, BookOpenCheck, Fingerprint } from "lucide-react"
 import AdvancedSearchModal from "./advanced-search-modal";
 import {
@@ -53,26 +54,50 @@ const advancedItems = [
 import logoUniverse from '../assets/universe_logo_white.png';
 
 export function AppSidebar() {
-  const dispatch = useDispatch(); 
-  const user = useSelector(currentUser); 
-  const [logout] = useLogoutMutation(); 
+  const [user, setUser] = useState(null);
+  // const dispatch = useDispatch(); 
+  // const user = useSelector(currentUser); 
+  // const [logout] = useLogoutMutation(); 
    
-  const handleLogin = () => {
+  // const handleLogin = () => {
+  //   console.log('handle login');
+  //   const usr = {
+  //     email: 'ronan.oleary@findest.eu',
+  //     password: 'p4ssw0rd',
+  //   }
+  //   dispatch(setCredentials(usr))
+  // }
+
+  // const handleLogout = async () => {
+  //   try {
+  //     await logout().unwrap(); // Call the logout mutation and handle the promise
+  //     dispatch(clearAuth()); // Clear the auth state
+  //     console.log("Logged out successfully");
+  //   } catch (error) {
+  //     console.error("Logout failed", error);
+  //   }
+  // };
+
+  const handleLogin = async () => {
     console.log('handle login');
-    const usr = {
-      email: 'ronan.oleary@findest.eu',
-      password: 'p4ssw0rd',
-    }
-    dispatch(setCredentials(usr))
-  }
+      const usr = { name: 'Ro', email: 'ronan.oleary@findest.eu', password: '@p4ss20rd' };
+      try {
+          setUser(usr);
+          console.log("Logged in successfully");
+      } catch (error) {
+          console.error("Login failed:", error);
+      }
+  };
 
   const handleLogout = async () => {
+    console.log(`log out ${user?.name || 'Guest'}`);
     try {
-      await logout().unwrap(); // Call the logout mutation and handle the promise
-      dispatch(clearAuth()); // Clear the auth state
-      console.log("Logged out successfully");
-    } catch (error) {
-      console.error("Logout failed", error);
+        //   await logout().unwrap();
+        //   dispatch(clearAuth());
+      setUser(null); 
+      console.log('Logged out successfully');
+    } catch (err) {
+      console.error('Failed to log out:', err);
     }
   };
 

@@ -35,7 +35,7 @@ export default function DashboardHeader() {
 
     const handleLogIn = async () => {
         console.log('handle login');
-        const usr = { email: 'ronan.oleary@findest.eu', password: '@p4ss20rd' };
+        const usr = { name: 'Ro', email: 'ronan.oleary@findest.eu', password: '@p4ss20rd' };
         try {
             setUser(usr);
             console.log("Logged in successfully");
@@ -47,8 +47,9 @@ export default function DashboardHeader() {
   const handleLogOut = async () => {
     console.log(`log out ${user?.name || 'Guest'}`);
     try {
-      await logout().unwrap();
-      dispatch(clearAuth());
+        //   await logout().unwrap();
+        //   dispatch(clearAuth());
+      setUser(null); 
       console.log('Logged out successfully');
     } catch (err) {
       console.error('Failed to log out:', err);
