@@ -30,7 +30,7 @@ const typeIcons = {
 export const DocumentCard: React.FC<DocumentCardProps> = ({ id, url, title, type, abstract, dateAdded, isSelected, onSelect, linkedCounts }) => {
     const navigate = useNavigate();
 
-    console.log('linkedCounts:', linkedCounts)
+    // console.log('linkedCounts:', linkedCounts)
     const handleCheckboxChange = (checked: boolean) => {
         onSelect(id, checked);
     };

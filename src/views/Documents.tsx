@@ -108,7 +108,7 @@ export const Documents: React.FC = () => {
                                     {...doc}
                                     isSelected={selectedDocs.has(doc.id)}
                                     onSelect={handleSelectDoc}
-                                    connectedObjects={[]}
+                                    linkedCounts={doc?.linkedCounts}
                                 />)
                               })}
                         </div>
