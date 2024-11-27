@@ -9,8 +9,7 @@ import { createReduxHistoryContext } from "redux-first-history";
 // Reducers
 import { authApi } from "../src/services/auth";
 import authSlice from "./services/auth/authSlice";
-import { documentApi } from "./services/documents/document";
-import documentSlice from "./services/documents/documentSlice";
+import { documentApi } from "./services/documents/documentApi";
 import { entityApi } from './services/entities/entity';  // Import the API slice
 import entitySlice from './services/entities/entitySlice';
 import { studyApi } from './services/study/study';
@@ -35,7 +34,6 @@ const persistConfig = {
 export const rootReducer = combineReducers({
   router: routerReducer,
   auth: authSlice,
-  documents: documentSlice,
   entities: entitySlice,
   activities: activitySlice,
   search: searchSlice,
