@@ -65,7 +65,13 @@ export const Documents: React.FC = () => {
                         </DropdownMenuContent>
                     </DropdownMenu>
                     <div className="hidden md:flex mb-2">
-                        <ListPagination />   
+                        <ListPagination currentPage={0} totalPages={0} onPageChange={function (page: number): void {
+                            throw new Error('Function not implemented.');
+                        } } onNextPage={function (): void {
+                            throw new Error('Function not implemented.');
+                        } } onPreviousPage={function (): void {
+                            throw new Error('Function not implemented.');
+                        } } />   
                     </div>
                 </div>  
             </div>
@@ -112,7 +118,15 @@ export const Documents: React.FC = () => {
                                 />)
                               })}
                         </div>
-                        <ListPagination />
+                        <div className="mt-6">
+                        <ListPagination currentPage={0} totalPages={0} onPageChange={function (page: number): void {
+                            throw new Error('Function not implemented.');
+                        } } onNextPage={function (): void {
+                            throw new Error('Function not implemented.');
+                        } } onPreviousPage={function (): void {
+                            throw new Error('Function not implemented.');
+                        } } />
+                        </div>
                     </div>
                 )}
             </CardContent>

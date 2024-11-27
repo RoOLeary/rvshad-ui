@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from 'react';
 import { useFeature } from 'use-feature';
 import { useDispatch } from 'react-redux'
@@ -69,7 +70,7 @@ export default function DashboardHeader() {
       } else {
         console.log('nothing to see here');
       }
-    },[user])
+    },[powerUserFlag, user])
 
     return (
         <header className="flex flex-col gap-6 md:flex-row items-center justify-between bg-gray-150 p-6 w-full bg-gray-300 sticky top-0 z-10">
