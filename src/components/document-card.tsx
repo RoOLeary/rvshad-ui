@@ -151,7 +151,7 @@ export const DocumentCard: React.FC<DocumentCardProps> = ({
           </div>
         </div>
         <div className="pl-4 pb-4">
-          <ul className="flex flex-row gap-2 mt-4">
+          <ul className="flex flex-row gap-2">
             {Object.entries(linkedCounts)
               .filter(([, value]) => value > 0)
               .map(([key, value], idx) => {
