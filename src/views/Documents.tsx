@@ -100,14 +100,17 @@ export const Documents: React.FC = () => {
                 {data && (
                     <div>
                         <div className="space-y-4">
-                            {data.documents.map((doc) => (
-                                <DocumentCard
+                            {data.documents.map((doc) => {
+                              console.log(doc);
+                              return(
+                              <DocumentCard
                                     key={doc.id}
                                     {...doc}
                                     isSelected={selectedDocs.has(doc.id)}
                                     onSelect={handleSelectDoc}
-                                />
-                            ))}
+                                    connectedObjects={[]}
+                                />)
+                              })}
                         </div>
                         <ListPagination />
                     </div>
