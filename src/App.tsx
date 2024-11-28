@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { Provider as ReduxStoreProvider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -19,28 +20,75 @@ import { NotFoundPage } from './views/NotFound';
 import { store, persistor } from "./store";
 import { Study } from './views/Study';
 
-const Home = () => (
-  <div className="flex flex-col gap-y-4 w-full h-screen">
- 
-    {/* <CountBtn /> */}
-    <SortableTable />
-    <div className="w-full flex gap-10 p-6">
-      <div className="w-1/2">
-        <DataChart />
+import Joyride from 'react-joyride';
+
+
+const steps = [
+  {
+    target: '.my-first-step',
+    content: 'Use this fantastic search input to find stuff. ',
+  },
+  {
+    target: '.my-other-step',
+    content: 'Check this out!! This is the second Feature highlight. ',
+  },
+];
+
+const Home = () => {
+  const [run, setRun] = useState(false);
+
+  const handleClickStart = () => {
+    setRun(true);
+  };
+
+  return (
+    <div>
+      <Joyride
+        run={run}
+        steps={steps}
+        styles={{
+          options: {
+            arrowColor: '#e3ffeb',
+            backgroundColor: '#e3ffeb',
+            overlayColor: 'rgba(79, 26, 0, 0.4)',
+            primaryColor: '#000',
+            textColor: '#004a14',
+            width: 900,
+            zIndex: 1000,
+          },
+        }}
+      />
+      <button onClick={handleClickStart}>Start</button>
+
+      {/* <CountBtn /> */}
+      <div className="my-first-step">
+        <SortableTable />
       </div>
-      <div className="w-1/2">
-        <SearchProgress />
+      <div className="w-full flex gap-10 p-6 my-other-step">
+        <div className="w-1/2">
+          <DataChart />
+        </div>
+        <div className="w-1/2">
+          <SearchProgress />
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 // Main App component with route transitions applied to the entire route structure
 function App() {
   const location = useLocation();
 
+
+  // useEffect(() => {
+  //   console.log('run', run);
+  // },[run])
+
   return (
+    <>
     <SidebarProvider>
+      
       <AppSidebar />
       <div className="app-canvas w-full">
         <DashboardHeader />
@@ -72,6 +120,8 @@ function App() {
         </main>
       </div>
     </SidebarProvider>
+    </>
+
   );
 }
 

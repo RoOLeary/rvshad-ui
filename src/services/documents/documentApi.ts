@@ -31,11 +31,14 @@ const initialState: DocumentState = {
   },
 };
 
+const apiRootUrl = import.meta.env.VITE_REACT_APP_API_BASE_URL;
+
+
 // Combine slice logic with RTK Query
 export const documentApi = createApi({
   reducerPath: 'documentApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://api.findest.com/api/',
+    baseUrl: apiRootUrl,
     prepareHeaders: (headers) => {
       const token = import.meta.env.VITE_ACCESS_TOKEN;
       headers.set('authorization', `Bearer ${token}`);
