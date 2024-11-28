@@ -21,12 +21,13 @@ import { store, persistor } from "./store";
 import { Study } from './views/Study';
 
 import Joyride from 'react-joyride';
+import { run } from 'node:test';
 
 
 const steps = [
   {
     target: '.my-first-step',
-    content: 'Use this fantastic search input to find stuff. ',
+    content: 'Impress your friends with this amazing sortable table!',
   },
   {
     target: '.my-other-step',
@@ -42,7 +43,7 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <Joyride
         run={run}
         steps={steps}
@@ -58,7 +59,7 @@ const Home = () => {
           },
         }}
       />
-      <button onClick={handleClickStart}>Start</button>
+      <button onClick={handleClickStart} className="bg-red-500 text-white p-2 rounded-md">Start</button>
 
       {/* <CountBtn /> */}
       <div className="my-first-step">
