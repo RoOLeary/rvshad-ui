@@ -64,9 +64,9 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="w-full mt-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
+            className="w-1/4 mt-4 py-2 bg-green-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
           >
-            Login
+            NEXT
           </button>
         </form>
       </div>
