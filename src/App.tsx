@@ -6,24 +6,23 @@ import { PersistGate } from "redux-persist/integration/react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import DashboardHeader from "./components/dashboard-header";
-import { store, persistor } from "./store";
-
-import { LoginPage } from "./views/LoginPage"; // Move LoginPage to its own file
-// Lazy-loaded views (TEMP! Will sort this out with some proper Routing )
+import DashboardHeader from "@/components/dashboard-header";
+import { store, persistor } from "@/store";
+import { LoginPage } from "@/views/LoginPage"; // Move LoginPage to its own file
 import { currentUser } from '@/services/auth/authSlice';
 import { useSelector } from 'react-redux';
 
-const Queries = lazy(() => import("./views/Queries"));
-const Documents = lazy(() => import("./views/Documents"));
-const Document = lazy(() => import("./views/Document"));
-const Studies = lazy(() => import("./views/Studies"));
-const Study = lazy(() => import("./views/Study"));
-const Entities = lazy(() => import("./views/Entities"));
-const Entity = lazy(() => import("./views/Entity"));
-const NotFoundPage = lazy(() => import("./views/NotFound"));
-const Dashboard = lazy(() => import("./views/Dashboard"));
-const Inbox = lazy(() => import("./views/Inbox"));
+// Lazy-loaded views (TEMP! Will sort this out with some proper Routing )
+const Queries = lazy(() => import("@/views/Queries"));
+const Documents = lazy(() => import("@/views/Documents"));
+const Document = lazy(() => import("@/views/Document"));
+const Studies = lazy(() => import("@/views/Studies"));
+const Study = lazy(() => import("@/views/Study"));
+const Entities = lazy(() => import("@/views/Entities"));
+const Entity = lazy(() => import("@/views/Entity"));
+const NotFoundPage = lazy(() => import("@/views/NotFound"));
+const Dashboard = lazy(() => import("@/views/Dashboard"));
+const Inbox = lazy(() => import("@/views/Inbox"));
 
 
 // Protected routes
