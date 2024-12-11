@@ -10,8 +10,9 @@ import DashboardHeader from "./components/dashboard-header";
 import { store, persistor } from "./store";
 
 import { LoginPage } from "./views/LoginPage"; // Move LoginPage to its own file
-
 // Lazy-loaded views (TEMP! Will sort this out with some proper Routing )
+import { currentUser } from '@/services/auth/authSlice';
+import { useSelector } from 'react-redux';
 
 const Queries = lazy(() => import("./views/Queries"));
 const Documents = lazy(() => import("./views/Documents"));
@@ -28,7 +29,8 @@ const Inbox = lazy(() => import("./views/Inbox"));
 // Protected routes
 // @ts-expect-error blah
 const ProtectedRoute = ({ children }) => {
-  const isAuthenticated = true; // Replace with auth logic from Redux state
+  const user = useSelector(currentUser); // Get user from Redux
+  const isAuthenticated = !!user; // Check if user exists
   const navigate = useNavigate();
 
   if (!isAuthenticated) {
@@ -42,6 +44,7 @@ const ProtectedRoute = ({ children }) => {
 // Authenticated Layout
 function AuthenticatedLayout() {
   const location = useLocation();
+
 
   return (
     <SidebarProvider>
@@ -63,7 +66,6 @@ function AuthenticatedLayout() {
                   <Route path="/library/documents/:id" element={<Document />} />
                   <Route path="/library/entities" element={<Entities />} />
                   <Route path="/library/entities/:id" element={<Entity />} />
-                  <Route path="/all-components" element={<Dashboard />} />
                   <Route path="/inbox" element={<Inbox />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>

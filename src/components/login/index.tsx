@@ -25,21 +25,23 @@ const Login = () => {
     navigate('/dashboard'); // Adjust the path based on where you want to navigate after login
   };
 
+
+
+
+
+
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-sm p-8 bg-white shadow-lg rounded-lg">
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+    <div className="flex justify-center items-center min-h-screen bg-white">
+      <div className="w-full max-w-sm p-8 bg-[#edf5ff] shadow-lg rounded-lg">
+        <h2 className="text-2xl font-bold text-left mb-6">Login</h2>
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
             <input
               type="email"
               id="email"
               name="email"
-              className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="you@example.com"
+              className="bg-transparent border-none border-b border-[#003171] text-base leading-6 mb-5 outline-none w-full"
+              placeholder="Email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required

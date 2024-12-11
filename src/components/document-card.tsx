@@ -127,7 +127,7 @@ export const DocumentCard: React.FC<DocumentCardProps> = ({
       />
       <Card key={id} className="w-full bg-white text-black">
         <div className="p-4 cursor-pointer" onClick={handleCardClick}>
-          <h3 className="font-black text-lg text-black">{title}</h3>
+          <h3 className="font-black text-lg text-black text-ellipsis overflow-hidden">{title}</h3>
           <div className="flex flex-col mt-2 text-sm">
             <div>
               <span className="font-black text-black">Type: </span>

@@ -1,13 +1,13 @@
 import { useParams } from 'react-router';
 // import { DocumentData } from '../types/types'; // Create a type for document data if needed for TypeScript
-import { useGetDocumentByIdQuery } from '@/services/documents/document';
+import { useGetDocumentByIdQuery } from '@/services/documents/documentApi';
 
 export const Document: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     // const location = useLocation();
     // const document = location.state as DocumentData;
 
-    // @ts-nocheck abd
+    // @ts-expect-error abd
     const { data: fetchedDocument } = useGetDocumentByIdQuery(id, {
       refetchOnMountOrArgChange: false, // Prevents automatic refetching
     });
@@ -17,6 +17,7 @@ export const Document: React.FC = () => {
     // it's because this isn't linked with useNavigate
 
     const renderConnectedObjects = fetchedDocument && Object.entries(fetchedDocument?.connectedObjects).map((o, i) => {
+      // @ts-expect-error ass
       return <div key={i}><a href={o[1].url}>{o[1]?.name}</a></div>;
     });
 

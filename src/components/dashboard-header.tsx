@@ -17,11 +17,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import SearchBar from './searchbar';
-import { setCredentials } from '@/services/auth';
-import { currentUser, logout } from '@/services/auth/authSlice';
+// import { setCredentials } from '@/services/auth';
+import { currentUser } from '@/services/auth/authSlice';
 import { useSelector } from 'react-redux';
 import { useGetMyRecentActivityQuery } from '@/services/activity/activity';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 // import { useWebSocket } from '../hooks/use-web-socket';
 // import { Permission, usePermissionsChecker } from '../hooks/use-permissions-checker';
@@ -31,8 +31,8 @@ interface DashboardHeader {
 }
 
 export default function DashboardHeader() {
-    const dispatch = useDispatch();
-    const navigate = useNavigate(); 
+    // const dispatch = useDispatch();
+    // const navigate = useNavigate(); 
     const user = useSelector(currentUser);
     const { data: activityData } = useGetMyRecentActivityQuery();
     
@@ -49,20 +49,20 @@ export default function DashboardHeader() {
     // console.log('from websocket hook', isConnected)
     // console.log('sendMessage websocket hook', sendMessage)
 
-    const handleLogIn = () => {
-      console.log('handle login');
-      const usr = {
-        email: 'generic@email.com',
-        password: 'p4ssw0rd',
-      }
-      dispatch(setCredentials(usr.email))
-    }
+    // const handleLogIn = () => {
+    //   console.log('handle login');
+    //   const usr = {
+    //     email: 'generic@email.com',
+    //     password: 'p4ssw0rd',
+    //   }
+    //   dispatch(setCredentials(usr.email))
+    // }
 
-    const handleLogOut = () => {
-      console.log(`log out ${user}`);
-      dispatch(logout());
-      navigate('/');
-    }
+    // const handleLogOut = () => {
+    //   console.log(`log out ${user}`);
+    //   dispatch(logout());
+    //   navigate('/');
+    // }
 
     useEffect(() => {
       if(user === 'Ro'){
@@ -150,10 +150,10 @@ export default function DashboardHeader() {
             
             <div className="flex items-center gap-2">
               
-                {user ? <div className="flex items-center gap-2">
-                        <h3>Welcome {user}</h3>
-                        <Button variant="outline" className="text-white" onClick={handleLogOut}>Log Out</Button>
-                </div> : <Button variant="outline" className="text-white" onClick={handleLogIn}>Log In</Button>}  
+                {user ? <div className="flex items-center gap-2 pr-2">
+                        <h3>Welcome back, {user}</h3>
+                    
+                </div> : null}  
                 <div className="create-action flex items-center gap-2">
                     <Button variant="secondary">Create New</Button>
                     <Button name="Happiness" className="hover:bg-slate-300 text-white"><SmilePlus width={18} color="black" /></Button>

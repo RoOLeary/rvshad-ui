@@ -10,6 +10,7 @@ import { createReduxHistoryContext } from "redux-first-history";
 import { authApi } from "../src/services/auth";
 import authSlice from "./services/auth/authSlice";
 import { documentApi } from "./services/documents/documentApi";
+import documentSlice from './services/documents/documentSlice'; // Correct import
 import { entityApi } from './services/entities/entity';  // Import the API slice
 import entitySlice from './services/entities/entitySlice';
 import { studyApi } from './services/study/study';
@@ -38,6 +39,7 @@ export const rootReducer = combineReducers({
   activities: activitySlice,
   search: searchSlice,
   studies: studySlice,
+  documents: documentSlice, // Correct reference
   [authApi.reducerPath]: authApi.reducer,
   [documentApi.reducerPath]: documentApi.reducer,
   [entityApi.reducerPath]: entityApi.reducer,

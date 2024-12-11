@@ -59,7 +59,7 @@ export function AppSidebar() {
   const user = useSelector(currentUser); 
    
   const handleLogin = () => {
-    dispatch(setCredentials("geneic@email.com"))
+    dispatch(setCredentials("generic@email.com"))
   }
 
   const handleLogout = () => {

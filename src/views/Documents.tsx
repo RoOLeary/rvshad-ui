@@ -1,35 +1,29 @@
-import { useState, useEffect } from 'react';
-import { useGetSavedDocumentsQuery } from '../services/documents/document';
+import { useState } from 'react';
+import { useGetSavedDocumentsQuery } from '../services/documents/documentApi';
 import { CardContent } from '@/components/ui/card';
 import { Checkbox } from "@/components/ui/checkbox";
 import { DocumentCard } from '@/components/document-card';
 import { ListPagination } from "@/components/list-pagination";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Loader, Filter } from 'lucide-react';
+import { Loader } from 'lucide-react';
 
 export const Documents: React.FC = () => {
-    const { data, isLoading, isError, error } = useGetSavedDocumentsQuery(undefined, {
-        refetchOnMountOrArgChange: false, // Prevents automatic refetching
-    });
-
     const [selectedDocs, setSelectedDocs] = useState<Set<string>>(new Set());
-    const [hasCachedData, setHasCachedData] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [documentsPerPage, setDocumentsPerPage] = useState(10);
+    const [tempLoading, setTempLoading] = useState(false); // Temporary loading state
+    
+    // React Query fetch
+    const { data, isLoading, isError, error, refetch } = useGetSavedDocumentsQuery(
+        { page: currentPage, limit: documentsPerPage },
+        { refetchOnMountOrArgChange: true }
+    );
 
-    useEffect(() => {
-        // Set hasCachedData to true if data is initially fetched
-        if (data) {
-            setHasCachedData(true);
-        }
-    }, [data]);
+    const totalPages = data ? Math.ceil(data.totalCount / documentsPerPage) : 1;
 
-    // Handle select all documents
+    const handlePageChange = (page: number) => setCurrentPage(page);
+    const handleNextPage = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+    const handlePreviousPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+
     const handleSelectAll = (checked: boolean) => {
         if (checked && data) {
             setSelectedDocs(new Set(data.documents.map((doc) => doc.id)));
@@ -38,7 +32,6 @@ export const Documents: React.FC = () => {
         }
     };
 
-    // Handle individual document selection
     const handleSelectDoc = (id: string, checked: boolean) => {
         const newSelected = new Set(selectedDocs);
         if (checked) {
@@ -49,84 +42,76 @@ export const Documents: React.FC = () => {
         setSelectedDocs(newSelected);
     };
 
+    const handleDocumentsPerPageChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = parseInt(e.target.value, 10);
+        setDocumentsPerPage(value);
+        setCurrentPage(1); // Reset to first page
+
+        // Show the loader for at least 500ms
+        setTempLoading(true);
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        setTempLoading(false);
+
+        refetch(); // Trigger re-fetch
+    };
+
+
     return (
         <div className="flex flex-col w-full h-full max-sm:px-4">
             <div className="flex w-full justify-between items-center">
                 <h1 className="text-black font-black text-xl">Documents</h1>
-                <div className="flex">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger className="bg-slate-50 mb-2 p-4 rounded-md flex w-full"><Filter /> Add Filter</DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                            <DropdownMenuLabel>Doc Type</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>Science</DropdownMenuItem>
-                            <DropdownMenuItem>Patent</DropdownMenuItem>
-                            <DropdownMenuItem>Webpage</DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                    <div className="hidden md:flex mb-2">
-                        <ListPagination currentPage={0} totalPages={0} onPageChange={function (page: number): void {
-                            throw new Error('Function not implemented.');
-                        } } onNextPage={function (): void {
-                            throw new Error('Function not implemented.');
-                        } } onPreviousPage={function (): void {
-                            throw new Error('Function not implemented.');
-                        } } />   
-                    </div>
-                </div>  
+                <div className="w-full sm:w-1/2 md:w-1/4 flex flex-col items-end">
+                    <label htmlFor="documentsPerPage" className="block text-sm font-black text-gray-700 mb-2 text-right">
+                        Documents per Page
+                    </label>
+                    <select
+                        id="documentsPerPage"
+                        value={documentsPerPage}
+                        onChange={handleDocumentsPerPageChange}
+                        className="border p-2 mb-2 rounded w-full sm:w-1/2 md:w-full focus:ring-blue-500 focus:border-blue-500"
+                    >
+                        <option value={25}>25</option>
+                        <option value={20}>20</option>
+                        <option value={15}>15</option>
+                        <option value={10}>10</option>
+                        <option value={5}>5</option>
+                    </select>
+                </div>
             </div>
+
             <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-lg mb-4">
                 <Checkbox
                     id="select-all"
                     checked={data ? selectedDocs.size === data.documents.length : false}
                     onCheckedChange={(checked) => handleSelectAll(checked as boolean)}
                 />
-                <label 
-                    htmlFor="select-all"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                    Select All Documents ({selectedDocs.size} of {data?.documents?.length || 0} selected)
+                <label htmlFor="select-all" className="text-sm font-medium">
+                    Select All ({selectedDocs.size} of {documentsPerPage || 0} total)
                 </label>
             </div>
-
+            {tempLoading ?? <p>LOADING</p>}
             <CardContent>
-                {isError && (
-                    <div className="p-4 bg-red-50 text-red-700 rounded-md">
-                        Error loading documents: {JSON.stringify(error)}
-                    </div>
-                )}
-
-                {isLoading && !hasCachedData && ( // Show spinner only if loading and no cached data is available
-                    <div className="text-center py-8">
-                        <Loader className="animate-spin mx-auto mb-2" />
-                        <p>Loading documents...</p>
-                    </div>
-                )}
-
+                {isError && <div className="text-red-600">Error loading documents: {JSON.stringify(error)}</div>}
+                {isLoading && <Loader className="animate-spin" />}
                 {data && (
                     <div>
-                        <div className="space-y-4">
-                            {data.documents.map((doc) => {
-                      
-                              return(
-                              <DocumentCard
+                        <div className="space-y-4 mb-8">
+                            {data.documents.slice(0, documentsPerPage).map((doc) => (
+                                <DocumentCard
                                     key={doc.id}
                                     {...doc}
                                     isSelected={selectedDocs.has(doc.id)}
                                     onSelect={handleSelectDoc}
-                                    linkedCounts={doc?.linkedCounts}
-                                />)
-                              })}
+                                />
+                            ))}
                         </div>
-                        <div className="mt-6">
-                        <ListPagination currentPage={0} totalPages={0} onPageChange={function (page: number): void {
-                            throw new Error('Function not implemented.');
-                        } } onNextPage={function (): void {
-                            throw new Error('Function not implemented.');
-                        } } onPreviousPage={function (): void {
-                            throw new Error('Function not implemented.');
-                        } } />
-                        </div>
+                        <ListPagination
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={handlePageChange}
+                            onNextPage={handleNextPage}
+                            onPreviousPage={handlePreviousPage}
+                        />
                     </div>
                 )}
             </CardContent>

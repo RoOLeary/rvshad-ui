@@ -57,6 +57,7 @@ export interface DocumentListResponse {
 
 // Define interfaces for the API response
 export interface SavedDocument {
+    linkedCounts: LinkedCounts;
     id: string;
     title: string;
     url: string;

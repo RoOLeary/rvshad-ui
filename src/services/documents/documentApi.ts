@@ -1,8 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { SavedDocumentResponse, ConnectedObject } from '@/types/types';
 
-// Define interfaces for document state
 interface Document {
   id: string;
   url: string;
@@ -11,34 +9,10 @@ interface Document {
   abstract: string;
 }
 
-interface DocumentState {
-  documents: Document[];
-  selectedDocument: Document | null;
-  filters: {
-    id?: string;
-    name?: string;
-    title?: string;
-  };
-}
-
-const initialState: DocumentState = {
-  documents: [],
-  selectedDocument: null,
-  filters: {
-    id: '',
-    name: '',
-    title: '',
-  },
-};
-
-const apiRootUrl = import.meta.env.VITE_REACT_APP_API_BASE_URL;
-
-
-// Combine slice logic with RTK Query
 export const documentApi = createApi({
   reducerPath: 'documentApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: apiRootUrl,
+    baseUrl: import.meta.env.VITE_REACT_APP_API_BASE_URL,
     prepareHeaders: (headers) => {
       const token = import.meta.env.VITE_ACCESS_TOKEN;
       headers.set('authorization', `Bearer ${token}`);
@@ -47,17 +21,22 @@ export const documentApi = createApi({
   }),
   tagTypes: ['SavedDocument'],
   endpoints: (builder) => ({
-    getSavedDocuments: builder.query<SavedDocumentResponse, void>({
-      query: () => ({
-        url: 'saveddocument',
-        params: {
-          orderBy: 2,
-          doIncludePatents: true,
-          doIncludeScienceArticles: true,
-          doIncludeWeblinks: true,
-          createdByMe: true,
-        },
-      }),
+    getSavedDocuments: builder.query<SavedDocumentResponse, { page: number; limit: number }>({
+      query: ({ page, limit }) => {
+        console.log('Fetching documents:', { page, limit });
+        return {
+          url: 'saveddocument',
+          params: {
+            orderBy: 2,
+            doIncludePatents: true,
+            doIncludeScienceArticles: true,
+            doIncludeWeblinks: true,
+            createdByMe: true,
+            page, // Pagination
+            limit, // Number of documents per page
+          },
+        };
+      },
       providesTags: ['SavedDocument'],
     }),
 
@@ -89,45 +68,11 @@ export const documentApi = createApi({
   }),
 });
 
-// Add slice reducers for local state management
-const documentSlice = createSlice({
-  name: 'document',
-  initialState,
-  reducers: {
-    // Set selected document
-    setSelectedDocument: (state, action: PayloadAction<Document | null>) => {
-      state.selectedDocument = action.payload;
-    },
-
-    // Update filters
-    setFilters: (state, action: PayloadAction<DocumentState['filters']>) => {
-      state.filters = {
-        ...state.filters,
-        ...action.payload,
-      };
-    },
-
-    // Clear filters
-    clearFilters: (state) => {
-      state.filters = initialState.filters;
-    },
-  },
-});
-
-export const { setSelectedDocument, setFilters, clearFilters } = documentSlice.actions;
-
-// Combine RTK Query and slice reducer for the store
-export const documentReducer = {
-  api: documentApi.reducer,
-  slice: documentSlice.reducer,
-};
-
-// Auto-generated RTK Query hooks
 export const {
   useGetSavedDocumentsQuery,
   useGetDocumentByIdQuery,
   useLazyGetConnectedObjectsQuery,
   useAddDocumentMutation,
   useDeleteDocumentMutation,
-  usePrefetch
+  usePrefetch,
 } = documentApi;

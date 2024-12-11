@@ -1,6 +1,3 @@
-import { useSelector } from 'react-redux';
-import { currentUser } from '@/services/auth/authSlice';
-
 import {
   Dialog,
   DialogContent,
@@ -9,8 +6,6 @@ import {
 import { Calendar } from "lucide-react";
 
 const AdvancedSearchModal: React.FC = () => {
-
-  const user = useSelector(currentUser); 
 
   return (
     <Dialog>
