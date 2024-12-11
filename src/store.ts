@@ -7,7 +7,7 @@ import { combineReducers } from "redux";
 import { createReduxHistoryContext } from "redux-first-history";
 
 // Import feature reducers and APIs
-import { authApi } from "../src/services/auth";
+import { authApi } from "../src/services/auth/authApi";
 import authSlice from "./services/auth/authSlice";
 import { documentApi } from "./services/documents/documentApi";
 import documentSlice from "./services/documents/documentSlice";

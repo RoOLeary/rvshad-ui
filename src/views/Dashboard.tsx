@@ -15,7 +15,7 @@ import {
   } from "@/components/ui/dropdown-menu"
 import DataChart from "@/components/data-chart";
 import { useSelector } from 'react-redux';
-import { currentUser } from '@/services/auth';
+import { currentUser } from '@/services/auth/authSlice';
 export const Dashboard = () => {
 
     const { data: activityData } = useGetMyRecentActivityQuery();

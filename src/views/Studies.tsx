@@ -15,7 +15,7 @@ import { StudyCard } from '@/components/study-card';
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { useSelector } from 'react-redux';
-import { currentUser } from '@/services/auth';
+import { currentUser } from '@/services/auth/authSlice';
 
 export const Studies: React.FC = () => {
     const [selectedStudies, setSelectedStudies] = useState<Set<string>>(new Set());
