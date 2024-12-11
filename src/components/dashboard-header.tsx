@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from 'react';
 import { useFeature } from 'use-feature';
-import { useDispatch } from 'react-redux'
 import { Clock, Pin, ChartNetwork, Search, SmilePlus, List } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {

@@ -9,7 +9,7 @@ import { Loader } from 'lucide-react';
 export const Documents: React.FC = () => {
     const [selectedDocs, setSelectedDocs] = useState<Set<string>>(new Set());
     const [currentPage, setCurrentPage] = useState(1);
-    const [documentsPerPage, setDocumentsPerPage] = useState(10);
+    const [documentsPerPage, setDocumentsPerPage] = useState(12);
     const [tempLoading, setTempLoading] = useState(false); // Temporary loading state
     
     // React Query fetch
