@@ -5,7 +5,7 @@ import { useParams, useLocation } from 'react-router';
 import { renderProseMirrorContent } from "@/lib/renderProseMirror";
 import { useSelector } from 'react-redux';
 import { currentUser } from '@/services/auth';
-import { useGetEntityByIdQuery } from '@/services/entities/entity';
+import { useGetEntityByIdQuery } from '@/services/entities/entityApi';
 
 export const Entity: React.FC = () => {
     const { id } = useParams<{ id: string }>();

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
-import { useGetEntitiesQuery } from '../services/entities/entity';
+import { useGetEntitiesQuery } from '../services/entities/entityApi';
 import { Filter, Loader } from "lucide-react";
 import { ListPagination } from "@/components/list-pagination";
 import {
