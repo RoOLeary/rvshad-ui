@@ -1,28 +1,8 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { AuthResponse, AuthState, LoginRequest, User } from '../../types/types';
+import { api } from '../api'; // Import the centralized base API
+import type { User, LoginRequest, AuthResponse } from "../../types/types";
 
-const initialState: AuthState = {
-  user: null,
-  token: null,
-  isLoading: false,
-  error: null,
-};
-
-// Define the API
-export const authApi = createApi({
-  reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://api.findest.com/api/v2/',
-    prepareHeaders: (headers) => {
-      const token = import.meta.env.VITE_ACCESS_TOKEN;
-      headers.set('authorization', `Bearer ${token}`);
-      return headers;
-    },
-  }),
-  tagTypes: ['Auth'],
+export const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    // Login mutation
     login: builder.mutation<AuthResponse, LoginRequest>({
       query: (body) => ({
         url: 'authentication/verify',
@@ -64,35 +44,7 @@ export const authApi = createApi({
   }),
 });
 
-// Define the slice
-const authSlice = createSlice({
-  name: 'auth',
-  initialState,
-  reducers: {
-    setCredentials: (state, action: PayloadAction<AuthResponse>) => {
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-    },
-    clearAuth: (state) => {
-      state.user = null;
-      state.token = null;
-    },
-  },
-});
-
-// Export actions from the slice
-export const { setCredentials, clearAuth } = authSlice.actions;
-
-// Selector to get the current user from the state
-export const currentUser = (state: { auth: AuthState }) => state.auth.user;
-
-// Combine the reducers for store configuration
-export const authReducer = {
-  api: authApi.reducer,
-  slice: authSlice.reducer,
-};
-
-// Export RTK Query hooks
+// Export RTK Query hooks for use in components
 export const {
   useLoginMutation,
   useGetProfileQuery,

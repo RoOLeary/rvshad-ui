@@ -1,37 +1,38 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { createBrowserHistory } from "history";
 import { combineReducers } from "redux";
 import { createReduxHistoryContext } from "redux-first-history";
-// Reducers
+
+// Import feature reducers and APIs
 import { authApi } from "../src/services/auth";
 import authSlice from "./services/auth/authSlice";
 import { documentApi } from "./services/documents/documentApi";
-import documentSlice from './services/documents/documentSlice'; // Correct import
-import { entityApi } from './services/entities/entity';  // Import the API slice
-import entitySlice from './services/entities/entitySlice';
-import { studyApi } from './services/study/study';
-import studySlice from './services/study/studySlice';
-import { activityApi } from './services/activity/activity';
-import activitySlice from './services/activity/activitySlice';
-import { searchApi } from './services/search/search';
-import searchSlice from './services/search/searchSlice';
+import documentSlice from "./services/documents/documentSlice";
+import { entityApi } from "./services/entities/entityApi";
+import entitySlice from "./services/entities/entitySlice";
+import { studyApi } from "./services/study/study";
+import studySlice from "./services/study/studySlice";
+import { activityApi } from "./services/activity/activity";
+import activitySlice from "./services/activity/activitySlice";
+import { searchApi } from "./services/search/search";
+import searchSlice from "./services/search/searchSlice";
 
 // Create the history context
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
   history: createBrowserHistory(),
 });
 
+// Persist configuration
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ['auth']
+  whitelist: ["auth"], // Persist only specific slices
 };
 
-// Define and export root reducer explicitly for typing
+// Combine reducers
 export const rootReducer = combineReducers({
   router: routerReducer,
   auth: authSlice,
@@ -39,7 +40,7 @@ export const rootReducer = combineReducers({
   activities: activitySlice,
   search: searchSlice,
   studies: studySlice,
-  documents: documentSlice, // Correct reference
+  documents: documentSlice,
   [authApi.reducerPath]: authApi.reducer,
   [documentApi.reducerPath]: documentApi.reducer,
   [entityApi.reducerPath]: entityApi.reducer,
@@ -48,11 +49,10 @@ export const rootReducer = combineReducers({
   [studyApi.reducerPath]: studyApi.reducer,
 });
 
+// Persist the combined reducer
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-// Define RootState type directly from rootReducer
-export type RootState = ReturnType<typeof rootReducer>;
 
-// Create the store with proper TypeScript types
+// Create the store
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
@@ -62,28 +62,28 @@ export const store = configureStore({
         ignoredPaths: ["router.location.key"],
       },
     }).concat(
-      authApi.middleware, 
-      documentApi.middleware, 
-      entityApi.middleware, 
-      activityApi.middleware, 
-      searchApi.middleware, 
-      studyApi.middleware, 
+      authApi.middleware,
+      documentApi.middleware,
+      entityApi.middleware,
+      activityApi.middleware,
+      searchApi.middleware,
+      studyApi.middleware,
       routerMiddleware
     ),
 });
 
-// Define AppDispatch directly from store
+// Type definitions
+export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
 
 // Setup RTK Query listeners
 setupListeners(store.dispatch);
 
-export const persistor = persistStore(store)
-// Create and export history
+// Persistor and History
+export const persistor = persistStore(store);
 export const history = createReduxHistory(persistor);
 
-
-// Export type-safe hooks
+// Type-safe hooks
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

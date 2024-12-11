@@ -1,4 +1,5 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+// src/features/documentApi.ts
+import { api } from '../api';
 import type { SavedDocumentResponse, ConnectedObject } from '@/types/types';
 
 interface Document {
@@ -9,34 +10,21 @@ interface Document {
   abstract: string;
 }
 
-export const documentApi = createApi({
-  reducerPath: 'documentApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_REACT_APP_API_BASE_URL,
-    prepareHeaders: (headers) => {
-      const token = import.meta.env.VITE_ACCESS_TOKEN;
-      headers.set('authorization', `Bearer ${token}`);
-      return headers;
-    },
-  }),
-  tagTypes: ['SavedDocument'],
+export const documentApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getSavedDocuments: builder.query<SavedDocumentResponse, { page: number; limit: number }>({
-      query: ({ page, limit }) => {
-        console.log('Fetching documents:', { page, limit });
-        return {
-          url: 'saveddocument',
-          params: {
-            orderBy: 2,
-            doIncludePatents: true,
-            doIncludeScienceArticles: true,
-            doIncludeWeblinks: true,
-            createdByMe: true,
-            page, // Pagination
-            limit, // Number of documents per page
-          },
-        };
-      },
+      query: ({ page, limit }) => ({
+        url: 'saveddocument',
+        params: {
+          orderBy: 2,
+          doIncludePatents: true,
+          doIncludeScienceArticles: true,
+          doIncludeWeblinks: true,
+          createdByMe: true,
+          page,
+          limit,
+        },
+      }),
       providesTags: ['SavedDocument'],
     }),
 
@@ -74,5 +62,5 @@ export const {
   useLazyGetConnectedObjectsQuery,
   useAddDocumentMutation,
   useDeleteDocumentMutation,
-  usePrefetch,
+  usePrefetch
 } = documentApi;

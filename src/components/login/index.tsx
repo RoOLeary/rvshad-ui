@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setCredentials } from '../../services/auth/authApi'; // Adjust the import path for your store
+import { setCredentials } from '../../services/auth/authSlice'; // Adjust the import path for your store
 
 const Login = () => {
   const [email, setEmail] = useState('');

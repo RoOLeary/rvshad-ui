@@ -1,16 +1,7 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { api } from '../api';
 import { Entity, SavedDocumentResponse } from '../../types/types'; // Adjust the import path as needed
 
-export const entityApi = createApi({
-  reducerPath: 'entityApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://api.findest.com/api/',
-    prepareHeaders: (headers) => {
-      const token = import.meta.env.VITE_ACCESS_TOKEN;
-      headers.set('authorization', `Bearer ${token}`);
-      return headers;
-    },
-  }),
+export const entityApi = api.injectEndpoints({
   endpoints: (builder) => ({
     createEntity: builder.mutation<Entity, Partial<Entity>>({
       query: (entity) => ({

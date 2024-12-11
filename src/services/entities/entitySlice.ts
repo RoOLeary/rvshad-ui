@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { entityApi } from './entity'; // Assuming you have your API slice in a separate file
+import { entityApi } from './entityApi'; // Assuming you have your API slice in a separate file
 import { Entity, EntityState } from '../../types/types'; 
 
 const initialState: EntityState = {
