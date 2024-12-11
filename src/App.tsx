@@ -1,128 +1,93 @@
-import { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+// Imports
+import { Suspense, lazy } from "react";
+import { BrowserRouter, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { Provider as ReduxStoreProvider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import SearchProgress from "@/components/search-progress";
-import { SortableTable } from '@/components/data-table/sortable-table';
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import DashboardHeader from "./components/dashboard-header";
-import DataChart from "./components/data-chart";
-import { Base } from './views/Base';
-import { Document } from './views/Document';
-import { Documents } from './views/Documents';
-import { Queries } from './views/Queries';
-import { Studies } from './views/Studies';
-import { Entities } from './views/Entities';
-import { Entity } from './views/Entity';
-import { NotFoundPage } from './views/NotFound';
+import { Home } from "lucide-react";
 import { store, persistor } from "./store";
-import { Study } from './views/Study';
 
-import Joyride from 'react-joyride';
-import { run } from 'node:test';
+import { LoginPage } from "./views/LoginPage"; // Move LoginPage to its own file
+// Lazy-loaded components
+const Queries = lazy(() => import("./views/Queries"));
+const Documents = lazy(() => import("./views/Documents"));
+const Document = lazy(() => import("./views/Document"));
+const Studies = lazy(() => import("./views/Studies"));
+const Study = lazy(() => import("./views/Study"));
+const Entities = lazy(() => import("./views/Entities"));
+const Entity = lazy(() => import("./views/Entity"));
+const NotFoundPage = lazy(() => import("./views/NotFound"));
+const Dashboard = lazy(() => import("./views/Dashboard"));
 
 
-const steps = [
-  {
-    target: '.my-first-step',
-    content: 'Impress your friends with this amazing sortable table!',
-  },
-  {
-    target: '.my-other-step',
-    content: 'Check this out!! This is the second Feature highlight. ',
-  },
-];
+// Protected routes
+const ProtectedRoute = ({ children }:unknown) => {
+  const isAuthenticated = true; // Replace with auth logic from Redux state
+  const navigate = useNavigate();
 
-const Home = () => {
-  const [run, setRun] = useState(false);
+  if (!isAuthenticated) {
+    navigate("/login");
+    return null;
+  }
 
-  const handleClickStart = () => {
-    setRun(true);
-  };
-
-  return (
-    <div className="w-full">
-      <Joyride
-        run={run}
-        steps={steps}
-        styles={{
-          options: {
-            arrowColor: '#e3ffeb',
-            backgroundColor: '#e3ffeb',
-            overlayColor: 'rgba(79, 26, 0, 0.4)',
-            primaryColor: '#000',
-            textColor: '#004a14',
-            width: 900,
-            zIndex: 1000,
-          },
-        }}
-      />
-      <button onClick={handleClickStart} className="bg-red-500 text-white p-2 rounded-md">Start</button>
-
-      {/* <CountBtn /> */}
-      <div className="my-first-step">
-        <SortableTable />
-      </div>
-      <div className="w-full flex gap-10 p-6 my-other-step">
-        <div className="w-1/2">
-          <DataChart />
-        </div>
-        <div className="w-1/2">
-          <SearchProgress />
-        </div>
-      </div>
-    </div>
-  );
+  return children;
 };
 
-// Main App component with route transitions applied to the entire route structure
-function App() {
+// Authenticated Layout
+function AuthenticatedLayout() {
   const location = useLocation();
 
-
-  // useEffect(() => {
-  //   console.log('run', run);
-  // },[run])
-
   return (
-    <>
     <SidebarProvider>
-      
       <AppSidebar />
       <div className="app-canvas w-full">
         <DashboardHeader />
         <main className="flex flex-col items-center justify-start w-full h-full p-6">
           <SidebarTrigger className="absolute z-10 top-0 left-0" />
           <TransitionGroup component={null}>
-            <CSSTransition 
-              key={location.key} 
-              classNames="fade" 
-              timeout={1000} 
-              unmountOnExit
-            >
-              <Routes location={location}>
-                <Route path="/library/queries" element={<Queries />} />
-                <Route path="/library/overview" element={<Documents />} />
-                <Route path="/library/studies" element={<Studies />} />
-                <Route path="/library/studies/:id" element={<Study />} />
-                <Route path="/library/documents" element={<Documents />} />
-                <Route path="/library/documents/:id" element={<Document />} />
-                <Route path="/library/entities" element={<Entities />} />
-                <Route path="/library/entities/:id" element={<Entity />} />
-                <Route path="/all-components" element={<Base />} />
-                <Route path="/inbox" element={<Home />} />
-                <Route path="/" element={<Base />} />
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
+            <CSSTransition key={location.key} classNames="fade" timeout={1000} unmountOnExit>
+              <Suspense fallback={<div>Loading...</div>}>
+                <Routes location={location}>
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/library/queries" element={<Queries />} />
+                  <Route path="/library/overview" element={<Documents />} />
+                  <Route path="/library/studies" element={<Studies />} />
+                  <Route path="/library/studies/:id" element={<Study />} />
+                  <Route path="/library/documents" element={<Documents />} />
+                  <Route path="/library/documents/:id" element={<Document />} />
+                  <Route path="/library/entities" element={<Entities />} />
+                  <Route path="/library/entities/:id" element={<Entity />} />
+                  <Route path="/all-components" element={<Dashboard />} />
+                  <Route path="/inbox" element={<Home />} />
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+              </Suspense>
             </CSSTransition>
           </TransitionGroup>
         </main>
       </div>
     </SidebarProvider>
-    </>
+  );
+}
 
+// Main App component
+function App() {
+  return (
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route
+        path="/*"
+        element={
+          <ProtectedRoute>
+            <AuthenticatedLayout />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
 }
 
@@ -131,9 +96,7 @@ function AppWrapper() {
   return (
     <ReduxStoreProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter future={{
-            v7_startTransition: true,
-          }}>
+        <BrowserRouter>
           <App />
         </BrowserRouter>
       </PersistGate>

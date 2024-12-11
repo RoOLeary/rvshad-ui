@@ -95,3 +95,5 @@ export function DataTable<TData, TValue>({
     </div>
   )
 }
+
+export default DataTable

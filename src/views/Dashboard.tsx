@@ -16,7 +16,7 @@ import {
 import DataChart from "@/components/data-chart";
 import { useSelector } from 'react-redux';
 import { currentUser } from '@/services/auth';
-export const Base = () => {
+export const Dashboard = () => {
 
     const { data: activityData } = useGetMyRecentActivityQuery();
     const navigate = useNavigate();
@@ -119,3 +119,5 @@ export const Base = () => {
         </div>
     );
 };
+
+export default Dashboard; 

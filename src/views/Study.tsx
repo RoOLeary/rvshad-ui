@@ -41,3 +41,6 @@ export const Study: React.FC = () => {
     </div>
   );
 };
+
+
+export default Study; 

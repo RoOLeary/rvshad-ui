@@ -122,6 +122,7 @@ export const Studies: React.FC = () => {
               <StudyCard
                 key={study.id}
                 {...study}
+                title={study.title}
                 isSelected={selectedStudies.has(study.id)}
                 onSelect={handleSelectStudy}
               />
@@ -143,3 +144,4 @@ export const Studies: React.FC = () => {
     );
   };
   
+  export default Studies;

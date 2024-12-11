@@ -21,7 +21,7 @@ import { setCredentials } from '@/services/auth';
 import { currentUser, logout } from '@/services/auth/authSlice';
 import { useSelector } from 'react-redux';
 import { useGetMyRecentActivityQuery } from '@/services/activity/activity';
-
+import { useNavigate } from 'react-router-dom';
 
 // import { useWebSocket } from '../hooks/use-web-socket';
 // import { Permission, usePermissionsChecker } from '../hooks/use-permissions-checker';
@@ -31,7 +31,8 @@ interface DashboardHeader {
 }
 
 export default function DashboardHeader() {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const navigate = useNavigate(); 
     const user = useSelector(currentUser);
     const { data: activityData } = useGetMyRecentActivityQuery();
     
@@ -59,7 +60,8 @@ export default function DashboardHeader() {
 
     const handleLogOut = () => {
       console.log(`log out ${user}`);
-      dispatch(logout())
+      dispatch(logout());
+      navigate('/login');
     }
 
     useEffect(() => {

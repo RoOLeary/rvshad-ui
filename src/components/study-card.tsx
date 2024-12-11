@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 interface StudyCardProps {
     id: string;
-    title: string;
+    title?: string;
     type: string;
     description?: string;
     dateAdded?: string;

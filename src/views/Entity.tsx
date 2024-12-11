@@ -53,3 +53,6 @@ export const Entity: React.FC = () => {
         </div>
     );
 };
+
+
+export default Entity;

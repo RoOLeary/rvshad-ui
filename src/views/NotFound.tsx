@@ -4,3 +4,5 @@ export const NotFoundPage = () => (
       <p>Nothing found. Check your query and try again.</p>
     </div>
 );
+
+export default NotFoundPage; 

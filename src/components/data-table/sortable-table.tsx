@@ -395,3 +395,5 @@ export function SortableTable() {
     </div>
   )
 }
+
+export default SortableTable
