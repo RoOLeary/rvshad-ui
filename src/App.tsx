@@ -24,12 +24,13 @@ const Dashboard = lazy(() => import("./views/Dashboard"));
 
 
 // Protected routes
-const ProtectedRoute = ({ children }:unknown) => {
+// @ts-expect-error blah
+const ProtectedRoute = ({ children }) => {
   const isAuthenticated = true; // Replace with auth logic from Redux state
   const navigate = useNavigate();
 
   if (!isAuthenticated) {
-    navigate("/login");
+    navigate("/");
     return null;
   }
 
@@ -77,7 +78,7 @@ function AuthenticatedLayout() {
 function App() {
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/" element={<LoginPage />} />
       <Route
         path="/*"
         element={

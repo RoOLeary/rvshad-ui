@@ -61,7 +61,7 @@ export default function DashboardHeader() {
     const handleLogOut = () => {
       console.log(`log out ${user}`);
       dispatch(logout());
-      navigate('/login');
+      navigate('/');
     }
 
     useEffect(() => {
