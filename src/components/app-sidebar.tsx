@@ -51,9 +51,11 @@ const advancedItems = [
 ];
 
 import logoUniverse from '../assets/universe_logo_white.png';
+import { useNavigate } from 'react-router';
 
 export function AppSidebar() {
   const dispatch = useDispatch(); 
+  const navigate = useNavigate(); 
   const user = useSelector(currentUser); 
    
   const handleLogin = () => {
@@ -61,7 +63,8 @@ export function AppSidebar() {
   }
 
   const handleLogout = () => {
-    dispatch(logout()); 
+    dispatch(logout());
+    navigate('/');
   }
 
   return (

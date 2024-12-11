@@ -21,12 +21,31 @@ const Entities = lazy(() => import("./views/Entities"));
 const Entity = lazy(() => import("./views/Entity"));
 const NotFoundPage = lazy(() => import("./views/NotFound"));
 const Dashboard = lazy(() => import("./views/Dashboard"));
+// lazy comps
+const SortableTable = lazy(() => import("./components/data-table/sortable-table"));
+const DataChart = lazy(() => import("./components/data-chart"));
+const SearchProgress = lazy(() => import("./components/search-progress"));
 
+const Inbox = () => (
+  <div className="flex flex-col gap-y-4 w-full h-screen">
+ 
+    {/* <CountBtn /> */}
+    <SortableTable />
+    <div className="w-full flex gap-10 p-6">
+      <div className="w-1/2">
+        <DataChart />
+      </div>
+      <div className="w-1/2">
+        <SearchProgress />
+      </div>
+    </div>
+  </div>
+);
 
 // Protected routes
 // @ts-expect-error blah
 const ProtectedRoute = ({ children }) => {
-  const isAuthenticated = true; // Replace with auth logic from Redux state
+  const isAuthenticated = false; // Replace with auth logic from Redux state
   const navigate = useNavigate();
 
   if (!isAuthenticated) {
@@ -62,7 +81,7 @@ function AuthenticatedLayout() {
                   <Route path="/library/entities" element={<Entities />} />
                   <Route path="/library/entities/:id" element={<Entity />} />
                   <Route path="/all-components" element={<Dashboard />} />
-                  <Route path="/inbox" element={<Home />} />
+                  <Route path="/inbox" element={<Inbox />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </Suspense>
