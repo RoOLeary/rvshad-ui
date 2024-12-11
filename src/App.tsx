@@ -45,7 +45,7 @@ const Inbox = () => (
 // Protected routes
 // @ts-expect-error blah
 const ProtectedRoute = ({ children }) => {
-  const isAuthenticated = false; // Replace with auth logic from Redux state
+  const isAuthenticated = true; // Replace with auth logic from Redux state
   const navigate = useNavigate();
 
   if (!isAuthenticated) {
