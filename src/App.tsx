@@ -7,11 +7,12 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import DashboardHeader from "./components/dashboard-header";
-import { Home } from "lucide-react";
 import { store, persistor } from "./store";
 
 import { LoginPage } from "./views/LoginPage"; // Move LoginPage to its own file
-// Lazy-loaded components
+
+// Lazy-loaded views (TEMP! Will sort this out with some proper Routing )
+
 const Queries = lazy(() => import("./views/Queries"));
 const Documents = lazy(() => import("./views/Documents"));
 const Document = lazy(() => import("./views/Document"));
@@ -21,26 +22,8 @@ const Entities = lazy(() => import("./views/Entities"));
 const Entity = lazy(() => import("./views/Entity"));
 const NotFoundPage = lazy(() => import("./views/NotFound"));
 const Dashboard = lazy(() => import("./views/Dashboard"));
-// lazy comps
-const SortableTable = lazy(() => import("./components/data-table/sortable-table"));
-const DataChart = lazy(() => import("./components/data-chart"));
-const SearchProgress = lazy(() => import("./components/search-progress"));
+const Inbox = lazy(() => import("./views/Inbox"));
 
-const Inbox = () => (
-  <div className="flex flex-col gap-y-4 w-full h-screen">
- 
-    {/* <CountBtn /> */}
-    <SortableTable />
-    <div className="w-full flex gap-10 p-6">
-      <div className="w-1/2">
-        <DataChart />
-      </div>
-      <div className="w-1/2">
-        <SearchProgress />
-      </div>
-    </div>
-  </div>
-);
 
 // Protected routes
 // @ts-expect-error blah
