@@ -1,16 +1,16 @@
 // Imports
 import { Suspense, lazy } from "react";
 import { BrowserRouter, Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { Provider as ReduxStoreProvider } from "react-redux";
+import { useSelector, Provider as ReduxStoreProvider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import DashboardHeader from "@/components/dashboard-header";
 import { store, persistor } from "@/store";
-import { LoginPage } from "@/views/LoginPage"; // Move LoginPage to its own file
 import { currentUser } from '@/services/auth/authSlice';
-import { useSelector } from 'react-redux';
+import { LoginPage } from "@/views/LoginPage";
+
 
 // Lazy-loaded views (TEMP! Will sort this out with some proper Routing )
 const Queries = lazy(() => import("@/views/Queries"));
