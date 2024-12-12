@@ -25,7 +25,7 @@ const Login = () => {
       dispatch(setCredentials({ token: 'fakeToken' })); // Replace 'fakeToken' with a real token if needed
       setIsLoading(false); // Reset loading state after the process
       navigate('/dashboard'); // Redirect after login
-    }, 2000);
+    }, 750);
   };
 
   return (
