@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useGetSavedDocumentsQuery } from '../services/documents/documentApi';
+import { useGetSavedDocumentsQuery } from '@/services/documents/documentApi';
 import { CardContent } from '@/components/ui/card';
 import { Checkbox } from "@/components/ui/checkbox";
 import { DocumentCard } from '@/components/document-card';

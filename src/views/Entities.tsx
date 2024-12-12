@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
-import { useGetEntitiesQuery } from '../services/entities/entityApi';
-import { Filter, Loader } from "lucide-react";
+import { useGetEntitiesQuery } from '@/services/entities/entityApi';
 import { ListPagination } from "@/components/list-pagination";
+import { Filter, Loader } from "lucide-react";
+
 import {
     DropdownMenu,
     DropdownMenuContent,

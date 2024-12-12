@@ -7,18 +7,18 @@ import { combineReducers } from "redux";
 import { createReduxHistoryContext } from "redux-first-history";
 
 // Import feature reducers and APIs
-import { authApi } from "../src/services/auth/authApi";
-import authSlice from "./services/auth/authSlice";
-import { documentApi } from "./services/documents/documentApi";
-import documentSlice from "./services/documents/documentSlice";
-import { entityApi } from "./services/entities/entityApi";
-import entitySlice from "./services/entities/entitySlice";
-import { studyApi } from "./services/study/study";
-import studySlice from "./services/study/studySlice";
-import { activityApi } from "./services/activity/activity";
-import activitySlice from "./services/activity/activitySlice";
-import { searchApi } from "./services/search/search";
-import searchSlice from "./services/search/searchSlice";
+import { authApi } from "@/services/auth/authApi";
+import authSlice from "@/services/auth/authSlice";
+import { documentApi } from "@/services/documents/documentApi";
+import documentSlice from "@/services/documents/documentSlice";
+import { entityApi } from "@/services/entities/entityApi";
+import entitySlice from "@/services/entities/entitySlice";
+import { studyApi } from "@/services/study/study";
+import studySlice from "@/services/study/studySlice";
+import { activityApi } from "@/services/activity/activity";
+import activitySlice from "@/services/activity/activitySlice";
+import { searchApi } from "@/services/search/search";
+import searchSlice from "@/services/search/searchSlice";
 
 // Create the history context
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
