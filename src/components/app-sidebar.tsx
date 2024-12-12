@@ -111,8 +111,8 @@ export function AppSidebar() {
                 ))}
               </SidebarMenu>
             </SidebarGroupContent>
-            <br />
-            <Separator />
+            
+           
             <SidebarGroupLabel className="my-4">
               <Bot width={18} color={"white"} />
               <h1 className="font-black text-md ml-2">IGOR<sup>AI</sup>search</h1>
